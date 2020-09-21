@@ -22,26 +22,26 @@ services:
     restart: unless-stopped
     # entrypoint: comunica-sparql-http http://ldf.nanopubs.lod.labs.vu.nl/np
     entrypoint: node ./bin/http.js http://ldf.nanopubs.lod.labs.vu.nl/np
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     environment: 
       # Variable for nginx-proxy routing. See https://github.com/nginx-proxy/
       VIRTUAL_HOST: nanopub-sparql.137.120.31.102.nip.io
-      LETSENCRYPT_HOST: nanopub-sparql.137.120.31.102.nip.io
-      VIRTUAL_PORT: 3000
+      # LETSENCRYPT_HOST: nanopub-sparql.137.120.31.102.nip.io
+      # VIRTUAL_PORT: 3000
     networks:
       - network
 
   sparql-reasoner-api:
-    container_name: d2s-api
+    container_name: d2s-api-nanopub
     image: umids/d2s-api:nanopubs
-    ports:
-      - 8081:8080
+    # ports:
+    #   - 8081:8080
     environment: 
       # - ENDPOINT=nanopub-sparql.137.120.31.102.nip.io
       - ENDPOINT=http://comunica-sparql-endpoint:3000/sparql
       - VIRTUAL_HOST=nanopub-reasoner-api.137.120.31.102.nip.io
-      - LETSENCRYPT_HOST=nanopub-reasoner-api.137.120.31.102.nip.io
+      # - LETSENCRYPT_HOST=nanopub-reasoner-api.137.120.31.102.nip.io
     networks:
       - network
     restart: unless-stopped
