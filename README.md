@@ -1,3 +1,7 @@
+Query the Nanopublication network using SPARQL and Translator Reasoner API at http://nanopub-reasoner-api.137.120.31.102.nip.io/
+
+![PSKG](PSKG-knowledge_collaboratory.png)
+
 ## Use the API 📬
 
 ### Query operation
@@ -8,26 +12,16 @@ See this [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query exa
 
 ```json
 {
+  "max_results": 50,
   "message": {
     "query_graph": {
-      "edges": [
-        {
-          "id": "e00",
-          "source_id": "n00",
-          "target_id": "n01",
-          "type": "treated_by"
-        }
-      ],
       "nodes": [
-        {
-          "curie": "DRUGBANK:DB00394",
-          "id": "n00",
-          "type": "drug"
-        },
-        {
-          "id": "n01",
-          "type": "disease"
-        }
+        { "id": "n00", "type": "Drug" },
+        { "id": "n01", "type": "Disease" }
+      ],
+      "edges": [
+        { "id": "e00", "type": "Association",
+          "source_id": "n00", "target_id": "n01" }
       ]
     }
   }
