@@ -1,4 +1,6 @@
-## Use the API 📬
+[![Python versions](https://img.shields.io/pypi/pyversions/nanopub-reasoner-api)](https://pypi.org/project/nanopub-reasoner-api)
+
+# Use the API 📬
 
 ### Query operation
 
@@ -40,16 +42,55 @@ The `/predicates` operation will return the entities and relations provided by t
 
 > Try it at [https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates](https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates)
 
-## Run with Docker
+### Notebook example
+
+> TODO
+
+# Deploy the API 📦
+
+You can also use nanopub-reasoner-api to build new classifiers, and deploy your API.
+
+> Requires [Python 3.6+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
+
+### Install the API 📥
+
+#### Clone the repository
+
+```bash
+git clone https://github.com/MaastrichtU-IDS/nanopub-reasoner-api.git
+cd nanopub-trapi
+```
+
+#### Install dependencies
+
+```bash
+pip3 install -r requirements.txt
+```
+
+#### Optional: isolate with a Virtual Environment
+
+If you are facing conflict with already installed packages, then you might want to use a [Virtual Environment](https://docs.python.org/3/tutorial/venv.html) to isolate the installation in the current folder before installing nanopub-reasoner-api:
+
+```bash
+# Create the virtual environment folder in your workspace
+python3 -m venv .venv
+# Activate it using a script in the created folder
+source .venv/bin/activate
+```
+
+### Start the API 🛩️
+
+```python
+python3 src/api.py
+```
+
+> Access the Swagger UI at [http://localhost:8808](http://localhost:8808)
+
+#### Alternative: Run with Docker
 
 Running using Docker can be convenient if you just want to run the API without installing the package locally, or if it runs in production alongside other services.
 
-2 services are started:
-
-* A SPARQL endpoint to query the Nanopublication network of HDT files using `comunica/actor-init-sparql`
-* A Reasoner API to query the SPARQL endpoint, using https://github.com/MaastrichtU-IDS/d2s-api/tree/develop
-
-Build and start the container with [docker-compose 🐳](https://docs.docker.com/compose/)
+Build and start the `nanopub-reasoner-api-api` container with [docker-compose 🐳](https://docs.docker.com/compose/)
 
 ```bash
 docker-compose up -d
