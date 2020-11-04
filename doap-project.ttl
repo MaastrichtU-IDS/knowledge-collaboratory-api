@@ -8,7 +8,7 @@
   doap:description '''This project enables researchers to rapidly create a Personal Scientific Knowledge Graph (PSKG) from structured claims from the scientific literature. Using a web interface, users will be guided to provide essential details about the claims such as their source and evidence. 
 Represented as nanopublications, the claims can be digitally signed and subsequently published into a decentralized network of nanopublications.''' ;
 
-  doap:programming-language "Python" ;
+  doap:programming-language "Python", "Java" ;
   doap:license <https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/LICENSE> ;
   doap:homepage <https://nanopub-reasoner-api.137.120.31.102.nip.io> ;
   doap:bug-database <https://github.com/MaastrichtU-IDS/nanopub-trapi/issues> ;
