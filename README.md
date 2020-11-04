@@ -1,18 +1,22 @@
-Query the Nanopublication network using SPARQL and Translator Reasoner API at http://nanopub-reasoner-api.137.120.31.102.nip.io/ 
-
 This repository provides guidelines to publish Nanopublications as a user with the Nanobench, and query the published Nanopublications network as a researcher searching for answers 💬
+
+> Query the Nanopublication network using SPARQL and Translator Reasoner API at http://nanopub-reasoner-api.137.120.31.102.nip.io/ 
 
 ![PSKG](PSKG-knowledge_collaboratory.png)
 
 ## Publish Nanopublications
 
+Requirements: [Java 8+](https://openjdk.java.net/install/)
+
 Use the [Nanobench](https://github.com/vemonet/nanobench) to publish and explore nanopublications using a convenient web UI.
 
-Download the latest release of the Nanobench jar file for the Translator ecosystem in `~/.nanopub/nanobench.jar`:
+Download the latest release of the Nanobench jar file for the Translator ecosystem by running this command:
 
 ```bash
 curl -s https://api.github.com/repos/vemonet/nanobench/releases/latest | grep "browser_download_url.*.jar" | cut -d : -f 2,3 | tr -d \" | wget -O ~/.nanopub/nanobench.jar -i -
 ```
+
+> Tje Jar file is download in your home folder: `~/.nanopub/nanobench.jar`
 
 Run the Nanobench (it will use the `ids_rsa` key in the `.nanopub` folder to authenticate):
 
@@ -61,6 +65,8 @@ The `/predicates` operation will return the entities and relations provided by t
 > Try it at [https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates](https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates)
 
 ## Run the API with Docker
+
+Requirements: [Docker](https://docs.docker.com/get-docker/).
 
 Running using Docker can be convenient if you just want to run the API without installing the package locally, or if it runs in production alongside other services.
 
