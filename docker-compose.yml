@@ -21,9 +21,9 @@ services:
     image: comunica/actor-init-sparql
     restart: unless-stopped
     # entrypoint: comunica-sparql-http http://ldf.nanopubs.lod.labs.vu.nl/np
-    entrypoint: node ./bin/http.js http://ldf.nanopubs.lod.labs.vu.nl/np
-    # ports:
-    #   - 3000:3000
+    entrypoint: node ./bin/http.js http://ldf.np.dumontierlab.com/np
+    ports:
+      - 3000:3000
     environment: 
       # Variable for nginx-proxy routing. See https://github.com/nginx-proxy/
       VIRTUAL_HOST: nanopub-sparql.137.120.31.102.nip.io

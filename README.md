@@ -8,7 +8,7 @@ This repository provides guidelines to publish Nanopublications as a user with t
 
 Requirements: [Java 8+](https://openjdk.java.net/install/)
 
-Use the [Nanobench](https://github.com/vemonet/nanobench) to publish and explore nanopublications using a convenient web UI.
+Use the [Nanobench 🛋️](https://github.com/vemonet/nanobench) to publish and explore nanopublications using a convenient web UI.
 
 Download the latest release of the Nanobench jar file for the Translator ecosystem by running this command:
 
@@ -16,9 +16,9 @@ Download the latest release of the Nanobench jar file for the Translator ecosyst
 curl -s https://api.github.com/repos/vemonet/nanobench/releases/latest | grep "browser_download_url.*.jar" | cut -d : -f 2,3 | tr -d \" | wget -O ~/.nanopub/nanobench.jar -i -
 ```
 
-> Tje Jar file is download in your home folder: `~/.nanopub/nanobench.jar`
+> The jar file is downloaded in your home folder: `~/.nanopub/nanobench.jar`
 
-Run the Nanobench (it will use the `ids_rsa` key in the `.nanopub` folder to authenticate):
+Run the Nanobench. It will use the `ids_rsa` key in the `.nanopub` folder to authenticate, or guide you to generate one:
 
 ```bash
 java -jar ~/.nanopub/nanobench.jar -httpPort 37373 -resetExtract
