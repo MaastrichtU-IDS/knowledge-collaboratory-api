@@ -44,14 +44,14 @@ jobs:
       - name: Run kgx to transform RDF to KGX TSV format
         run: |
           kgx transform --input-format ttl \
-              --output output/neurodkg_kgx.tsv \
+              --output output/neurodkg_kgx \
               --output-format tsv \
               neurodkg.ttl
 
       - name: Run kgx to transform RDF to KGX TSV format
         run: |
           kgx transform --input-format ttl \
-              --output output/nanopubs_pskg.tsv \
+              --output output/nanopubs_pskg \
               --output-format tsv \
               nanopubs_pskg.ttl
 
