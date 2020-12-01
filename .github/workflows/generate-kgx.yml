@@ -30,16 +30,10 @@ jobs:
       - name: Get the Nanopubs PSKG as RDF by running a CONSTRUCT query
         run: |
           curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
-      #     ## SELECT query:
-      #     curl -X GET -o nanopubs_pskg.ttl -H  "accept: application/sparql-results+json" "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX+owl%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX+bl%3A+%3Chttps%3A%2F%2Fw3id.org%2Fbiolink%2Fvocab%2F%3E%0APREFIX+d2s%3A+%3Chttps%3A%2F%2Fw3id.org%2Fd2s%2F%3E%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0APREFIX+bio2rdf%3A+%3Chttp%3A%2F%2Fbio2rdf.org%2F%3E%0APREFIX+covid%3A+%3Chttp%3A%2F%2Fidlab.github.io%2Fcovid19%23%3E%0APREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0APREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX+dctypes%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2F%3E%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0APREFIX+idot%3A+%3Chttp%3A%2F%2Fidentifiers.org%2Fidot%2F%3E%0APREFIX+dcat%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0APREFIX+void%3A+%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E%0APREFIX+void-ext%3A+%3Chttp%3A%2F%2Fldf.fi%2Fvoid-ext%23%3E%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0APREFIX+ncit%3A+%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23%3E%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0APREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0APREFIX+omop%3A+%3Chttp%3A%2F%2Fapi.ohdsi.org%2FWebAPI%2Fvocabulary%2Fconcept%2F%3E%0APREFIX+cohd%3A+%3Chttps%3A%2F%2Fw3id.org%2Ftrek%2Fcohd%2F%3E%0ASELECT+DISTINCT+%3Fn00+%3Fn00name+%3Fn01+%3Fn01name+%3Fe00+WHERE+%7B+%0A%3Fn00+a+bl%3ADrug.+%0AOPTIONAL+%7B%3Fn00+bl%3Aname+%3Fn00name+.+%7D%0A%3Fn01+a+bl%3ADisease.+%0AOPTIONAL+%7B%3Fn01+bl%3Aname+%3Fn01name+.+%7D%0A%3Fe00+a+bl%3AAssociation.+%0A%3Fe00+bl%3Asubject+%3Fn00+.+%0A%3Fe00+bl%3Aobject+%3Fn01+.+%0A%7D"
 
       - name: Install kgx and PyShEx
         run: |
           pip install kgx PyShEx
-        # pip install -r requirements.txt
-        ## Locally: 
-        # python3.7 -m pip install --upgrade pip
-        # python3.7 -m pip install kgx
 
       - name: Run kgx to transform RDF to KGX TSV format
         run: |
@@ -55,21 +49,6 @@ jobs:
               --output-format tsv \
               nanopubs_pskg.ttl
 
-        ## CLI options: https://github.com/biolink/kgx/blob/master/kgx/cli/__init__.py#L153
-        ## Formats supported:
-        # 'tar': kgx.PandasTransformer,
-        # 'csv': kgx.PandasTransformer,
-        # 'tsv': kgx.PandasTransformer,
-        # 'tsv:neo4j': kgx.PandasTransformer,
-        # 'nt': kgx.NtTransformer,
-        # 'ttl': kgx.RdfTransformer,
-        # 'json': kgx.JsonTransformer,
-        # 'jsonl': kgx.JsonlTransformer,
-        # 'obojson': kgx.ObographJsonTransformer,
-        # 'owl': kgx.RdfOwlTransformer,
-        # 'rsa': kgx.RsaTransformer
-        # Work in progress: 'rq': kgx.SparqlTransformer,
-
       - name: Upload output KGX data on GitHub
         uses: actions/upload-artifact@v1
         with:
@@ -84,3 +63,26 @@ jobs:
       # - name: SHACL validation
       #   run: |
       #     pyshacl -s shacl/neurodkg-shape.ttl -m -i rdfs -a -f human data/output/neuro_dkg.ttl
+
+      ## KGX CLI options: https://github.com/biolink/kgx/blob/master/kgx/cli/__init__.py#L153
+      ## Formats supported:
+      # 'tar': kgx.PandasTransformer,
+      # 'csv': kgx.PandasTransformer,
+      # 'tsv': kgx.PandasTransformer,
+      # 'tsv:neo4j': kgx.PandasTransformer,
+      # 'nt': kgx.NtTransformer,
+      # 'ttl': kgx.RdfTransformer,
+      # 'json': kgx.JsonTransformer,
+      # 'jsonl': kgx.JsonlTransformer,
+      # 'obojson': kgx.ObographJsonTransformer,
+      # 'owl': kgx.RdfOwlTransformer,
+      # 'rsa': kgx.RsaTransformer
+      # Work in progress: 'rq': kgx.SparqlTransformer,
+
+      ## Install KGX locally: 
+      # python3.7 -m pip install --upgrade pip
+      # python3.7 -m pip install kgx
+      # pip install -r requirements.txt
+
+      ## SELECT query on Comunica SPARQL endpoint:
+      # curl -X GET -o nanopubs_pskg.ttl -H  "accept: application/sparql-results+json" "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=PREFIX+rdf%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX+rdfs%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX+owl%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0APREFIX+skos%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX+bl%3A+%3Chttps%3A%2F%2Fw3id.org%2Fbiolink%2Fvocab%2F%3E%0APREFIX+d2s%3A+%3Chttps%3A%2F%2Fw3id.org%2Fd2s%2F%3E%0APREFIX+sio%3A+%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0APREFIX+bio2rdf%3A+%3Chttp%3A%2F%2Fbio2rdf.org%2F%3E%0APREFIX+covid%3A+%3Chttp%3A%2F%2Fidlab.github.io%2Fcovid19%23%3E%0APREFIX+dc%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0APREFIX+dct%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX+dctypes%3A+%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2F%3E%0APREFIX+foaf%3A+%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0APREFIX+idot%3A+%3Chttp%3A%2F%2Fidentifiers.org%2Fidot%2F%3E%0APREFIX+dcat%3A+%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0APREFIX+void%3A+%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E%0APREFIX+void-ext%3A+%3Chttp%3A%2F%2Fldf.fi%2Fvoid-ext%23%3E%0APREFIX+obo%3A+%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0APREFIX+ncit%3A+%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23%3E%0APREFIX+xsd%3A+%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0APREFIX+schema%3A+%3Chttp%3A%2F%2Fschema.org%2F%3E%0APREFIX+omop%3A+%3Chttp%3A%2F%2Fapi.ohdsi.org%2FWebAPI%2Fvocabulary%2Fconcept%2F%3E%0APREFIX+cohd%3A+%3Chttps%3A%2F%2Fw3id.org%2Ftrek%2Fcohd%2F%3E%0ASELECT+DISTINCT+%3Fn00+%3Fn00name+%3Fn01+%3Fn01name+%3Fe00+WHERE+%7B+%0A%3Fn00+a+bl%3ADrug.+%0AOPTIONAL+%7B%3Fn00+bl%3Aname+%3Fn00name+.+%7D%0A%3Fn01+a+bl%3ADisease.+%0AOPTIONAL+%7B%3Fn01+bl%3Aname+%3Fn01name+.+%7D%0A%3Fe00+a+bl%3AAssociation.+%0A%3Fe00+bl%3Asubject+%3Fn00+.+%0A%3Fe00+bl%3Aobject+%3Fn01+.+%0A%7D"
