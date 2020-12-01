@@ -1,14 +1,7 @@
 click
 connexion[swagger-ui]
 tornado
-rdflib==4.2.2
+kgx
+PyShEx
 # SPARQLWrapper
-# networkx==1.11
-# joblib
-# numpy==1.16.1
-# pandas==1.1.1
-# cython
-# pyspark
-# findspark
-# scikit-learn
-# kgx
+# rdflib==4.2.2

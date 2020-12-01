@@ -21,13 +21,55 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX schema: <http://schema.org/>
 PREFIX omop: <http://api.ohdsi.org/WebAPI/vocabulary/concept/>
 PREFIX cohd: <https://w3id.org/trek/cohd/>
-SELECT DISTINCT ?n00 ?n00name ?n01 ?n01name ?e00 
+CONSTRUCT {
+  ?association
+    bl:association_type ?association_type ;
+    rdfs:label ?label ;
+    rdf:subject ?subject ;
+    rdf:predicate ?predicate ;
+    rdf:object ?object ;
+    bl:relation ?relation ;
+  	bl:provided_by ?provided_by ;
+    bl:has_evidence ?targetgroup ;
+    bl:stage_qualifier ?lifestage .
+  
+  ?subject bl:category ?subjectCategory .
+  ?object bl:category ?objectCategory . 
+
+  ?targetgroup a ?targetGroupType ;
+    bl:category ?targetGroupCategory ;
+    bl:has_drug ?drug ;
+    bl:has_phenotype ?phenotype .
+  ?lifestage a bl:LifeStage ;
+    rdfs:label ?lifestageLabel .
+}
 WHERE { 
-    ?n00 a bl:Drug. 
-    OPTIONAL {?n00 bl:name ?n00name . }
-    ?n01 a bl:Disease . 
-    OPTIONAL {?n01 bl:name ?n01name . }
-    ?e00 a bl:Association . 
-    ?e00 bl:subject ?n00 . 
-    ?e00 bl:object ?n01 . 
-} LIMIT 50
+  ?association
+    bl:association_type ?association_type ;
+    rdfs:label ?label ;
+    rdf:subject ?subject ;
+    rdf:predicate ?predicate ;
+    rdf:object ?object ;
+    bl:relation ?relation ;
+  	bl:provided_by ?provided_by .
+  
+  	?subject bl:category ?subjectCategory .
+  	?object bl:category ?objectCategory . 
+   
+  	OPTIONAL {
+    	?association bl:has_evidence ?targetgroup .
+  		?targetgroup a ?targetGroupType ;
+    		bl:category ?targetGroupCategory .
+	}
+  	OPTIONAL {
+      ?targetgroup bl:has_drug ?drug .
+	}
+  	OPTIONAL {
+      ?targetgroup bl:has_phenotype ?phenotype .
+	}  
+  	OPTIONAL {
+    	?association bl:stage_qualifier ?lifestage .
+  		?lifestage a bl:LifeStage ;
+    		rdfs:label ?lifestageLabel .
+	}
+}
