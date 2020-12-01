@@ -21,13 +21,13 @@ jobs:
         with:
           python-version: 3.7
 
-      - name: Get the NeuroDKG as RDF by running a CONSTRUCT query
+      - name: Get the NeuroDKG as RDF by running a SPARQL CONSTRUCT query
         run: |
           mkdir -p output
           wget https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq
           curl -X GET -H "accept: text/turtle" -o neurodkg.ttl "https://graphdb.dumontierlab.com/repositories/NeuroDKG?query=$(cat convert2biolink.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
-      - name: Get the Nanopubs PSKG as RDF by running a CONSTRUCT query
+      - name: Get the Nanopubs PSKG as RDF by running a SPARQL CONSTRUCT query
         run: |
           curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 

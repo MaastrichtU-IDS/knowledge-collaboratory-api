@@ -32,6 +32,20 @@ java -jar ~/.nanopub/nanobench.jar -httpPort 37373 -resetExtract
 
 Templates for the Translator (e.g. "Defining a biomedical association") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
+## Generate KGX files from RDF graphs
+
+We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/nanopub-trapi/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
+
+* `.github/workflows/generate-kgx.yml`
+* `.github/workflows/validate-rdf.yml`
+
+The RDF graphs are accessible through public SPARQL endpoints:
+
+* [NeuroDKG](https://graphdb.dumontierlab.com/repositories/NeuroDKG)
+* [Nanopublications Personal Scientific Knowledge Graph](http://nanopub-sparql.137.120.31.102.nip.io/sparql)
+
+
+
 ## Query with the Translator Reasoner API 📬
 
 An Open API is available to query the Nanopublications network using the [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) standards.

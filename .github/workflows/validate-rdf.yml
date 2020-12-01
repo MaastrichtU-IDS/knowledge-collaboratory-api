@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - ".github/workflows/rdf-validation.yml"
+      - ".github/workflows/validate-rdf.yml"
       - "src/construct_pskg_from_nanopubs.rq"
   # schedule:
   #   - cron: '0 2 * * *'
