@@ -32,6 +32,8 @@ Templates for the Translator (e.g. "Defining a biomedical association with its c
 
 ## Generate KGX files from RDF graphs
 
+[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Validate+RDF+graphs%22)
+
 We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/nanopub-trapi/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
 
 * [`.github/workflows/generate-kgx.yml`](https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/.github/workflows/generate-kgx.yml)
