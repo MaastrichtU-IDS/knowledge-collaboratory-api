@@ -20,33 +20,31 @@ curl -s https://api.github.com/repos/vemonet/nanobench/releases/latest | grep "b
 
 > The jar file is downloaded in your home folder: `~/.nanopub/nanobench.jar`
 
-Run the Nanobench. It will use the `ids_rsa` key in the `.nanopub` folder to authenticate, or guide you to generate one:
+Run the Nanobench on http://localhost:37373. It will use the `ids_rsa` key in the `.nanopub` folder to authenticate, or guide you to generate one:
 
 ```bash
 java -jar ~/.nanopub/nanobench.jar -httpPort 37373 -resetExtract
 ```
 
-> Access on http://localhost:37373
-
 > Check the [vemonet/nanobench wiki](https://github.com/vemonet/nanobench/wiki/Add-an-evidence-to-an-association) to get a full tutorial to publish associations.
 
-Templates for the Translator (e.g. "Defining a biomedical association") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
+Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
 ## Generate KGX files from RDF graphs
 
 We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/nanopub-trapi/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
 
-* `.github/workflows/generate-kgx.yml`
-* `.github/workflows/validate-rdf.yml`
+* [`.github/workflows/generate-kgx.yml`](https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/.github/workflows/generate-kgx.yml)
+* [`.github/workflows/validate-rdf.yml`](https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/.github/workflows/validate-rdf.yml)
 
 The RDF graphs are accessible through public SPARQL endpoints:
 
 * [NeuroDKG](https://graphdb.dumontierlab.com/repositories/NeuroDKG)
 * [Nanopublications Personal Scientific Knowledge Graph](http://nanopub-sparql.137.120.31.102.nip.io/sparql)
 
-
-
 ## Query with the Translator Reasoner API 📬
+
+> Work in progress
 
 An Open API is available to query the Nanopublications network using the [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) standards.
 
@@ -78,9 +76,7 @@ See this [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query exa
 
 The `/predicates` operation will return the entities and relations provided by this API in a JSON object (following the [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) specifications).
 
-> Try it at [https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates](https://nanopub-reasoner-api.137.120.31.102.nip.io/predicates)
-
-## Run the API with Docker
+## Run the SPARQL endpoint and API with Docker
 
 Requirements: [Docker](https://docs.docker.com/get-docker/).
 
@@ -88,8 +84,8 @@ Running using Docker can be convenient if you just want to run the API without i
 
 2 services are started:
 
-* A SPARQL endpoint to query the Nanopublication network of HDT files using `comunica/actor-init-sparql`
-* A Reasoner API to query the SPARQL endpoint, using https://github.com/MaastrichtU-IDS/d2s-api/tree/develop
+* **A SPARQL endpoint to query the Nanopublications** network of HDT files using `comunica/actor-init-sparql`
+* **A Reasoner API to query the SPARQL endpoint**, using https://github.com/MaastrichtU-IDS/d2s-api/tree/develop
 
 Build and start the container with [docker-compose 🐳](https://docs.docker.com/compose/)
 
