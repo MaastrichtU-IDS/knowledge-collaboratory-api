@@ -1,18 +1,17 @@
-name: Generate RDF from Google doc
-
+name: Generate KGX graphs from RDF
 on:
   workflow_dispatch:
   push:
     branches: [master]
     paths:
-      - "src/convert_to_rdf.py"
       - ".github/workflows/generate-kgx.yml"
+      # - "src/construct_pskg_from_nanopubs.rq"
   # schedule:
   #   - cron: '0 2 * * *'
   # Everyday at 2am
 
 jobs:
-  generate-rdf:
+  generate-kgx:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,12 +41,13 @@ jobs:
         # python3.8 -m pip install --upgrade pip
         # python3.8 -m pip install kgx
 
-      - name: Run kgx
+      - name: Run kgx to transform RDF to KGX TSV format
         run: |
           kgx transform --input-format ttl \
               --output output/neurodkg_kgx.tsv \
               --output-format tsv \
               neurodkg.ttl
+
         ## CLI options: https://github.com/biolink/kgx/blob/master/kgx/cli/__init__.py#L153
         ## Formats supported:
         # 'tar': kgx.PandasTransformer,
@@ -66,26 +66,12 @@ jobs:
       # - name: SHACL validation
       #   run: |
       #     pyshacl -s shacl/neurodkg-shape.ttl -m -i rdfs -a -f human data/output/neuro_dkg.ttl
-      # TODO: add PyShEx validation?
+      
+      ## TODO: add PyShEx validation?
 
-      - name: Upload output KGX data
+      - name: Upload output KGX data on GitHub
         uses: actions/upload-artifact@v1
         with:
           name: kgx-output
           path: output
 
-      # - name: Clear older graph
-      #   uses: vemonet/sparql-operations-action@v1
-      #   with:
-      #     query: "CLEAR GRAPH <https://w3id.org/neurodkg/graph>"
-      #     endpoint: https://graphdb.dumontierlab.com/repositories/NeuroDKG/statements
-      #     user: ${{ secrets.GRAPHDB_USER }}
-      #     password: ${{ secrets.GRAPHDB_PASSWORD }}
-
-      # - uses: MaastrichtU-IDS/RdfUpload@master
-      #   with:
-      #     file: data/output/neuro_dkg.ttl
-      #     endpoint: https://graphdb.dumontierlab.com/repositories/NeuroDKG/statements
-      #     user: ${{ secrets.GRAPHDB_USER }}
-      #     password: ${{ secrets.GRAPHDB_PASSWORD }}
-      #     graph: "https://w3id.org/neurodkg/graph"
