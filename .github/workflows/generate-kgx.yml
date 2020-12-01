@@ -31,9 +31,9 @@ jobs:
         run: |
           curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
-      - name: Install kgx and PyShEx
+      - name: Install kgx
         run: |
-          pip install kgx PyShEx
+          pip install kgx
 
       - name: Run kgx to transform RDF to KGX TSV format
         run: |
@@ -49,20 +49,11 @@ jobs:
               --output-format tsv \
               nanopubs_pskg.ttl
 
-      - name: Upload output KGX data on GitHub
+      - name: Upload output kgx data on GitHub
         uses: actions/upload-artifact@v1
         with:
           name: kgx-output
           path: output
-
-      - name: PyShEx validation
-        run: |
-           shexeval -A -ut neurodkg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
-           shexeval -A -ut nanopubs_pskg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
-
-      # - name: SHACL validation
-      #   run: |
-      #     pyshacl -s shacl/neurodkg-shape.ttl -m -i rdfs -a -f human data/output/neuro_dkg.ttl
 
       ## KGX CLI options: https://github.com/biolink/kgx/blob/master/kgx/cli/__init__.py#L153
       ## Formats supported:

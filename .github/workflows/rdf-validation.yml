@@ -1,0 +1,45 @@
+name: Validate RDF graphs
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/rdf-validation.yml"
+      - "src/construct_pskg_from_nanopubs.rq"
+  # schedule:
+  #   - cron: '0 2 * * *'
+  # Everyday at 2am
+
+jobs:
+  validate-rdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+
+      - name: Get the NeuroDKG as RDF by running a CONSTRUCT query
+        run: |
+          mkdir -p output
+          wget https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq
+          curl -X GET -H "accept: text/turtle" -o neurodkg.ttl "https://graphdb.dumontierlab.com/repositories/NeuroDKG?query=$(cat convert2biolink.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+
+      - name: Get the Nanopubs PSKG as RDF by running a CONSTRUCT query
+        run: |
+          curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+
+      - name: Install PyShEx
+        run: |
+          pip install PyShEx
+
+      - name: PyShEx validation
+        run: |
+           shexeval -A -ut neurodkg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+           shexeval -A -ut nanopubs_pskg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+
+      # - name: SHACL validation
+      #   run: |
+      #     pyshacl -s shacl/neurodkg-shape.ttl -m -i rdfs -a -f human data/output/neuro_dkg.ttl
