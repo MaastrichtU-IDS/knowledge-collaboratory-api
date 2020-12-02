@@ -72,7 +72,7 @@ jobs:
 
       ## Install KGX locally: 
       # python3.7 -m pip install --upgrade pip
-      # python3.7 -m pip install kgx
+      # python3.7 -m pip install --upgrade kgx
       # pip install -r requirements.txt
 
       ## SELECT query on Comunica SPARQL endpoint:

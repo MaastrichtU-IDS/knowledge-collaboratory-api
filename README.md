@@ -44,6 +44,25 @@ The RDF graphs are accessible through public SPARQL endpoints:
 * [NeuroDKG](https://graphdb.dumontierlab.com/repositories/NeuroDKG)
 * [Nanopublications Personal Scientific Knowledge Graph](http://nanopub-sparql.137.120.31.102.nip.io/sparql)
 
+Attempt to ShEx validation with SHACLEX:
+
+1. Clone and compile shaclex with `sbt`
+
+```bash
+git clone https://github.com/weso/shaclex.git
+cd shaclex
+sbt test
+```
+
+2. Run with `sbt`:
+
+```bash
+sbt "run --engine=ShEx 
+         --schemaUrl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+         --schemaFormat ShExC 
+         --data ../nanopub-trapi/output/neurodkg.ttl"
+```
+
 ## Query with the Translator Reasoner API 📬
 
 > Work in progress
