@@ -83,12 +83,11 @@ def get_predicates():
     }
     return openpredict_predicates
 
-# TODO: get_predict wrapped in ReasonerStdApi
-def post_reasoner_predict(request_body):
-    """Get predicted associations for a given ReasonerAPI query.
+def post_reasoner_query(request_body):
+    """Get associations for a given ReasonerAPI query.
     
     :param request_body: The ReasonerStdAPI query in JSON
-    :return: Predictions as a ReasonerStdAPI Message
+    :return: Results as a ReasonerStdAPI Message
     """
     query_graph = request_body["message"]["query_graph"]
     print(query_graph)

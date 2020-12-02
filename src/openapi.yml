@@ -102,7 +102,7 @@ paths:
       description: "Send a [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query 
         to request the predicted targets given: a source node, and the relation to predict. 
         Use classes and relations from the [BioLink model](https://biolink.github.io/biolink-model)"
-      operationId: api.post_reasoner_predict
+      operationId: api.post_reasoner_query
       # operationId: query
       requestBody:
         description: Query information to be submitted
