@@ -3,5 +3,6 @@ connexion[swagger-ui]
 tornado
 kgx
 PyShEx
+rdflib
 # SPARQLWrapper
 # rdflib==4.2.2

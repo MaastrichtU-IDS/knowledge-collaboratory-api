@@ -2,13 +2,15 @@ import os
 import subprocess
 import ast
 import connexion
+import flask
 import logging
 import json
 from datetime import datetime
-# from openpredict.predict_utils import get_predictions
-# from openpredict.predict_model_omim_drugbank import addEmbedding
-# from openpredict.reasonerapi_parser import typed_results_to_reasonerapi
 
+from SPARQLWrapper import SPARQLWrapper, TURTLE, XML
+from rdflib import Graph
+from kgx import RdfTransformer, PandasTransformer
+import zipfile
 
 def start_api(port=8808, server_url='/', debug=False):
     """Start the Translator OpenPredict API using [zalando/connexion](https://github.com/zalando/connexion) and the `openapi.yml` definition
@@ -38,6 +40,54 @@ def start_api(port=8808, server_url='/', debug=False):
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
     api.run(port=port, debug=debug, server=deployment_server)
+
+
+def get_kgx():
+    """Query the Nanopubs SPARQL endpoint using CONSTRUCT queries 
+    to retrieve BioLink nodes and edges (associations)
+    Then convert the RDF to kgx TSV format
+    And return the files in a zip file  
+    """
+    sparql = SPARQLWrapper("http://nanopub-sparql.137.120.31.102.nip.io/sparql")
+
+    print('Read SPARQL query')
+    with open('src/construct_pskg_from_nanopubs.rq') as f:
+        sparql_query = f.read()
+
+    sparql.setQuery(sparql_query)
+
+    # CONSTRUCT query to Nanopubs SPARQL endpoint
+    sparql.setReturnFormat(TURTLE)
+    results = sparql.query().convert().decode('utf-8')
+    print('Run SPARQL query')
+
+    # Write RDF to file
+    with open('output/rdf_for_kgx.ttl', 'w') as f:
+        f.write(results)
+    # print(results)
+
+    # Initialize turtle transformer
+    t = RdfTransformer()
+    t.parse('output/rdf_for_kgx.ttl')
+
+    # Transform turtle to KGX TSV
+    kgx_dir = 'output/kgx/'
+    pt = PandasTransformer(t.graph)
+    pt.save(kgx_dir + 'pskg_nanopubs', output_format='tsv')
+
+    # Zip nodes and edges files 
+    with zipfile.ZipFile('output/pskg_nanopubs_kgx.zip', 'w') as zip_file:
+        for tsv_file in os.listdir(kgx_dir):
+            zip_file.write(kgx_dir + tsv_file)
+        # zip_file.close()
+
+    # resp = flask.send_file(zip_file,
+    resp = flask.send_from_directory(os.getcwd() + '/output', 'pskg_nanopubs_kgx.zip',
+        as_attachment=True, 
+        mimetype='application/zip',
+        attachment_filename='pskg_nanopubs_kgx.zip'
+    )
+    return resp
 
 
 # def get_sparql(query, endpoint="http://ldf.nanopubs.lod.labs.vu.nl/np"):

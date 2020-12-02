@@ -30,6 +30,24 @@ tags:
   - name: translator
   - name: reasoner
 paths:
+  /kgx:
+    get:
+      operationId: api.get_kgx
+      tags:
+        - predicates
+      summary: Get the knowledge graph in KGX TSV format
+      responses:
+        '200':
+          description: Zip file with files in KGX TSV format
+          content: 
+            application/zip:
+            # application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          # content:
+          #   application/json:
+
   /predicates:
     get:
       operationId: api.get_predicates
