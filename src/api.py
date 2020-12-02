@@ -40,34 +40,34 @@ def start_api(port=8808, server_url='/', debug=False):
     api.run(port=port, debug=debug, server=deployment_server)
 
 
-def get_sparql(query, endpoint="http://ldf.nanopubs.lod.labs.vu.nl/np"):
-    """Get associations for a given entity CURIE.
+# def get_sparql(query, endpoint="http://ldf.nanopubs.lod.labs.vu.nl/np"):
+#     """Get associations for a given entity CURIE.
     
-    :param entity: Search for predicted associations for this entity CURIE
-    :return: Prediction results object with score
-    """
-    time_start = datetime.now()
+#     :param entity: Search for predicted associations for this entity CURIE
+#     :return: Prediction results object with score
+#     """
+#     time_start = datetime.now()
 
-    # prediction_json = get_predictions(entity, classifier, score, n_results)
+#     # prediction_json = get_predictions(entity, classifier, score, n_results)
     
-    ldf_url = 'http://ldf.nanopubs.lod.labs.vu.nl/np'
-    sparql_query = 'SELECT * WHERE { ?s ?p <https://w3id.org/biolink/vocab/Association> . } LIMIT 10'
+#     ldf_url = 'http://ldf.nanopubs.lod.labs.vu.nl/np'
+#     sparql_query = 'SELECT * WHERE { ?s ?p <https://w3id.org/biolink/vocab/Association> . } LIMIT 10'
 
-    # Built comunica-sparql command to execute query
-    comunica_cmd = 'comunica-sparql ' + endpoint + ' "' + query + '"'
-    print(comunica_cmd)
+#     # Built comunica-sparql command to execute query
+#     comunica_cmd = 'comunica-sparql ' + endpoint + ' "' + query + '"'
+#     print(comunica_cmd)
 
-    sparql_results = str(subprocess.check_output(comunica_cmd, shell=True))
+#     sparql_results = str(subprocess.check_output(comunica_cmd, shell=True))
 
-    # print(sparql_results.stdout) 
-    print(sparql_results)
-    # Parse shell output output as dict 
-    results_dict = eval(sparql_results)
+#     # print(sparql_results.stdout) 
+#     print(sparql_results)
+#     # Parse shell output output as dict 
+#     results_dict = eval(sparql_results)
 
-    relation = "biolink:treated_by"
-    logging.info('Runtime: ' + str(datetime.now() - time_start))
-    results_json = json.loads(results_dict)
-    return {'results': results_json, 'relation': relation, 'count': len(results_json)} or ('Not found', 404)
+#     relation = "biolink:treated_by"
+#     logging.info('Runtime: ' + str(datetime.now() - time_start))
+#     results_json = json.loads(results_dict)
+#     return {'results': results_json, 'relation': relation, 'count': len(results_json)} or ('Not found', 404)
 
 def get_predicates():
     """Get predicates and entities provided by the API
