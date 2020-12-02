@@ -24,7 +24,8 @@ def start_api(port=8808, server_url='/', debug=False):
     if debug:
         # Run in development mode
         deployment_server='flask'
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.INFO)
+        # logging.basicConfig(level=logging.DEBUG)
         print("Development deployment using \033[1mFlask\033[0m 🧪")
         print("Debug enabled 🐞 - The API will reload automatically at each change 🔃")
     else:
@@ -78,7 +79,7 @@ def get_kgx():
     # Zip nodes and edges files 
     with zipfile.ZipFile('output/pskg_nanopubs_kgx.zip', 'w') as zip_file:
         for tsv_file in os.listdir(kgx_dir):
-            zip_file.write(kgx_dir + tsv_file)
+            zip_file.write(kgx_dir + tsv_file, tsv_file)
         # zip_file.close()
 
     # resp = flask.send_file(zip_file,
@@ -164,7 +165,8 @@ def post_reasoner_query(request_body):
 
     return reasonerapi_response or ('Not found', 404)
 
-server_url = "/"
-debug = True
-# Start API in debug mode 
-start_api(8808, server_url, debug)
+if __name__ == '__main__':
+    server_url = "/"
+    debug = True
+    # Start API in debug mode 
+    start_api(8808, server_url, debug)
