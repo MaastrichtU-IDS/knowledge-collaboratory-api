@@ -18,7 +18,8 @@ services:
 
   comunica-sparql-endpoint:
     container_name: nanopub-sparql
-    image: comunica/actor-init-sparql
+    image: comunica/actor-init-sparql:latest
+    # 1.18.1
     restart: unless-stopped
     # entrypoint: comunica-sparql-http http://ldf.nanopubs.lod.labs.vu.nl/np
     entrypoint: node ./bin/http.js http://ldf.np.dumontierlab.com/np
