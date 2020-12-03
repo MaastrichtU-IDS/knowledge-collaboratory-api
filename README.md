@@ -2,18 +2,19 @@
 
 This repository provides guidelines to publish Nanopublications as a user with the Nanobench, and query the published Nanopublications network as a researcher searching for answers 💬
 
-Services has been been deployed publicly to query the Nanopublications network using Translator standards:
+Services has been been deployed publicly to query the Nanopublications network using Translator standards to retrieve the Knowledge Collaboratory graph, a collection of drug indications annotated using preferred identifiers (usually from MONDO, CHEBI, DrugBank, etc).
 
 * A **SPARQL endpoint** to query the Nanopublications network
   * Nanopublications [LDF](http://query.linkeddatafragments.org/) queried using [`comunica/actor-init-sparql`](https://hub.docker.com/r/comunica/actor-init-sparql)
-  * **http://nanopub-sparql.137.120.31.102.nip.io**
+  * No UI available for the SPARQL endpoint
+  * **http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=**
 * A **Translator Reasoner API** to query the SPARQL endpoint
   * Using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop), with Java and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`
   * **http://nanopub-reasoner-api.137.120.31.102.nip.io**
 * A **new Translator Reasoner API** to query the SPARQL endpoint
   * Supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` (work in progress)
   * In python, defined in this repo in `src/`
-  * **https://nanopub-kgx-api.137.120.31.102.nip.io**
+  * **http://nanopub-kgx-api.137.120.31.102.nip.io**
 
 ## The Knowledge Collaboratory vision
 
@@ -81,7 +82,7 @@ source .venv/bin/activate
 
 ### Start the API locally 🛩️
 
-By default it will use the public SPARQL endpoint http://nanopub-sparql.137.120.31.102.nip.io
+By default it will use the public SPARQL endpoint http://nanopub-sparql.137.120.31.102.nip.io/sparql
 
 In **debug** mode for development with Flask:
 
