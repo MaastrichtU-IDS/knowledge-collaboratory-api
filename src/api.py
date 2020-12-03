@@ -46,7 +46,8 @@ def start_api(port=8808, server_url='/', debug=False):
         logging.basicConfig(level=logging.INFO)
         print("Production deployment using \033[1mTornado\033[0m 🌪️")
     
-    api = connexion.App(__name__, options={"swagger_url": ""})
+    server_url = 'http://nanopub-kgx-api.137.120.31.102.nip.io'
+    api = connexion.App(__name__, options={"swagger_url": ""}, arguments={'server_url': server_url})
 
     api.add_api('openapi.yml', arguments={'server_url': server_url})
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)

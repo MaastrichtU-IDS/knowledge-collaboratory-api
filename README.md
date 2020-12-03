@@ -20,7 +20,7 @@ Services has been been deployed publicly to query the Nanopublications network u
 
 ![PSKG](PSKG-knowledge_collaboratory.png)
 
-## Publish Nanopublications
+## Publish Nanopublications with the Nanobench UI
 
 Requirements: [Java 8+](https://openjdk.java.net/install/)
 
@@ -40,9 +40,11 @@ Run the Nanobench on http://localhost:37373. It will use the `ids_rsa` key in th
 java -jar ~/.nanopub/nanobench.jar -httpPort 37373 -resetExtract
 ```
 
-> Check the [vemonet/nanobench wiki](https://github.com/vemonet/nanobench/wiki/Add-an-evidence-to-an-association) to get a full tutorial to publish associations!
+See also:
 
-Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
+* Check the [vemonet/nanobench wiki](https://github.com/vemonet/nanobench/wiki/Add-an-evidence-to-an-association) to get a full tutorial to publish associations!
+
+* Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
 ## Query with the Nanopublications network 📬
 
