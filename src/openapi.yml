@@ -20,14 +20,14 @@ servers:
 tags:
   - name: predicates
     description: Get supported relationships by source and target
-    externalDocs:
-      description: Documentation for the reasoner predicates function
-      url: http://reasonerhost.ncats.io/overview.html#predicates
+    # externalDocs:
+    #   description: Documentation for the reasoner predicates function
+    #   url: http://reasonerhost.ncats.io/overview.html#predicates
   - name: query
     description: Query reasoner using a predefined question type
-    externalDocs:
-      description: Documentation for the reasoner query function
-      url: http://reasonerhost.ncats.io/overview.html#query
+    # externalDocs:
+    #   description: Documentation for the reasoner query function
+    #   url: http://reasonerhost.ncats.io/overview.html#query
   - name: translator
   - name: reasoner
 paths:
@@ -35,7 +35,7 @@ paths:
     get:
       operationId: api.get_kgx
       tags:
-        - predicates
+        - translator
       summary: Get the Knowledge Collaboratory drug indications in KGX TSV format
       responses:
         '200':
