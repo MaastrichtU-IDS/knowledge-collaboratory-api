@@ -4,12 +4,18 @@ This repository provides guidelines to publish Nanopublications as a user with t
 
 Services has been been deployed publicly to query the Nanopublications network using Translator standards:
 
-* **A SPARQL endpoint to query the Nanopublications** network of HDT files using [`comunica/actor-init-sparql`](https://hub.docker.com/r/comunica/actor-init-sparql)
-  * http://nanopub-sparql.137.120.31.102.nip.io
-* **A Reasoner API to query the SPARQL endpoint**, using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop) (Java, [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`)
-  * http://nanopub-reasoner-api.137.120.31.102.nip.io
-* **A new Reasoner API to query the SPARQL endpoint**, supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` (in python, defined in this repo in `src/`)
-  * https://nanopub-kgx-api.137.120.31.102.nip.io
+* A **SPARQL endpoint** to query the Nanopublications network
+  * Nanopublications [LDF](http://query.linkeddatafragments.org/) queried using [`comunica/actor-init-sparql`](https://hub.docker.com/r/comunica/actor-init-sparql)
+  * **http://nanopub-sparql.137.120.31.102.nip.io**
+* A **Translator Reasoner API** to query the SPARQL endpoint
+  * Using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop), with Java and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`
+  * **http://nanopub-reasoner-api.137.120.31.102.nip.io**
+* A **new Translator Reasoner API** to query the SPARQL endpoint
+  * Supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` (work in progress)
+  * In python, defined in this repo in `src/`
+  * **https://nanopub-kgx-api.137.120.31.102.nip.io**
+
+## The Knowledge Collaboratory vision
 
 ![PSKG](PSKG-knowledge_collaboratory.png)
 
@@ -37,15 +43,17 @@ java -jar ~/.nanopub/nanobench.jar -httpPort 37373 -resetExtract
 
 Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
-## Query with the Translator Reasoner APIs 📬
+## Query with the Nanopublications network 📬
 
-A Reasoner OpenAPI to query the Knowledge Collaboratory Nanopublications (drug indications in the BioLink format) using the [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) standards and KGX.
+Using the Nanobench, SPARQL endpoint, or the Translator Reasoner APIs we built.
+
+Deploy the new TRAPI: a Reasoner OpenAPI in Python, using [connexion](https://github.com/zalando/connexion), to query the Knowledge Collaboratory Nanopublications (drug indications in the BioLink format) using the [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) standards and KGX.
 
 > Requires [Python 3.7+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
 
 ### Install the new API 📥
 
-> Work in progress
+> Work in progress: the Reasoner API calls have not been implemented yet, only the KGX call works.
 
 #### Clone the repository
 
@@ -71,15 +79,17 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### Start the API 🛩️
+### Start the API locally 🛩️
 
-In debug mode for development with Flask:
+By default it will use the public SPARQL endpoint http://nanopub-sparql.137.120.31.102.nip.io
+
+In **debug** mode for development with Flask:
 
 ```bash
 python3 src/api.py debug
 ```
 
-Or in production mode with Tornado:
+Or in **production** mode with Tornado:
 
 ```bash
 python3 src/api.py
