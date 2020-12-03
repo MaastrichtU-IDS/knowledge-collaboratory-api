@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import ast
 import connexion
@@ -11,6 +12,17 @@ from SPARQLWrapper import SPARQLWrapper, TURTLE, XML
 from rdflib import Graph
 from kgx import RdfTransformer, PandasTransformer
 import zipfile
+
+from kgx_transformer import KgxTransformer
+
+global DATA_DIR
+DATA_DIR = os.getenv('TRAPI_DATA_DIR')
+if not DATA_DIR:
+    # Output data folder in current dir if not provided via environment variable
+    DATA_DIR = os.getcwd() + '/output/'
+else:
+    if not DATA_DIR.endswith('/'):
+        DATA_DIR += '/'
 
 def start_api(port=8808, server_url='/', debug=False):
     """Start the Translator OpenPredict API using [zalando/connexion](https://github.com/zalando/connexion) and the `openapi.yml` definition
@@ -47,47 +59,10 @@ def get_kgx():
     """Query the Nanopubs SPARQL endpoint using CONSTRUCT queries 
     to retrieve BioLink nodes and edges (associations)
     Then convert the RDF to kgx TSV format
-    And return the files in a zip file  
+    And return the nodes/edges files in a zip file  
     """
-    sparql = SPARQLWrapper("http://nanopub-sparql.137.120.31.102.nip.io/sparql")
-
-    print('Read SPARQL query')
-    with open('src/construct_pskg_from_nanopubs.rq') as f:
-        sparql_query = f.read()
-
-    sparql.setQuery(sparql_query)
-
-    # CONSTRUCT query to Nanopubs SPARQL endpoint
-    sparql.setReturnFormat(TURTLE)
-    results = sparql.query().convert().decode('utf-8')
-    print('Run SPARQL query')
-
-    # Write RDF to file
-    with open('output/rdf_for_kgx.ttl', 'w') as f:
-        f.write(results)
-    # print(results)
-
-    # Initialize turtle transformer
-    t = RdfTransformer()
-    t.parse('output/rdf_for_kgx.ttl')
-
-    # Transform turtle to KGX TSV
-    kgx_dir = 'output/kgx/'
-    pt = PandasTransformer(t.graph)
-    pt.save(kgx_dir + 'pskg_nanopubs', output_format='tsv')
-
-    # Zip nodes and edges files 
-    with zipfile.ZipFile('output/pskg_nanopubs_kgx.zip', 'w') as zip_file:
-        for tsv_file in os.listdir(kgx_dir):
-            zip_file.write(kgx_dir + tsv_file, tsv_file)
-        # zip_file.close()
-
-    # resp = flask.send_file(zip_file,
-    resp = flask.send_from_directory(os.getcwd() + '/output', 'pskg_nanopubs_kgx.zip',
-        as_attachment=True, 
-        mimetype='application/zip',
-        attachment_filename='pskg_nanopubs_kgx.zip'
-    )
+    kgx_transformer = KgxTransformer(DATA_DIR)
+    resp = kgx_transformer.transform_rdf_to_kgx()
     return resp
 
 
@@ -165,8 +140,18 @@ def post_reasoner_query(request_body):
 
     return reasonerapi_response or ('Not found', 404)
 
+def get_dir(file=''):
+    """Return the full path to the directory used to store the API data
+    """
+    return DATA_DIR + file
+
 if __name__ == '__main__':
+
+    debug = False
+    if len(sys.argv) >= 2:
+        if sys.argv[1]=='debug':
+            debug = True
+
     server_url = "/"
-    debug = True
     # Start API in debug mode 
     start_api(8808, server_url, debug)

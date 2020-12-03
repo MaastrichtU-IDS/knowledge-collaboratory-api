@@ -80,8 +80,16 @@ source .venv/bin/activate
 
 ### Start the API 🛩️
 
-```python
-python3 src/api.py
+In debug mode for development with Flask:
+
+```bash
+python3.7 src/api.py debug
+```
+
+In production mode with Tornado:
+
+```bash
+python3.7 src/api.py
 ```
 
 > Access the Swagger UI at [http://localhost:8808](http://localhost:8808)

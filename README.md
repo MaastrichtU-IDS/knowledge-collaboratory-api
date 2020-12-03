@@ -63,6 +63,30 @@ sbt "run --engine=ShEx
          --data ../nanopub-trapi/output/neurodkg.ttl"
 ```
 
+Convert ShEx to SHACL:
+
+```bash
+sbt "run --schemaUrl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+           --schemaFormat ShExC 
+           --outSchemaFormat Turtle
+           --engine SHEX 
+           --outEngine SHACLEX
+           --showSchema 
+           --no-validate"
+```
+
+> `--outEngine`: SHACLEX, SHEX, JENASHACL,SHACL_TQ
+
+Results in:
+
+```
+[info] Error: es.weso.schema.ShExSchema$ShExSchemaError: Not implemented conversion of non-normalized shapes yet.
+[info] Shape: Shape(Some(IRILabel(<https://w3id.org/biolink/vocab/ActivityAndBehavior>)),None,None,None,Some(EachOf(None,List(EachOf(Some(IRILabel(<https://w3id.org/biolink/vocab/ActivityAndBehavior_tes>)),List(Inclusion(IRILabel(<https://w3id.org/biolink/vocab/Occurrent_tes>)), TripleConstraint(None,None,None,<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,Some(NodeConstraint(None,None,None,List(),Some(List(IRIValue(<https://w3id.org/biolink/vocab/Occurrent>))),None,None)),Some(0),Some(IntMax(1)),None,None,None)),None,None,None,None), TripleConstraint(None,None,None,<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>,Some(NodeConstraint(None,None,None,List(),Some(List(IRIValue(<https://w3id.org/biolink/vocab/ActivityAndBehavior>))),None,None)),Some(0),Some(IntMax(1)),None,None,None)),None,None,None,None)),None,None,None)
+[info] Error: Contains an inclusion
+```
+
+
+
 ## Query with the Translator Reasoner API 📬
 
 > Work in progress

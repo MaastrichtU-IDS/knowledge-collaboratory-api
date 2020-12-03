@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  description: "Query the Nanopublication network through an Open API supporting ReasonerAPI queries.
+  description: "Query the Nanopublication network through an Open API supporting ReasonerAPI queries an the [KGX](https://github.com/biolink/kgx) format.
     \n\nService supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)"
   version: 1.0.0-beta
   title: Reasoner OpenAPI for Nanopublications
@@ -35,10 +35,10 @@ paths:
       operationId: api.get_kgx
       tags:
         - predicates
-      summary: Get the knowledge graph in KGX TSV format
+      summary: Get the Knowledge Collaboratory drug indications in KGX TSV format
       responses:
         '200':
-          description: Zip file with files in KGX TSV format
+          description: Zip file with nodes and edges files in KGX TSV format
           content: 
             application/zip:
             # application/octet-stream:
