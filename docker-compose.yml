@@ -19,8 +19,10 @@ services:
 
   comunica-sparql-endpoint:
     container_name: nanopub-sparql
-    image: comunica/actor-init-sparql:latest
-    # 1.18.1
+    # image: comunica/actor-init-sparql:latest
+    image: comunica/actor-init-sparql:1.18.1
+    # Comunica is not supported by RDF4J:
+    # https://github.com/comunica/comunica/issues/762
     restart: unless-stopped
     # entrypoint: comunica-sparql-http http://ldf.nanopubs.lod.labs.vu.nl/np
     entrypoint: node ./bin/http.js http://ldf.np.dumontierlab.com/np
