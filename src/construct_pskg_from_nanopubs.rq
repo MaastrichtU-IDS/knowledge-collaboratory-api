@@ -46,30 +46,33 @@ CONSTRUCT {
 WHERE { 
   ?association
     bl:association_type ?association_type ;
-    rdfs:label ?label ;
     rdf:subject ?subject ;
     rdf:predicate ?predicate ;
     rdf:object ?object ;
     bl:relation ?relation ;
   	bl:provided_by ?provided_by .
   
-  	?subject bl:category ?subjectCategory .
-  	?object bl:category ?objectCategory . 
-   
-  	OPTIONAL {
-    	?association bl:has_evidence ?targetgroup .
-  		?targetgroup a ?targetGroupType ;
-    		bl:category ?targetGroupCategory .
+  ?subject bl:category ?subjectCategory .
+  ?object bl:category ?objectCategory . 
+
+  OPTIONAL {
+    ?association rdfs:label ?label .
+  }
+  
+  OPTIONAL {
+    ?association bl:has_evidence ?targetgroup .
+    ?targetgroup a ?targetGroupType ;
+      bl:category ?targetGroupCategory .
 	}
-  	OPTIONAL {
-      ?targetgroup bl:has_drug ?drug .
+  OPTIONAL {
+    ?targetgroup bl:has_drug ?drug .
 	}
-  	OPTIONAL {
-      ?targetgroup bl:has_phenotype ?phenotype .
+  OPTIONAL {
+    ?targetgroup bl:has_phenotype ?phenotype .
 	}  
-  	OPTIONAL {
-    	?association bl:stage_qualifier ?lifestage .
-  		?lifestage a bl:LifeStage ;
-    		rdfs:label ?lifestageLabel .
+  OPTIONAL {
+    ?association bl:stage_qualifier ?lifestage .
+    ?lifestage a bl:LifeStage ;
+      rdfs:label ?lifestageLabel .
 	}
 }

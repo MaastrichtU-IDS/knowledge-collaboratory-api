@@ -4,5 +4,6 @@ tornado
 kgx
 PyShEx
 rdflib
+nanopub
 # SPARQLWrapper
 # rdflib==4.2.2
