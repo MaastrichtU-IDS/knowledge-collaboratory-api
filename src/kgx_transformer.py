@@ -55,9 +55,11 @@ class KgxTransformer:
       with open('src/construct_pskg_from_nanopubs.rq') as f:
           nanopubs_sparql_query = f.read()
 
-      self.run_sparql_query('http://nanopub-sparql.137.120.31.102.nip.io/sparql', 
+      self.run_sparql_query('http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql', 
                             nanopubs_sparql_query, 'nanopubs_rdf.ttl')
 
+      # self.run_sparql_query('http://nanopub-sparql.137.120.31.102.nip.io/sparql', 
+      #                       nanopubs_sparql_query, 'nanopubs_rdf.ttl')
 
       # Initialize kgx turtle transformer
       rdf_transformer = RdfTransformer()
