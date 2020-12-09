@@ -6,10 +6,52 @@ Services has been been deployed publicly to query the Nanopublications network u
 
 * A **SPARQL endpoint** to query the Nanopublications network
   * Nanopublications [LDF](http://query.linkeddatafragments.org/) queried using [`comunica/actor-init-sparql`](https://hub.docker.com/r/comunica/actor-init-sparql)
+  
   * URL for SPARQL endpoint: [**http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=**](http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=PREFIX%20rdf%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20owl%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0APREFIX%20skos%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX%20bl%3A%20%3Chttps%3A%2F%2Fw3id.org%2Fbiolink%2Fvocab%2F%3E%0APREFIX%20d2s%3A%20%3Chttps%3A%2F%2Fw3id.org%2Fd2s%2F%3E%0APREFIX%20sio%3A%20%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0APREFIX%20bio2rdf%3A%20%3Chttp%3A%2F%2Fbio2rdf.org%2F%3E%0APREFIX%20covid%3A%20%3Chttp%3A%2F%2Fidlab.github.io%2Fcovid19%23%3E%0APREFIX%20dc%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0APREFIX%20dct%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX%20dctypes%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2F%3E%0APREFIX%20foaf%3A%20%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0APREFIX%20idot%3A%20%3Chttp%3A%2F%2Fidentifiers.org%2Fidot%2F%3E%0APREFIX%20dcat%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0APREFIX%20void%3A%20%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E%0APREFIX%20void-ext%3A%20%3Chttp%3A%2F%2Fldf.fi%2Fvoid-ext%23%3E%0APREFIX%20obo%3A%20%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0APREFIX%20ncit%3A%20%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23%3E%0APREFIX%20xsd%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0APREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0APREFIX%20omop%3A%20%3Chttp%3A%2F%2Fapi.ohdsi.org%2FWebAPI%2Fvocabulary%2Fconcept%2F%3E%0APREFIX%20cohd%3A%20%3Chttps%3A%2F%2Fw3id.org%2Ftrek%2Fcohd%2F%3E%0ACONSTRUCT%20%7B%0A%20%20%3Fassociation%0A%20%20%20%20bl%3Aassociation_type%20%3Fassociation_type%20%3B%0A%20%20%20%20rdfs%3Alabel%20%3Flabel%20%3B%0A%20%20%20%20rdf%3Asubject%20%3Fsubject%20%3B%0A%20%20%20%20rdf%3Apredicate%20%3Fpredicate%20%3B%0A%20%20%20%20rdf%3Aobject%20%3Fobject%20%3B%0A%20%20%20%20bl%3Arelation%20%3Frelation%20%3B%0A%20%20%09bl%3Aprovided_by%20%3Fprovided_by%20%3B%0A%20%20%20%20bl%3Ahas_evidence%20%3Ftargetgroup%20%3B%0A%20%20%20%20bl%3Astage_qualifier%20%3Flifestage%20.%0A%20%20%0A%20%20%3Fsubject%20bl%3Acategory%20%3FsubjectCategory%20.%0A%20%20%3Fobject%20bl%3Acategory%20%3FobjectCategory%20.%20%0A%0A%20%20%3Ftargetgroup%20a%20%3FtargetGroupType%20%3B%0A%20%20%20%20bl%3Acategory%20%3FtargetGroupCategory%20%3B%0A%20%20%20%20bl%3Ahas_drug%20%3Fdrug%20%3B%0A%20%20%20%20bl%3Ahas_phenotype%20%3Fphenotype%20.%0A%20%20%3Flifestage%20a%20bl%3ALifeStage%20%3B%0A%20%20%20%20rdfs%3Alabel%20%3FlifestageLabel%20.%0A%7D%0AWHERE%20%7B%20%0A%20%20%3Fassociation%0A%20%20%20%20bl%3Aassociation_type%20%3Fassociation_type%20%3B%0A%20%20%20%20rdf%3Asubject%20%3Fsubject%20%3B%0A%20%20%20%20rdf%3Apredicate%20%3Fpredicate%20%3B%0A%20%20%20%20rdf%3Aobject%20%3Fobject%20%3B%0A%20%20%20%20bl%3Arelation%20%3Frelation%20%3B%0A%20%20%09bl%3Aprovided_by%20%3Fprovided_by%20.%0A%20%20%0A%20%20%3Fsubject%20bl%3Acategory%20%3FsubjectCategory%20.%0A%20%20%3Fobject%20bl%3Acategory%20%3FobjectCategory%20.%20%0A%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20rdfs%3Alabel%20%3Flabel%20.%0A%20%20%7D%0A%20%20%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20bl%3Ahas_evidence%20%3Ftargetgroup%20.%0A%20%20%20%20%3Ftargetgroup%20a%20%3FtargetGroupType%20%3B%0A%20%20%20%20%20%20bl%3Acategory%20%3FtargetGroupCategory%20.%0A%09%7D%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Ftargetgroup%20bl%3Ahas_drug%20%3Fdrug%20.%0A%09%7D%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Ftargetgroup%20bl%3Ahas_phenotype%20%3Fphenotype%20.%0A%09%7D%20%20%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20bl%3Astage_qualifier%20%3Flifestage%20.%0A%20%20%20%20%3Flifestage%20a%20bl%3ALifeStage%20%3B%0A%20%20%20%20%20%20rdfs%3Alabel%20%3FlifestageLabel%20.%0A%09%7D%0A%7D%0A)
+  
   * Or query it using the [YASGUI query editor](https://yasgui.triply.cc/#query=PREFIX%20rdf%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%0APREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20owl%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%0APREFIX%20skos%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%3E%0APREFIX%20bl%3A%20%3Chttps%3A%2F%2Fw3id.org%2Fbiolink%2Fvocab%2F%3E%0APREFIX%20d2s%3A%20%3Chttps%3A%2F%2Fw3id.org%2Fd2s%2F%3E%0APREFIX%20sio%3A%20%3Chttp%3A%2F%2Fsemanticscience.org%2Fresource%2F%3E%0APREFIX%20bio2rdf%3A%20%3Chttp%3A%2F%2Fbio2rdf.org%2F%3E%0APREFIX%20covid%3A%20%3Chttp%3A%2F%2Fidlab.github.io%2Fcovid19%23%3E%0APREFIX%20dc%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%0APREFIX%20dct%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%0APREFIX%20dctypes%3A%20%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2F%3E%0APREFIX%20foaf%3A%20%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%0APREFIX%20idot%3A%20%3Chttp%3A%2F%2Fidentifiers.org%2Fidot%2F%3E%0APREFIX%20dcat%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2Fns%2Fdcat%23%3E%0APREFIX%20void%3A%20%3Chttp%3A%2F%2Frdfs.org%2Fns%2Fvoid%23%3E%0APREFIX%20void-ext%3A%20%3Chttp%3A%2F%2Fldf.fi%2Fvoid-ext%23%3E%0APREFIX%20obo%3A%20%3Chttp%3A%2F%2Fpurl.obolibrary.org%2Fobo%2F%3E%0APREFIX%20ncit%3A%20%3Chttp%3A%2F%2Fncicb.nci.nih.gov%2Fxml%2Fowl%2FEVS%2FThesaurus.owl%23%3E%0APREFIX%20xsd%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%0APREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0APREFIX%20omop%3A%20%3Chttp%3A%2F%2Fapi.ohdsi.org%2FWebAPI%2Fvocabulary%2Fconcept%2F%3E%0APREFIX%20cohd%3A%20%3Chttps%3A%2F%2Fw3id.org%2Ftrek%2Fcohd%2F%3E%0ACONSTRUCT%20%7B%0A%20%20%3Fassociation%0A%20%20%20%20bl%3Aassociation_type%20%3Fassociation_type%20%3B%0A%20%20%20%20rdfs%3Alabel%20%3Flabel%20%3B%0A%20%20%20%20rdf%3Asubject%20%3Fsubject%20%3B%0A%20%20%20%20rdf%3Apredicate%20%3Fpredicate%20%3B%0A%20%20%20%20rdf%3Aobject%20%3Fobject%20%3B%0A%20%20%20%20bl%3Arelation%20%3Frelation%20%3B%0A%20%20%09bl%3Aprovided_by%20%3Fprovided_by%20%3B%0A%20%20%20%20bl%3Ahas_evidence%20%3Ftargetgroup%20%3B%0A%20%20%20%20bl%3Astage_qualifier%20%3Flifestage%20.%0A%20%20%0A%20%20%3Fsubject%20bl%3Acategory%20%3FsubjectCategory%20.%0A%20%20%3Fobject%20bl%3Acategory%20%3FobjectCategory%20.%20%0A%0A%20%20%3Ftargetgroup%20a%20%3FtargetGroupType%20%3B%0A%20%20%20%20bl%3Acategory%20%3FtargetGroupCategory%20%3B%0A%20%20%20%20bl%3Ahas_drug%20%3Fdrug%20%3B%0A%20%20%20%20bl%3Ahas_phenotype%20%3Fphenotype%20.%0A%20%20%3Flifestage%20a%20bl%3ALifeStage%20%3B%0A%20%20%20%20rdfs%3Alabel%20%3FlifestageLabel%20.%0A%7D%0AWHERE%20%7B%20%0A%20%20%3Fassociation%0A%20%20%20%20bl%3Aassociation_type%20%3Fassociation_type%20%3B%0A%20%20%20%20rdf%3Asubject%20%3Fsubject%20%3B%0A%20%20%20%20rdf%3Apredicate%20%3Fpredicate%20%3B%0A%20%20%20%20rdf%3Aobject%20%3Fobject%20%3B%0A%20%20%20%20bl%3Arelation%20%3Frelation%20%3B%0A%20%20%09bl%3Aprovided_by%20%3Fprovided_by%20.%0A%20%20%0A%20%20%3Fsubject%20bl%3Acategory%20%3FsubjectCategory%20.%0A%20%20%3Fobject%20bl%3Acategory%20%3FobjectCategory%20.%20%0A%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20rdfs%3Alabel%20%3Flabel%20.%0A%20%20%7D%0A%20%20%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20bl%3Ahas_evidence%20%3Ftargetgroup%20.%0A%20%20%20%20%3Ftargetgroup%20a%20%3FtargetGroupType%20%3B%0A%20%20%20%20%20%20bl%3Acategory%20%3FtargetGroupCategory%20.%0A%09%7D%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Ftargetgroup%20bl%3Ahas_drug%20%3Fdrug%20.%0A%09%7D%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Ftargetgroup%20bl%3Ahas_phenotype%20%3Fphenotype%20.%0A%09%7D%20%20%0A%20%20OPTIONAL%20%7B%0A%20%20%20%20%3Fassociation%20bl%3Astage_qualifier%20%3Flifestage%20.%0A%20%20%20%20%3Flifestage%20a%20bl%3ALifeStage%20%3B%0A%20%20%20%20%20%20rdfs%3Alabel%20%3FlifestageLabel%20.%0A%09%7D%0A%7D%0A&endpoint=http%3A%2F%2Fnanopub-sparql.137.120.31.102.nip.io%2Fsparql&requestMethod=GET&tabTitle=Query&headers=%7B%7D&contentTypeConstruct=text%2Fturtle%2C*%2F*%3Bq%3D0.9&contentTypeSelect=application%2Fsparql-results%2Bjson%2C*%2F*%3Bq%3D0.9&outputFormat=table).
+  
   * Or checkout an association directly in the LDF: http://ldf.np.dumontierlab.com/np?subject=https%3A%2F%2Fw3id.org%2Fum%2Fneurodkg%2FDB01148_OMIM231200
+  
   * Checkout the nanopub: http://server.nanopubs.lod.labs.vu.nl/RAavLF3YkTN96cEi1YWpFVXr_X2Czh3hzQXFAHkGGYrUo
+  
+  * Try this SPARQL query:
+  
+    ```SPARQL
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX bl: <https://w3id.org/biolink/vocab/>
+    PREFIX np: <http://www.nanopub.org/nschema#>
+    CONSTRUCT {
+      ?association
+        bl:association_type ?association_type ;
+        rdf:subject ?subject ;
+        rdf:predicate ?predicate ;
+        rdf:object ?object ;
+        bl:relation ?relation ;
+      	bl:provided_by ?provided_by .
+      ?subject bl:category ?subjectCategory .
+      ?object bl:category ?objectCategory . 
+    } WHERE {
+      graph ?np_assertion {
+      ?association
+        bl:association_type ?association_type ;
+        rdf:subject ?subject ;
+        rdf:predicate ?predicate ;
+        rdf:object ?object ;
+        bl:relation ?relation ;
+        bl:provided_by ?provided_by .
+      }
+      ?subject bl:category ?subjectCategory .
+      ?object bl:category ?objectCategory .
+      graph ?h {
+        ?np_uri np:hasAssertion ?np_assertion .
+      }
+      # BIND(URI(REPLACE(STR(?np_graph), "#assertion", "")) AS ?np_uri)
+      FILTER NOT EXISTS { ?creator <http://purl.org/nanopub/x/retracts> ?np_uri }
+    }
+    ```
+
 * A **Translator Reasoner API** to query the SPARQL endpoint
   * Using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop), with Java and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`
   * **http://nanopub-reasoner-api.137.120.31.102.nip.io**

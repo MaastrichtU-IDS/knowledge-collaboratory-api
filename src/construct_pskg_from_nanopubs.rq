@@ -54,6 +54,7 @@ WHERE {
   
   ?subject bl:category ?subjectCategory .
   ?object bl:category ?objectCategory . 
+  FILTER NOT EXISTS { ?creator <http://purl.org/nanopub/x/retracts> ?np_graph }
 
   OPTIONAL {
     ?association rdfs:label ?label .
