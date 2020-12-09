@@ -56,14 +56,14 @@ def start_api(port=8808, server_url='/', debug=False):
     api.run(port=port, debug=debug, server=deployment_server)
 
 
-def get_kgx():
+def get_kgx(from_kg):
     """Query the Nanopubs SPARQL endpoint using CONSTRUCT queries 
     to retrieve BioLink nodes and edges (associations)
     Then convert the RDF to kgx TSV format
     And return the nodes/edges files in a zip file  
     """
     kgx_transformer = KgxTransformer(DATA_DIR)
-    resp = kgx_transformer.transform_rdf_to_kgx()
+    resp = kgx_transformer.transform_rdf_to_kgx(from_kg)
     return resp
 
 

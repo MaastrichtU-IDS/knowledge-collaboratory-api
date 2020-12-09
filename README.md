@@ -22,6 +22,7 @@ Services has been been deployed publicly to query the Nanopublications network u
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX bl: <https://w3id.org/biolink/vocab/>
     PREFIX np: <http://www.nanopub.org/nschema#>
+    PREFIX npx: <http://purl.org/nanopub/x/>
     CONSTRUCT {
       ?association
         bl:association_type ?association_type ;
@@ -34,21 +35,20 @@ Services has been been deployed publicly to query the Nanopublications network u
       ?object bl:category ?objectCategory . 
     } WHERE {
       graph ?np_assertion {
-      ?association
-        bl:association_type ?association_type ;
-        rdf:subject ?subject ;
-        rdf:predicate ?predicate ;
-        rdf:object ?object ;
-        bl:relation ?relation ;
-        bl:provided_by ?provided_by .
+        ?association
+          bl:association_type ?association_type ;
+          rdf:subject ?subject ;
+          rdf:predicate ?predicate ;
+          rdf:object ?object ;
+          bl:relation ?relation ;
+          bl:provided_by ?provided_by .
       }
       ?subject bl:category ?subjectCategory .
       ?object bl:category ?objectCategory .
-      graph ?h {
+      graph ?np_head {
         ?np_uri np:hasAssertion ?np_assertion .
       }
-      # BIND(URI(REPLACE(STR(?np_graph), "#assertion", "")) AS ?np_uri)
-      FILTER NOT EXISTS { ?creator <http://purl.org/nanopub/x/retracts> ?np_uri }
+      FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
     }
     ```
 

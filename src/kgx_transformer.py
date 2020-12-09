@@ -39,32 +39,34 @@ class KgxTransformer:
     return results
 
 
-  def transform_rdf_to_kgx(self):
+  def transform_rdf_to_kgx(self, from_kg):
       """Query the Nanopubs SPARQL endpoint using CONSTRUCT queries 
       to retrieve BioLink nodes and edges (associations)
       Then convert the RDF to kgx TSV format
       And return the files in a zip file  
       """
-      ## Get NeuroDKG drug indications
-      r = requests.get('https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq')
-      neurodkg_sparql_query = r.content
-      self.run_sparql_query('https://graphdb.dumontierlab.com/repositories/NeuroDKG', 
-                        neurodkg_sparql_query, 'neurodkg_rdf.ttl')
-
-      ## Get drug indications from Nanopublications
-      with open('src/construct_pskg_from_nanopubs.rq') as f:
-          nanopubs_sparql_query = f.read()
-
-      self.run_sparql_query('http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql', 
-                            nanopubs_sparql_query, 'nanopubs_rdf.ttl')
-
-      # self.run_sparql_query('http://nanopub-sparql.137.120.31.102.nip.io/sparql', 
-      #                       nanopubs_sparql_query, 'nanopubs_rdf.ttl')
-
       # Initialize kgx turtle transformer
       rdf_transformer = RdfTransformer()
-      rdf_transformer.parse(self.get_dir('nanopubs_rdf.ttl'))
-      rdf_transformer.parse(self.get_dir('neurodkg_rdf.ttl'))
+
+      if from_kg == 'NeuroDKG':
+        ## Get NeuroDKG drug indications
+        r = requests.get('https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq')
+        neurodkg_sparql_query = r.content
+        self.run_sparql_query('https://graphdb.dumontierlab.com/repositories/NeuroDKG', 
+                          neurodkg_sparql_query, 'neurodkg_rdf.ttl')
+        rdf_transformer.parse(self.get_dir('neurodkg_rdf.ttl'))
+      else:
+        ## Get drug indications from Nanopublications
+        with open('src/construct_pskg_from_nanopubs.rq') as f:
+            nanopubs_sparql_query = f.read()
+
+        self.run_sparql_query('http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql', 
+                              nanopubs_sparql_query, 'nanopubs_rdf.ttl')
+        rdf_transformer.parse(self.get_dir('nanopubs_rdf.ttl'))
+
+
+      # self.run_sparql_query('http://nanopub-sparql.137.120.31.102.nip.io/sparql',
+      #                       nanopubs_sparql_query, 'nanopubs_rdf.ttl')
 
       # Transform turtle to KGX TSV
       kgx_dir = self.get_dir('kgx/')

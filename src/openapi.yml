@@ -37,6 +37,13 @@ paths:
       tags:
         - translator
       summary: Get the Knowledge Collaboratory drug indications in KGX TSV format
+      parameters:
+        - in: query
+          name: from_kg
+          description: Get drug indications from which KG
+          schema:
+            type: string
+            enum: [NeuroDKG, Nanopublications]
       responses:
         '200':
           description: Zip file with nodes and edges files in KGX TSV format
