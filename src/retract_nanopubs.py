@@ -82,7 +82,8 @@ print(results)
 
 for nanopub in results:
     print(nanopub['np'])
-    np_client.retract(nanopub['np'], force=True)
+    np_client.retract(nanopub['np'])
+    # np_client.retract(nanopub['np'], force=True)
 
 
 # url = 'https://raw.githubusercontent.com/MaastrichtU-IDS/translator-openpredict/master/openpredict/data/resources/openpredict-omim-drug.csv'
