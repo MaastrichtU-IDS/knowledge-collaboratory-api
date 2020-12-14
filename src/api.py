@@ -47,14 +47,14 @@ def start_api(port=8808, server_url='/', debug=False):
         logging.basicConfig(level=logging.INFO)
         print("Production deployment using \033[1mTornado\033[0m 🌪️")
     
-    server_url = 'http://nanopub-kgx-api.137.120.31.102.nip.io'
+    server_url = 'http://api.collaboratory.semantiscience.org'
     api = connexion.App(__name__, options={"swagger_url": ""}, arguments={'server_url': server_url})
 
     api.add_api('openapi.yml', arguments={'server_url': server_url})
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
-    api.run(port=port, debug=debug, server=deployment_server)
+    api.run(host='0.0.0.0', port=port, debug=debug, server=deployment_server)
 
 
 def get_kgx(from_kg):

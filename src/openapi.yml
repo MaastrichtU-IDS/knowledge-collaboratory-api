@@ -17,7 +17,11 @@ externalDocs:
     Documentation for the NCATS Biomedical Translator Reasoners web services
   url: https://github.com/NCATS-Tangerine/NCATS-ReasonerStdAPI
 servers:
-- url: "{{server_url}}"
+  - url: /
+    description: Local Knowledge Collaboratory API
+  - url: https://api.collaboratory.semanticscience.org
+    description: Production Knowledge Collaboratory API
+# - url: "{{server_url}}"
 tags:
   - name: predicates
     description: Get supported relationships by source and target
