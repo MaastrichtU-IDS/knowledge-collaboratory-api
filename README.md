@@ -8,7 +8,7 @@ Services has been been deployed publicly to query the Nanopublications network u
   * Using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop), with Java and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`
   * **http://nanopub-reasoner-api.137.120.31.102.nip.io**
 * A **new Translator Reasoner API** to query the SPARQL endpoint
-  * Supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` (work in progress)
+  * Supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` 
   * In python, defined in this repo in `src/`
   * **http://nanopub-kgx-api.137.120.31.102.nip.io**
   * Or **[https://api.collaboratory.semanticscience.org](https://api.collaboratory.semanticscience.org)**

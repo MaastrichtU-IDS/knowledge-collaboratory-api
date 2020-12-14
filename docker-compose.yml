@@ -2,7 +2,7 @@ version: "3"
 
 services:
   knowledge-collaboratory-api:
-    container_name: nanopub-kgx-api
+    container_name: knowledge-collaboratory-api
     build: .
     restart: unless-stopped
     # command: src/api.py

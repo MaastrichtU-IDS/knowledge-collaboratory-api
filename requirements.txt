@@ -1,7 +1,7 @@
 click
 connexion[swagger-ui]
 tornado
-# kgx
+kgx
 PyShEx
 rdflib
 nanopub
