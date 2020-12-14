@@ -35,11 +35,18 @@ def create_drug_indic_nanopub(np_client, drug_id, disease_id):
     """
     # Or: 1. construct a desired assertion (a graph of RDF triples)
     nanopub_rdf = Graph()
-    nanopub_rdf.bind("bl", URIRef('https://w3id.org/biolink/vocab/'))
+    nanopub_rdf.bind("biolink", URIRef('https://w3id.org/biolink/vocab/'))
+    nanopub_rdf.bind("drugbank", URIRef('https://identifiers.org/drugbank/'))
+    nanopub_rdf.bind("omim", URIRef('http://purl.obolibrary.org/obo/OMIM_'))
+    nanopub_rdf.bind("pmid", URIRef('http://www.ncbi.nlm.nih.gov/pubmed/'))
+    nanopub_rdf.bind("ro", URIRef('http://purl.obolibrary.org/obo/RO_'))
+
+    ## Use BioLink JSON-LD context: https://github.com/biolink/biolink-model/blob/master/context.jsonld
 
     drug_uri = URIRef('https://identifiers.org/drugbank/' + drug_id)
-    disease_uri = URIRef('https://identifiers.org/mim/' + str(disease_id))
-    association_uri = URIRef('https://w3id.org/um/neurodkg/' + drug_id + '_OMIM' + str(disease_id))
+    disease_uri = URIRef('http://purl.obolibrary.org/obo/OMIM_' + str(disease_id))
+    # disease_uri = URIRef('https://identifiers.org/mim/' + str(disease_id))
+    association_uri = URIRef('https://w3id.org/um/predict/reference/' + drug_id + '_OMIM' + str(disease_id))
 
     # BioLink do not require to define rdf:type, but come on...
     nanopub_rdf.add( (drug_uri, RDF.type, BIOLINK['Drug'] ) )
@@ -55,7 +62,7 @@ def create_drug_indic_nanopub(np_client, drug_id, disease_id):
     nanopub_rdf.add( (association_uri, RDF.predicate, BIOLINK['treats'] ) )
     nanopub_rdf.add( (association_uri, BIOLINK['association_type'], BIOLINK['ChemicalToDiseaseOrPhenotypicFeatureAssociation']) )
 
-    nanopub_rdf.add( (association_uri, BIOLINK['provided_by'], URIRef("https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979") ) )
+    nanopub_rdf.add( (association_uri, BIOLINK['provided_by'], URIRef("http://www.ncbi.nlm.nih.gov/pubmed/PMC3159979") ) )
     nanopub_rdf.add( (association_uri, BIOLINK['relation'], URIRef("http://purl.obolibrary.org/obo/RO_0002606") ) )
     
 

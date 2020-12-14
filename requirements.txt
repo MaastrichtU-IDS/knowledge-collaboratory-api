@@ -1,9 +1,9 @@
 click
 connexion[swagger-ui]
 tornado
-kgx
+# kgx
 PyShEx
 rdflib
 nanopub
-# SPARQLWrapper
+SPARQLWrapper
 # rdflib==4.2.2

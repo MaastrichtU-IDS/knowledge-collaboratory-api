@@ -14,6 +14,7 @@ from kgx import RdfTransformer, PandasTransformer
 import zipfile
 
 from kgx_transformer import KgxTransformer
+from reasonerapi_parser import reasonerapi_to_sparql
 
 global DATA_DIR
 DATA_DIR = os.getenv('TRAPI_DATA_DIR')
@@ -123,8 +124,8 @@ def post_reasoner_query(request_body):
     if len(query_graph["edges"]) > 1:
         return ({"status": 501, "title": "Not Implemented", "detail": "Multi-edges queries not yet implemented", "type": "about:blank" }, 501)
 
-    # reasonerapi_response = typed_results_to_reasonerapi(request_body)
-    reasonerapi_response = request_body
+    reasonerapi_response = reasonerapi_to_sparql(request_body)
+    # reasonerapi_response = request_body
 
     # TODO: populate edges/nodes with association predictions    
     #  Edge: {

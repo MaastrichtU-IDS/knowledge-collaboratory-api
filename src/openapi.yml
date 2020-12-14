@@ -44,6 +44,7 @@ paths:
           schema:
             type: string
             enum: [NeuroDKG, Nanopublications]
+            default: NeuroDKG
       responses:
         '200':
           description: Zip file with nodes and edges files in KGX TSV format
@@ -184,7 +185,24 @@ components:
             referenced in any of the possible answers to the query OR
             connection information for a remote knowledge graph
           $ref: '#/components/schemas/KnowledgeGraph'
-      additionalProperties: false
+      additionalProperties: true
+      example:
+        # n_results: 42
+        # query_options:
+        #   min_score: 0.5
+        #   max_score: 0.9
+        query_graph:
+          nodes:
+            n0: 
+              category: "biolink:Drug"
+              # curie: DRUGBANK:DB00394
+            n1:
+              category: "biolink:Disease"
+          edges:
+            e01:
+              subject: n0
+              object: n1
+              predicate: "biolink:treats"
     LogEntry:
       type: object
       properties:

@@ -75,16 +75,20 @@ MLS = Namespace("http://www.w3.org/ns/mls#")
 np_client = NanopubClient()
 
 # results = np_client.find_nanopubs_with_text('fair')
-results = np_client.find_nanopubs_with_pattern(
+# results = np_client.find_nanopubs_with_pattern(\
+results = np_client.find_valid_signed_nanopubs_with_pattern(
     obj='https://w3id.org/biolink/vocab/ChemicalToDiseaseOrPhenotypicFeatureAssociation'
     )
 print(results)
 
+count = 0
 for nanopub in results:
+    count += 1
     print(nanopub['np'])
-    np_client.retract(nanopub['np'])
+    # np_client.retract(nanopub['np'])
     # np_client.retract(nanopub['np'], force=True)
 
+print(str(count) + ' nanopublications')
 
 # url = 'https://raw.githubusercontent.com/MaastrichtU-IDS/translator-openpredict/master/openpredict/data/resources/openpredict-omim-drug.csv'
 
