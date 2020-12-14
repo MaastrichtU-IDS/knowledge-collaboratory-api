@@ -1,9 +1,9 @@
 openapi: 3.0.1
 info:
   description: "Query the Nanopublication network for annotated drug indications, using an Open API supporting the [KGX](https://github.com/biolink/kgx) format, 
-    and Translator Reasoner API version `1.0.0-beta` (TRAPI calls not implemented yet)
+    and [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) version `1.0.0-beta`
     \n\nService supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)
-    \n\nSee the API GitHub repository: https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api"
+    \n\nSee the API GitHub repository: [github.com/MaastrichtU-IDS/knowledge-collaboratory-api](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api)"
   version: 1.0.0-beta
   title: Translator Reasoner API for the Knowledge Collaboratory Nanopublications
   contact:

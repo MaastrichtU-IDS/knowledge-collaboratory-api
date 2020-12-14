@@ -4,14 +4,12 @@ This repository provides guidelines to publish Nanopublications as a user with t
 
 Services has been been deployed publicly to query the Nanopublications network using Translator standards to retrieve the Knowledge Collaboratory graph, a collection of drug indications annotated using preferred identifiers (usually from MONDO, CHEBI, DrugBank, etc).
 
-* A **Translator Reasoner API** to query the SPARQL endpoint
-  * Using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop), with Java and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `0.9.0`
-  * **http://nanopub-reasoner-api.137.120.31.102.nip.io**
-* A **new Translator Reasoner API** to query the SPARQL endpoint
-  * Supporting `kgx` and [TRAPI](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` 
-  * In python, defined in this repo in `src/`
-  * **http://nanopub-kgx-api.137.120.31.102.nip.io**
-  * Or **[https://api.collaboratory.semanticscience.org](https://api.collaboratory.semanticscience.org)**
+Check the **Translator Reasoner API** to query the Nanopublications network SPARQL endpoint:
+
+**[api.collaboratory.semanticscience.org 🔗](http://api.collaboratory.semanticscience.org)**
+
+* Supporting [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` and returning the Knowledge Collaboratory in the `kgx` format
+* In python, TRAPI-SPARQL interface and `kgx` transformer defined in `src/`
 
 ## The Knowledge Collaboratory vision
 

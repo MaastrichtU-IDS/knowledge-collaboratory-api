@@ -1,4 +1,7 @@
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
+# from rdflib import Graph, plugin
+# from rdflib.serializer import Serializer
+import urllib.request, json 
 
 get_nanopubs_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -25,6 +28,25 @@ WHERE {
 }"""
 
 SPARQL_ENDPOINT_URL = 'http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql'
+
+## Load BioLink JSON-LD Context to resolve URIs to BioLink CURIEs
+with urllib.request.urlopen("https://raw.githubusercontent.com/biolink/biolink-model/master/context.jsonld") as url:
+    data = json.loads(url.read().decode())
+    
+namespace_resolver = {}
+context = data['@context']
+for prefix in context.keys():
+    if isinstance(context[prefix], str):
+        namespace_resolver[prefix] = context[prefix]
+
+def resolve_uri_with_context(uri_string):
+    """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded
+    """
+    for prefix in namespace_resolver.keys():
+        if uri_string.startswith(namespace_resolver[prefix]):
+            return uri_string.replace(namespace_resolver[prefix], prefix + ':')
+
+    return uri_string
 
 def reasonerapi_to_sparql(reasoner_query):
     """Convert an array of predictions objects to ReasonerAPI format
@@ -81,11 +103,11 @@ def reasonerapi_to_sparql(reasoner_query):
         # Create edge object in knowledge_graph
         knowledge_graph['edges'][edge_uri] = {
             'predicate': predicate_category,
-            'subject': edge_result['subject']['value'],
-            'object': edge_result['object']['value'],
-            'provided_by': edge_result['provided_by']['value'],
-            'association_type': edge_result['association_type']['value'],
-            'relation': edge_result['relation']['value']
+            'subject': resolve_uri_with_context(edge_result['subject']['value']),
+            'object': resolve_uri_with_context(edge_result['object']['value']),
+            'provided_by': resolve_uri_with_context(edge_result['provided_by']['value']),
+            'association_type': resolve_uri_with_context(edge_result['association_type']['value']),
+            'relation': resolve_uri_with_context(edge_result['relation']['value'])
         }
         knowledge_graph['nodes'][edge_result['subject']['value']] = {
             'category': subject_category
