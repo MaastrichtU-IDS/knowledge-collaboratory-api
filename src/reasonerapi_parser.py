@@ -1,6 +1,3 @@
-# from openpredict.predict_utils import get_predictions
-
-# import nanopub
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
 
 get_nanopubs_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -75,6 +72,7 @@ def reasonerapi_to_sparql(reasoner_query):
     sparql.setQuery(sparql_query_get_nanopubs)
     sparqlwrapper_results = sparql.query().convert()
     sparql_results = sparqlwrapper_results["results"]["bindings"]
+
 
     # Check current official example of Reasoner query results: https://github.com/NCATSTranslator/ReasonerAPI/blob/master/examples/Message/simple.json
     # Now iterates the Nanopubs SPARQL query results
