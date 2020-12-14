@@ -1,6 +1,4 @@
 from SPARQLWrapper import SPARQLWrapper, POST, JSON
-# from rdflib import Graph, plugin
-# from rdflib.serializer import Serializer
 import urllib.request, json 
 
 get_nanopubs_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -27,6 +25,7 @@ WHERE {
   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
 }"""
 
+## Virtuoso SPARQL endpoint for the Nanopubs server at IDS
 SPARQL_ENDPOINT_URL = 'http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql'
 
 ## Load BioLink JSON-LD Context to resolve URIs to BioLink CURIEs
@@ -95,9 +94,8 @@ def reasonerapi_to_sparql(reasoner_query):
     sparqlwrapper_results = sparql.query().convert()
     sparql_results = sparqlwrapper_results["results"]["bindings"]
 
-
     # Check current official example of Reasoner query results: https://github.com/NCATSTranslator/ReasonerAPI/blob/master/examples/Message/simple.json
-    # Now iterates the Nanopubs SPARQL query results
+    # Now iterates the Nanopubs SPARQL query results:
     for edge_result in sparql_results:
         edge_uri = edge_result['association']['value']
         # Create edge object in knowledge_graph
