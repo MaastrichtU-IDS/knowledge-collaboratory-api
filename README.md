@@ -4,12 +4,12 @@ This repository provides guidelines to publish Nanopublications as a user with t
 
 Services has been been deployed publicly to query the Nanopublications network using Translator standards to retrieve the Knowledge Collaboratory graph, a collection of drug indications annotated using preferred identifiers (usually from MONDO, CHEBI, DrugBank, etc).
 
-Check the **Translator Reasoner API** to query the Nanopublications network SPARQL endpoint:
+Check the **Translator Reasoner API** to query the Nanopublications network SPARQL endpoint at
 
-**[api.collaboratory.semanticscience.org 🔗](http://api.collaboratory.semanticscience.org)**
+**[🔗 http://api.collaboratory.semanticscience.org](http://api.collaboratory.semanticscience.org)**
 
-* Supporting [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` and returning the Knowledge Collaboratory in the `kgx` format
-* In python, TRAPI-SPARQL interface and `kgx` transformer defined in `src/`
+* Supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta` and call to return the Knowledge Collaboratory in the `kgx` format
+* The TRAPI-SPARQL interface and `kgx` transformer are implemented in Python in the `src/` folder
 
 ## The Knowledge Collaboratory vision
 
@@ -105,13 +105,7 @@ python3 src/api.py
 
 Requirements: [Docker](https://docs.docker.com/get-docker/).
 
-Running using Docker can be convenient if you just want to run the API without installing the package locally, or if it runs in production alongside other services.
-
-3 services are started:
-
-* **A SPARQL endpoint to query the Nanopublications** network of HDT files using `comunica/actor-init-sparql`
-* **A Reasoner API to query the SPARQL endpoint**, using the [d2s-api](https://github.com/MaastrichtU-IDS/d2s-api/tree/develop) (Java, TRAPI `0.9.0`)
-* **A new Reasoner API to query the SPARQL endpoint**, supporting `kgx` and TRAPI `1.0.0-beta` (defined in this repo in `src/`)
+Starts a **Translator Reasoner API to query the Nanopublications SPARQL endpoint**, supporting `kgx` and TRAPI `1.0.0-beta` (defined in this repo in `src/`)
 
 Build and start the container with [docker-compose 🐳](https://docs.docker.com/compose/)
 
@@ -135,7 +129,7 @@ Stop the container:
 docker-compose down
 ```
 
-## List of the API operations
+## Overview of API operations
 
 Of the new Translator Reasoner API (supporting `kgx`)
 
