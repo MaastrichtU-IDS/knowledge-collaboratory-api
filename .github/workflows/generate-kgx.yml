@@ -5,7 +5,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/generate-kgx.yml"
-      - "src/construct_pskg_from_nanopubs.rq"
+      - "src/get_nanopubs_drug_action_with_context.rq"
   # schedule:
   #   - cron: '0 2 * * *'
   # Everyday at 2am
@@ -23,13 +23,14 @@ jobs:
 
       - name: Get the NeuroDKG as RDF by running a SPARQL CONSTRUCT query
         run: |
-          mkdir -p output
+          mkdir -p output/nanopubs_rdf
           wget https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq
           curl -X GET -H "accept: text/turtle" -o neurodkg.ttl "https://graphdb.dumontierlab.com/repositories/NeuroDKG?query=$(cat convert2biolink.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
-      - name: Get the Nanopubs PSKG as RDF by running a SPARQL CONSTRUCT query
+      - name: Get the Nanopubs PSKG as RDF by running SPARQL CONSTRUCT queries
         run: |
-          curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+          curl -X GET -H "accept: text/turtle" -o output/nanopubs_rdf/nanopubs_drug_disease_with_provider.ttl "http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql?query=$(cat src/get_nanopubs_drug_disease_with_provider.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+          curl -X GET -H "accept: text/turtle" -o output/nanopubs_rdf/nanopubs_drug_action_with_context.ttl "http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql?query=$(cat src/get_nanopubs_drug_action_with_context.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
       - name: Install kgx
         run: |
@@ -45,9 +46,10 @@ jobs:
       - name: Run kgx to transform RDF to KGX TSV format
         run: |
           kgx transform --input-format ttl \
-              --output output/nanopubs_pskg \
+              --output output/nanopubs_kgx \
               --output-format tsv \
-              nanopubs_pskg.ttl
+              output/nanopubs_rdf/nanopubs_drug_disease_with_provider.ttl \
+              output/nanopubs_rdf/nanopubs_drug_action_with_context.ttl
 
       - name: Upload output kgx data on GitHub
         uses: actions/upload-artifact@v1

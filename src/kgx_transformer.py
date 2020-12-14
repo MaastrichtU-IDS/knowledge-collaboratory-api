@@ -57,7 +57,7 @@ class KgxTransformer:
         rdf_transformer.parse(self.get_dir('neurodkg_rdf.ttl'))
       else:
         ## Get drug indications from Nanopublications
-        with open('src/construct_pskg_from_nanopubs.rq') as f:
+        with open('src/get_nanopubs_drug_action_with_context.rq') as f:
             nanopubs_sparql_query = f.read()
 
         self.run_sparql_query('http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql', 

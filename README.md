@@ -1,4 +1,4 @@
-[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Validate+RDF+graphs%22)
+[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+RDF+graphs%22)
 
 This repository provides guidelines to publish Nanopublications as a user with the Nanobench, and query the published Nanopublications network as a researcher searching for answers 💬
 
@@ -62,8 +62,8 @@ Deploy the new TRAPI: a Reasoner OpenAPI in Python, using [connexion](https://gi
 #### Clone the repository
 
 ```bash
-git clone https://github.com/MaastrichtU-IDS/nanopub-reasoner-api.git
-cd nanopub-trapi
+git clone https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api.git
+cd knowledge-collaboratory-api
 ```
 
 #### Install dependencies
@@ -74,7 +74,7 @@ pip3 install -r requirements.txt
 
 #### Optional: isolate with a Virtual Environment
 
-If you are facing conflict with already installed packages, then you might want to use a [Virtual Environment](https://docs.python.org/3/tutorial/venv.html) to isolate the installation in the current folder before installing nanopub-reasoner-api:
+If you are facing conflict with already installed packages, then you might want to use a [Virtual Environment](https://docs.python.org/3/tutorial/venv.html) to isolate the installation in the current folder before installing knowledge-collaboratory-api:
 
 ```bash
 # Create the virtual environment folder in your workspace
@@ -121,7 +121,7 @@ docker-compose up -d
 
 > Access the Swagger UI at [http://localhost:8808](http://localhost:8808)
 
-> We use [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) and [docker-letsencrypt-nginx-proxy-companion](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion) as reverse proxy for HTTP and HTTPS in production. You can change the proxy URL and port via environment variables `VIRTUAL_HOST`, `VIRTUAL_PORT` and `LETSENCRYPT_HOST` in the [docker-compose.yml](https://github.com/MaastrichtU-IDS/nanopub-reasoner-api/blob/master/docker-compose.yml) file.
+> We use [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) and [docker-letsencrypt-nginx-proxy-companion](https://github.com/nginx-proxy/docker-letsencrypt-nginx-proxy-companion) as reverse proxy for HTTP and HTTPS in production. You can change the proxy URL and port via environment variables `VIRTUAL_HOST`, `VIRTUAL_PORT` and `LETSENCRYPT_HOST` in the [docker-compose.yml](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/docker-compose.yml) file.
 
 Check the logs:
 
@@ -173,12 +173,12 @@ The `/kgx` operation will return the complete Knowledge Collaboratory drug indic
 
 ## Workflows to generate KGX files from RDF graphs
 
-[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/nanopub-trapi/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/nanopub-trapi/actions?query=workflow%3A%22Validate+RDF+graphs%22)
+[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+RDF+graphs%22)
 
-We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/nanopub-trapi/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
+We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
 
-* [`.github/workflows/generate-kgx.yml`](https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/.github/workflows/generate-kgx.yml)
-* [`.github/workflows/validate-rdf.yml`](https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/.github/workflows/validate-rdf.yml)
+* [`.github/workflows/generate-kgx.yml`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/.github/workflows/generate-kgx.yml)
+* [`.github/workflows/validate-rdf.yml`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/.github/workflows/validate-rdf.yml)
 
 The RDF graphs are accessible through public SPARQL endpoints:
 
@@ -201,7 +201,7 @@ sbt test
 sbt "run --engine=ShEx 
          --schemaUrl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
          --schemaFormat ShExC 
-         --data ../nanopub-trapi/output/neurodkg.ttl"
+         --data ../knowledge-collaboratory-api/output/neurodkg.ttl"
 ```
 
 Convert ShEx to SHACL:

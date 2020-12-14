@@ -5,7 +5,7 @@ on:
     branches: [master]
     paths:
       - ".github/workflows/validate-rdf.yml"
-      - "src/construct_pskg_from_nanopubs.rq"
+      - "src/get_nanopubs_drug_action_with_context.rq"
   # schedule:
   #   - cron: '0 2 * * *'
   # Everyday at 2am
@@ -27,9 +27,10 @@ jobs:
           wget https://raw.githubusercontent.com/MaastrichtU-IDS/neuro_dkg/master/convert2biolink.rq
           curl -X GET -H "accept: text/turtle" -o neurodkg.ttl "https://graphdb.dumontierlab.com/repositories/NeuroDKG?query=$(cat convert2biolink.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
-      - name: Get the Nanopubs PSKG as RDF by running a CONSTRUCT query
+      - name: Get the Nanopubs PSKG as RDF by running SPARQL CONSTRUCT queries
         run: |
-          curl -X GET -H "accept: text/turtle" -o nanopubs_pskg.ttl "http://nanopub-sparql.137.120.31.102.nip.io/sparql?query=$(cat src/construct_pskg_from_nanopubs.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+          curl -X GET -H "accept: text/turtle" -o nanopubs_drug_disease_with_provider.ttl "http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql?query=$(cat src/get_nanopubs_drug_disease_with_provider.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
+          curl -X GET -H "accept: text/turtle" -o nanopubs_drug_action_with_context.ttl "http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql?query=$(cat src/get_nanopubs_drug_action_with_context.rq | python3 -c 'import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read()))')"
 
       - name: Install PyShEx
         run: |
@@ -38,7 +39,8 @@ jobs:
       - name: PyShEx validation
         run: |
            shexeval -A -ut neurodkg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
-           shexeval -A -ut nanopubs_pskg.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+           shexeval -A -ut nanopubs_drug_disease_with_provider.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
+           shexeval -A -ut nanopubs_drug_action_with_context.ttl https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex
 
       # - name: SHACL validation
       #   run: |

@@ -9,17 +9,17 @@
 Represented as nanopublications, the claims can be digitally signed and subsequently published into a decentralized network of nanopublications.''' ;
 
   doap:programming-language "Python", "Java" ;
-  doap:license <https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/LICENSE> ;
-  doap:homepage <https://nanopub-reasoner-api.137.120.31.102.nip.io> ;
-  doap:bug-database <https://github.com/MaastrichtU-IDS/nanopub-trapi/issues> ;
+  doap:license <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/LICENSE> ;
+  doap:homepage <http://api.collaboratory.semanticscience.org> ;
+  doap:bug-database <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues> ;
   
   
-  doap:service-endpoint <https://nanopub-reasoner-api.137.120.31.102.nip.io> ;
+  doap:service-endpoint <http://api.collaboratory.semanticscience.org> ;
   
   doap:category "Research" ;
   doap:repository [
     a doap:GitRepository ;
-    doap:location <https://github.com/MaastrichtU-IDS/nanopub-trapi> ;
+    doap:location <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api> ;
   ] ;
   doap:maintainer [
     a foaf:Person ;

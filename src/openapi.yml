@@ -11,7 +11,7 @@ info:
   license:
     name: MIT license
     url: https://opensource.org/licenses/MIT
-  termsOfService: https://github.com/MaastrichtU-IDS/nanopub-trapi/blob/master/LICENSE
+  termsOfService: https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/LICENSE
 externalDocs:
   description: >-
     Documentation for the NCATS Biomedical Translator Reasoners web services
@@ -37,7 +37,7 @@ paths:
       operationId: api.get_kgx
       tags:
         - translator
-      summary: Get the Knowledge Collaboratory drug indications in KGX TSV format
+      summary: Get the Knowledge Collaboratory drug indications in KGX TSV format (TSV files in a .zip)
       parameters:
         - in: query
           name: from_kg

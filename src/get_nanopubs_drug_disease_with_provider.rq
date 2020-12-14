@@ -1,0 +1,35 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX np: <http://www.nanopub.org/nschema#>
+PREFIX npx: <http://purl.org/nanopub/x/>
+CONSTRUCT {
+  ?association
+    biolink:association_type ?association_type ;
+    rdf:subject ?subject ;
+    rdf:predicate ?predicate ;
+    rdf:object ?object ;
+    biolink:relation ?relation ;
+  	biolink:provided_by ?provided_by .
+  ?subject biolink:category ?subjectCategory .
+  ?object biolink:category ?objectCategory . 
+}
+WHERE {
+  graph ?np_assertion {
+    ?association
+      biolink:association_type ?association_type ;
+      rdf:subject ?subject ;
+      rdf:predicate biolink:treats ;
+      rdf:object ?object ;
+      biolink:relation ?relation ;
+      biolink:provided_by ?provided_by .
+  }
+  ?subject biolink:category biolink:Drug .
+  ?object biolink:category biolink:Disease .
+#  ?subject biolink:category ?subjectCategory .
+#  ?object biolink:category ?objectCategory .
+  graph ?np_head {
+    ?np_uri np:hasAssertion ?np_assertion .
+  }
+  FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
+}
