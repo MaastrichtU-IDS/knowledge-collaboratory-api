@@ -138,7 +138,10 @@ def reasonerapi_to_sparql(reasoner_query):
         knowledge_graph['edges'][edge_uri] = {
             'predicate': predicate_category,
             'subject': edge_result['subject']['value'],
-            'object': edge_result['object']['value']
+            'object': edge_result['object']['value'],
+            'provided_by': edge_result['provided_by']['value'],
+            'association_type': edge_result['association_type']['value'],
+            'relation': edge_result['relation']['value']
         }
         knowledge_graph['nodes'][edge_result['subject']['value']] = {
             'category': subject_category

@@ -102,10 +102,11 @@ def get_predicates():
     
     :return: JSON with biolink entities
     """
+    # TODO: update based on Nanopublication network content
     openpredict_predicates = {
-        "disease": {
-            "drug": [
-            "treated_by"
+        "drug": {
+            "disease": [
+                "treats"
             ]
         }
     }
