@@ -1,4 +1,4 @@
-name: Generate KGX graphs from RDF
+name: Generate KGX graphs from Collaboratory
 on:
   workflow_dispatch:
   push:

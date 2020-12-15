@@ -1,4 +1,4 @@
-[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+RDF+graphs%22)
+[![Generate KGX graphs from Collaboratory](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20Collaboratory/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+Collaboratory%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20Collaboratory%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+Collaboratory+RDF+graphs%22)
 
 # Contributing
 
@@ -64,7 +64,7 @@ Change version in `setup.py` before new release.
 
 ## Workflows to generate KGX files from RDF graphs
 
-[![Generate KGX graphs from RDF](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+RDF%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+RDF+graphs%22)
+[![Generate KGX graphs from Collaboratory](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20graphs%20from%20Collaboratory/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+graphs+from+Collaboratory%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20Collaboratory%20RDF%20graphs/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+Collaboratory+RDF+graphs%22)
 
 We use [GitHub Actions workflows](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/tree/master/.github/workflows) to validate, and transform to KGX TSV files, RDF graphs:
 
