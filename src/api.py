@@ -48,19 +48,17 @@ def start_api(port=8808, server_url='/', debug=False):
         logging.basicConfig(level=logging.INFO)
         print("Production deployment using \033[1mTornado\033[0m 🌪️")
     
-    server_url = 'http://api.collaboratory.semantiscience.org'
-    api = connexion.App(__name__, options={"swagger_url": "", "disable_servers_overwrite": True}, arguments={'server_url': server_url})
 
-    # api = connexion.App(__name__, arguments={'server_url': server_url})
-    # Add server_args? https://github.com/zalando/connexion/pull/1173
+    api = connexion.App(__name__, options={"swagger_url": ""})
+    # server_url = 'http://api.collaboratory.semantiscience.org'
+    # api = connexion.App(__name__, options={"swagger_url": "", "disable_servers_overwrite": True}, arguments={'server_url': server_url})
 
-    api.add_api('openapi.yml', arguments={'server_url': server_url})
+    api.add_api('openapi.yml')
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
 
-    api.app.config['REVERSE_PROXY_PATH'] = 'api.collaboratory.semantiscience.org'
-
-    # Works:
-    # api.app.config['REVERSE_PROXY_PATH'] = '/api'
+    ## Fix to avoid empty list of servers
+    api.app.config['REVERSE_PROXY_PATH'] = '/api'
+    # api.app.config['REVERSE_PROXY_PATH'] = 'http://api.collaboratory.semantiscience.org'
     ReverseProxyPrefixFix(api.app)
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
