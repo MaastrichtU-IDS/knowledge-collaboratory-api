@@ -1,6 +1,7 @@
 click
 # connexion[swagger-ui]
 -e git+https://github.com/vemonet/connexion.git@fix-servers-overwrite#egg=connexion[swagger-ui]
+aiohttp
 tornado
 kgx
 PyShEx
