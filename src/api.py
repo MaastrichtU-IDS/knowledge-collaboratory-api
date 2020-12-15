@@ -3,6 +3,7 @@ import sys
 import subprocess
 import ast
 import connexion
+from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
 import flask
 import logging
 import json
@@ -50,6 +51,9 @@ def start_api(port=8808, server_url='/', debug=False):
     server_url = 'http://api.collaboratory.semantiscience.org'
     api = connexion.App(__name__, options={"swagger_url": "", "disable_servers_overwrite": True}, arguments={'server_url': server_url})
     
+    api.config['REVERSE_PROXY_PATH'] = '/'
+    ReverseProxyPrefixFix(api)
+
     # api = connexion.App(__name__, arguments={'server_url': server_url})
     # Add server_args? https://github.com/zalando/connexion/pull/1173
 
