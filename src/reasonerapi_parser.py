@@ -10,12 +10,18 @@ SELECT DISTINCT *
 WHERE {
   graph ?np_assertion {
     ?association
-      biolink:association_type ?association_type ;
       rdf:subject ?subject ;
       rdf:predicate ?_predicate_category ;
-      rdf:object ?object ;
-      biolink:relation ?relation ;
-      biolink:provided_by ?provided_by .
+      rdf:object ?object .
+    OPTIONAL {
+      ?association biolink:relation ?relation .
+    }
+    OPTIONAL {
+      ?association biolink:provided_by ?provided_by .
+    }
+    OPTIONAL {
+      ?association biolink:association_type ?association_type .
+    }
   }
   ?subject biolink:category ?_subject_category .
   ?object biolink:category ?_object_category .
@@ -69,6 +75,9 @@ def resolve_uri_with_context(uri_string):
     return uri_string
 
 def get_predicates_from_nanopubs():
+    """Query the Nanopublications network to get BioLink entity categories and the relation between them
+    Formatted for the Translator TRAPI /predicate get call
+    """
     predicates = {}
     # Run query to get types and relations between them
     sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
@@ -145,11 +154,15 @@ def reasonerapi_to_sparql(reasoner_query):
         knowledge_graph['edges'][edge_uri] = {
             'predicate': predicate_category,
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
-            'object': resolve_uri_with_context(edge_result['object']['value']),
-            'provided_by': resolve_uri_with_context(edge_result['provided_by']['value']),
-            'association_type': resolve_uri_with_context(edge_result['association_type']['value']),
-            'relation': resolve_uri_with_context(edge_result['relation']['value'])
+            'object': resolve_uri_with_context(edge_result['object']['value'])
         }
+        if edge_result['provided_by']:
+          knowledge_graph['edges'][edge_uri]['provided_by'] = resolve_uri_with_context(edge_result['provided_by']['value'])
+        if edge_result['association_type']:
+          knowledge_graph['edges'][edge_uri]['association_type'] = resolve_uri_with_context(edge_result['association_type']['value'])
+        if edge_result['relation']:
+          knowledge_graph['edges'][edge_uri]['relation'] = resolve_uri_with_context(edge_result['relation']['value'])
+
         knowledge_graph['nodes'][edge_result['subject']['value']] = {
             'category': subject_category
         }
