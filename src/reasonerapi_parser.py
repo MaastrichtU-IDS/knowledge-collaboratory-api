@@ -108,6 +108,7 @@ def reasonerapi_to_sparql(reasoner_query):
     :return: Results as ReasonerAPI object
     """
     query_graph = reasoner_query["message"]["query_graph"]
+    n_results = reasoner_query["message"]["n_results"]
     if len(query_graph["edges"]) != 1:
         return {'error': len(query_graph["edges"]) + """ edges have been provided. 
             This API currently only implements 1 hop queries (with 1 edge query_graph). 
@@ -133,6 +134,9 @@ def reasonerapi_to_sparql(reasoner_query):
         sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_subject_category', subject_category)
         sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_object_category', object_category)
 
+    # Add LIMIT to the SPARQL query if n_results provided
+    if n_results:
+        sparql_query_get_nanopubs = sparql_query_get_nanopubs + ' LIMIT ' + str(n_results)
 
     knowledge_graph = {'nodes': {}, 'edges': {}}
     query_results = []

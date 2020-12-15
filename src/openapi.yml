@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  description: "Query the Nanopublication network for annotated drug indications, using an Open API supporting the [KGX](https://github.com/biolink/kgx) format, 
-    and [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) version `1.0.0-beta`
-    \n\nService supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)
-    \n\nSee the API GitHub repository: [github.com/MaastrichtU-IDS/knowledge-collaboratory-api](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api)"
+  description: "Query the Knowledge Collaboratory, hosted on the Nanopublications network, for annotated drug indications
+    \n\n This Open API supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) version `1.0.0-beta` queries and the [KGX](https://github.com/biolink/kgx) format
+    \n\nSee the API GitHub repository: [github.com/MaastrichtU-IDS/knowledge-collaboratory-api](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api)
+    \n\nThis service is supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)"
   version: 1.0.0-beta
-  title: Translator Reasoner API for the Knowledge Collaboratory Nanopublications
+  title: Translator Reasoner API for the Knowledge Collaboratory
   contact:
     email: vincent.emonet@maastrichtuniversity.nl
   license:
@@ -19,7 +19,7 @@ externalDocs:
 servers:
   - url: /
     description: Local Knowledge Collaboratory API
-  - url: https://api.collaboratory.semanticscience.org
+  - url: http://api.collaboratory.semanticscience.org
     description: Production Knowledge Collaboratory API
 # - url: "{{server_url}}"
 tags:
@@ -235,7 +235,7 @@ components:
           nullable: true
       additionalProperties: true
       example:
-        # n_results: 42
+        n_results: 42
         # query_options:
         #   min_score: 0.5
         #   max_score: 0.9
