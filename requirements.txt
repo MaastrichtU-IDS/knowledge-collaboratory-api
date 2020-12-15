@@ -1,5 +1,5 @@
 click
-connexion[swagger-ui]
+# connexion[swagger-ui]
 tornado
 kgx
 PyShEx
