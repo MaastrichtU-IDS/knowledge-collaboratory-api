@@ -60,11 +60,15 @@ def start_api(port=8808, server_url='/', debug=False):
     # Add CORS support
     CORS(api.app)
 
-    ## Fix to avoid empty list of servers
-    # api.app.config['REVERSE_PROXY_PATH'] = '/v1'
-    # api.app.config['REVERSE_PROXY_PATH'] = '/api'
-    api.app.config['REVERSE_PROXY_PATH'] = 'http://api.collaboratory.semanticscience.org'
-    ReverseProxyPrefixFix(api.app)
+    ## Fix to avoid empty list of servers for nginx-proxy deployments
+    if os.getenv('VIRTUAL_HOST'):
+        server_url='http://' + os.getenv('VIRTUAL_HOST')
+        api.app.config['REVERSE_PROXY_PATH'] = server_url
+        # api.app.config['REVERSE_PROXY_PATH'] = '/v1'
+        # api.app.config['REVERSE_PROXY_PATH'] = '/api'
+        ReverseProxyPrefixFix(api.app)
+    # if os.getenv('LETSENCRYPT_HOST'):
+    #     server_url='https://' + os.getenv('LETSENCRYPT_HOST')
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
     api.run(host='0.0.0.0', port=port, debug=debug, server=deployment_server)
