@@ -1,4 +1,4 @@
-name: Generate KGX graphs from Collaboratory
+name: Generate KGX from Knowledge Collaboratory
 on:
   workflow_dispatch:
   push:

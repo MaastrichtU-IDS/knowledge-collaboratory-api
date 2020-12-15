@@ -1,4 +1,4 @@
-name: Validate Collaboratory RDF graphs
+name: Validate Knowledge Collaboratory RDF
 on:
   workflow_dispatch:
   push:
