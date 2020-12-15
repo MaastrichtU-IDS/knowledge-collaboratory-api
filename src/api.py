@@ -48,7 +48,10 @@ def start_api(port=8808, server_url='/', debug=False):
         print("Production deployment using \033[1mTornado\033[0m 🌪️")
     
     server_url = 'http://api.collaboratory.semantiscience.org'
-    api = connexion.App(__name__, options={"swagger_url": ""}, arguments={'server_url': server_url})
+    # api = connexion.App(__name__, options={"swagger_url": "", "disable_servers_overwrite": True}, arguments={'server_url': server_url})
+    
+    api = connexion.App(__name__, arguments={'server_url': server_url})
+    # Add server_args? https://github.com/zalando/connexion/pull/1173
 
     api.add_api('openapi.yml', arguments={'server_url': server_url})
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
