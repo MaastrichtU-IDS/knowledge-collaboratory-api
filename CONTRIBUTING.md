@@ -45,7 +45,7 @@ Or in **production** mode with Tornado:
 python3 src/api.py
 ```
 
-By default the API will use the SPARQL endpoint of IDS Nanopublications server Virtuoso: http://nanopub-sparql.137.120.31.102.nip.io/sparql
+> By default the API will use the SPARQL endpoint of IDS Nanopublications server Virtuoso.
 
 ## Pull Request process
 

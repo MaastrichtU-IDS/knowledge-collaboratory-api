@@ -6,7 +6,7 @@ Services has been been deployed publicly to query the Nanopublications network u
 
 Check the **Translator Reasoner API** to query the Nanopublications network SPARQL endpoint at
 
-**[🔗 http://api.collaboratory.semanticscience.org](http://api.collaboratory.semanticscience.org)**
+**[🔗 https://api.collaboratory.semanticscience.org](https://api.collaboratory.semanticscience.org)**
 
 * Supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta`
 * Include operation to retrieve the Knowledge Collaboratory nanopublications in the [`kgx`](https://github.com/biolink/kgx) format
@@ -57,7 +57,7 @@ Starts the **Translator Reasoner API to query the Nanopublications SPARQL endpoi
   * The TRAPI-SPARQL interface and `kgx` transformer are implemented in Python in the `src/` folder
 * OpenAPI 3 with Swagger UI, built in Python using [zalando/connexion](https://github.com/zalando/connexion)
 
-Available at **[http://api.collaboratory.semanticscience.org 🔗](http://api.collaboratory.semanticscience.org)**
+Available at **[https://api.collaboratory.semanticscience.org 🔗](https://api.collaboratory.semanticscience.org)**
 
 Starts the **Translator Reasoner API to query the Nanopublications SPARQL endpoint**, supporting `kgx` and TRAPI `1.0.0-beta` (defined in this repo in `src/`)
 

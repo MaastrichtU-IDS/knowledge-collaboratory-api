@@ -1,11 +1,11 @@
 openapi: 3.0.1
 info:
-  description: "Query the Knowledge Collaboratory, hosted on the [Nanopublications network](http://nanopub.org/wordpress/), for annotated drug indications or any other BioLink-compliant claims.
+  description: "Translator Reasoner API for the Knowledge Collaboratory, hosted on the [Nanopublications network](http://nanopub.org/wordpress/), for annotated drug indications or any other BioLink-compliant claims.
     \n\n This Open API supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) version `1.0.0-beta` queries and the [KGX](https://github.com/biolink/kgx) format
     \n\nSee the API GitHub repository: [github.com/MaastrichtU-IDS/knowledge-collaboratory-api](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api)
     \n\nThis service is supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)"
   version: 1.0.0-beta
-  title: Translator Reasoner API for the Knowledge Collaboratory
+  title: Translator Knowledge Collaboratory API
   contact:
     email: vincent.emonet@maastrichtuniversity.nl
   license:
