@@ -3,7 +3,6 @@ connexion[swagger-ui]
 flask-cors
 flask-reverse-proxy-fix
 werkzeug<1
-# -e git+https://github.com/vemonet/connexion.git@fix-servers-overwrite#egg=connexion[swagger-ui]
 tornado
 kgx
 PyShEx
@@ -11,3 +10,4 @@ rdflib
 nanopub
 SPARQLWrapper
 # rdflib==4.2.2
+# -e git+https://github.com/vemonet/connexion.git@fix-servers-overwrite#egg=connexion[swagger-ui]

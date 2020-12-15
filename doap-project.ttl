@@ -4,11 +4,11 @@
 
 <https://w3id.org/um/ids/project/translator-personal-scientific-knowledge-graph-and-knowledge-collaboratory>
   a doap:Project ;
-  doap:name "Translator Personal Scientific Knowledge Graph and Knowledge Collaboratory" ;
+  doap:name "Translator Knowledge Collaboratory" ;
   doap:description '''This project enables researchers to rapidly create a Personal Scientific Knowledge Graph (PSKG) from structured claims from the scientific literature. Using a web interface, users will be guided to provide essential details about the claims such as their source and evidence. 
-Represented as nanopublications, the claims can be digitally signed and subsequently published into a decentralized network of nanopublications.''' ;
+Represented as nanopublications, the claims can be digitally signed and subsequently published into a decentralized network of nanopublications, known as the Knowledge Collaboratory.''' ;
 
-  doap:programming-language "Python", "Java" ;
+  doap:programming-language "Python" ;
   doap:license <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/LICENSE> ;
   doap:homepage <http://api.collaboratory.semanticscience.org> ;
   doap:bug-database <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues> ;
