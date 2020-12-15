@@ -2,7 +2,7 @@
 @prefix asf: <http://projects.apache.org/ns/asfext#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-<https://w3id.org/um/ids/project/translator-personal-scientific-knowledge-graph-and-knowledge-collaboratory>
+<https://w3id.org/um/ids/projects#translator-personal-scientific-knowledge-graph-and-knowledge-collaboratory>
   a doap:Project ;
   doap:name "Translator Knowledge Collaboratory" ;
   doap:description '''This project enables researchers to rapidly create a Personal Scientific Knowledge Graph (PSKG) from structured claims from the scientific literature. Using a web interface, users will be guided to provide essential details about the claims such as their source and evidence. 
