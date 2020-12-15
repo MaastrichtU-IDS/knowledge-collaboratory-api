@@ -6,7 +6,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX biolink: <https://w3id.org/biolink/vocab/>
 PREFIX np: <http://www.nanopub.org/nschema#>
 PREFIX npx: <http://purl.org/nanopub/x/>
-SELECT *
+SELECT DISTINCT *
 WHERE {
   graph ?np_assertion {
     ?association
@@ -19,6 +19,27 @@ WHERE {
   }
   ?subject biolink:category ?_subject_category .
   ?object biolink:category ?_object_category .
+  graph ?np_head {
+    ?np_uri np:hasAssertion ?np_assertion .
+  }
+  FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
+}"""
+
+get_predicates_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX np: <http://www.nanopub.org/nschema#>
+PREFIX npx: <http://purl.org/nanopub/x/>
+SELECT DISTINCT ?subject_category ?predicate_category ?object_category
+WHERE {
+  graph ?np_assertion {
+    ?association
+      rdf:subject ?subject ;
+      rdf:predicate ?predicate_category ;
+      rdf:object ?object .
+  }
+  ?subject biolink:category ?subject_category .
+  ?object biolink:category ?object_category .
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
   }
@@ -46,6 +67,28 @@ def resolve_uri_with_context(uri_string):
             return uri_string.replace(namespace_resolver[prefix], prefix + ':')
 
     return uri_string
+
+def get_predicates_from_nanopubs():
+    predicates = {}
+    # Run query to get types and relations between them
+    sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
+    sparql.setReturnFormat(JSON)
+    sparql.setQuery(get_predicates_select_query)
+    sparqlwrapper_results = sparql.query().convert()
+    sparql_results = sparqlwrapper_results["results"]["bindings"]
+    for result in sparql_results:
+        np_subject = resolve_uri_with_context(result['subject_category']['value'])
+        np_predicate = resolve_uri_with_context(result['predicate_category']['value'])
+        np_object = resolve_uri_with_context(result['object_category']['value'])
+        if not predicates.get(np_subject):
+            predicates[np_subject] = {}
+
+        if not predicates[np_subject].get(np_object):
+            predicates[np_subject][np_object] = []
+
+        predicates[np_subject][np_object].append(np_predicate)
+
+    return predicates
 
 def reasonerapi_to_sparql(reasoner_query):
     """Convert an array of predictions objects to ReasonerAPI format

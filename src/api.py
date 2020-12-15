@@ -4,6 +4,7 @@ import subprocess
 import ast
 import connexion
 from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
+from flask_cors import CORS
 import flask
 import logging
 import json
@@ -15,7 +16,7 @@ from kgx import RdfTransformer, PandasTransformer
 import zipfile
 
 from kgx_transformer import KgxTransformer
-from reasonerapi_parser import reasonerapi_to_sparql
+from reasonerapi_parser import reasonerapi_to_sparql, get_predicates_from_nanopubs
 
 global DATA_DIR
 DATA_DIR = os.getenv('TRAPI_DATA_DIR')
@@ -27,9 +28,9 @@ else:
         DATA_DIR += '/'
 
 def start_api(port=8808, server_url='/', debug=False):
-    """Start the Translator OpenPredict API using [zalando/connexion](https://github.com/zalando/connexion) and the `openapi.yml` definition
+    """Start the Knwoledge Collaboratory API using [zalando/connexion](https://github.com/zalando/connexion) and the `openapi.yml` definition
 
-    :param port: Port of the OpenPredict API, defaults to 8808
+    :param port: Port of the API, defaults to 8808
     :param debug: Run in debug mode, defaults to False
     :param start_spark: Start a local Spark cluster, default to true
     """
@@ -55,6 +56,9 @@ def start_api(port=8808, server_url='/', debug=False):
 
     api.add_api('openapi.yml')
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
+
+    # Add CORS support
+    CORS(api.app)
 
     ## Fix to avoid empty list of servers
     api.app.config['REVERSE_PROXY_PATH'] = '/api'
@@ -111,14 +115,14 @@ def get_predicates():
     :return: JSON with biolink entities
     """
     # TODO: update based on Nanopublication network content
-    openpredict_predicates = {
-        "drug": {
-            "disease": [
-                "treats"
-            ]
-        }
-    }
-    return openpredict_predicates
+    # openpredict_predicates = {
+    #     "drug": {
+    #         "disease": [
+    #             "treats"
+    #         ]
+    #     }
+    # }
+    return get_predicates_from_nanopubs()
 
 def post_reasoner_query(request_body):
     """Get associations for a given ReasonerAPI query.
