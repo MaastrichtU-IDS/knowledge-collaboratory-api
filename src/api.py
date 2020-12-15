@@ -50,15 +50,15 @@ def start_api(port=8808, server_url='/', debug=False):
     
     server_url = 'http://api.collaboratory.semantiscience.org'
     api = connexion.App(__name__, options={"swagger_url": "", "disable_servers_overwrite": True}, arguments={'server_url': server_url})
-    
-    api.config['REVERSE_PROXY_PATH'] = '/'
-    ReverseProxyPrefixFix(api)
 
     # api = connexion.App(__name__, arguments={'server_url': server_url})
     # Add server_args? https://github.com/zalando/connexion/pull/1173
 
     api.add_api('openapi.yml', arguments={'server_url': server_url})
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
+
+    api.app.config['REVERSE_PROXY_PATH'] = '/'
+    ReverseProxyPrefixFix(api.app)
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
     api.run(host='0.0.0.0', port=port, debug=debug, server=deployment_server)
