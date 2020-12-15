@@ -34,7 +34,7 @@ def start_api(port=8808, server_url='/', debug=False):
     :param debug: Run in debug mode, defaults to False
     :param start_spark: Start a local Spark cluster, default to true
     """
-    print("Starting the \033[1mTranslator OpenPredict API\033[0m 🔮🐍")
+    print("Starting the \033[1mTranslator Knowledge Collaboratory API\033[0m 🔮🐍")
 
     if debug:
         # Run in development mode
@@ -122,14 +122,6 @@ def get_predicates():
     
     :return: JSON with biolink entities
     """
-    # TODO: update based on Nanopublication network content
-    # openpredict_predicates = {
-    #     "drug": {
-    #         "disease": [
-    #             "treats"
-    #         ]
-    #     }
-    # }
     return get_predicates_from_nanopubs()
 
 def post_reasoner_query(request_body):

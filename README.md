@@ -11,7 +11,7 @@ Check the **Translator Reasoner API** to query the Nanopublications network SPAR
 * Supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) `1.0.0-beta`
 * Include operation to retrieve the Knowledge Collaboratory nanopublications in the [`kgx`](https://github.com/biolink/kgx) format
 
-## The Knowledge Collaboratory vision
+## The Knowledge Collaboratory concept
 
 ![PSKG](PSKG-knowledge_collaboratory.png)
 
@@ -130,11 +130,11 @@ docker-compose down
 
 ## Overview of API operations 🧭
 
-Of the new Translator Reasoner API (supporting `kgx`)
+Overview of the different operations available in the Knowledge Collaboratory Translator Reasoner API (supporting `kgx`)
 
 ### Query operation
 
-The user sends a [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query asking for the predicted targets given: a source, and the relation to predict. The query is a graph with nodes and edges defined in JSON, and uses classes from the [BioLink model](https://biolink.github.io/biolink-model).
+The user sends a [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query to the Knowledge Collaboratory Nanopublications in the BioLink format (e.g. drug indications). The query is a graph with nodes and edges defined in JSON, and uses classes from the [BioLink model](https://biolink.github.io/biolink-model).
 
 ### Predicates operation
 
