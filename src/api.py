@@ -61,7 +61,7 @@ def start_api(port=8808, server_url='/', debug=False):
     CORS(api.app)
 
     ## Fix to avoid empty list of servers
-    # api.app.config['REVERSE_PROXY_PATH'] = '/v1'
+    api.app.config['REVERSE_PROXY_PATH'] = '/v1'
     # api.app.config['REVERSE_PROXY_PATH'] = '/api'
     # api.app.config['REVERSE_PROXY_PATH'] = 'http://api.collaboratory.semantiscience.org'
     ReverseProxyPrefixFix(api.app)
