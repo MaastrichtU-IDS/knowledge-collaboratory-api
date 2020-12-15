@@ -18,9 +18,9 @@ externalDocs:
   url: https://github.com/NCATS-Tangerine/NCATS-ReasonerStdAPI
 servers:
   - url: /
-    description: Local Knowledge Collaboratory API
-  - url: http://api.collaboratory.semanticscience.org
-    description: Production Knowledge Collaboratory API
+    # description: Local Knowledge Collaboratory API
+  # - url: https://api.collaboratory.semanticscience.org
+  #   description: Production Knowledge Collaboratory API
 # - url: "{{server_url}}"
 tags:
   - name: predicates

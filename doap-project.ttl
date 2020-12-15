@@ -10,11 +10,11 @@ Represented as nanopublications, the claims can be digitally signed and subseque
 
   doap:programming-language "Python" ;
   doap:license <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/LICENSE> ;
-  doap:homepage <http://api.collaboratory.semanticscience.org> ;
+  doap:homepage <https://api.collaboratory.semanticscience.org> ;
   doap:bug-database <https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues> ;
   
   
-  doap:service-endpoint <http://api.collaboratory.semanticscience.org> ;
+  doap:service-endpoint <https://api.collaboratory.semanticscience.org> ;
   
   doap:category "Research" ;
   doap:repository [
