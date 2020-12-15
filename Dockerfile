@@ -11,7 +11,7 @@ RUN npm install -g @comunica/actor-init-sparql
 # Install pip dependencies
 ADD requirements.txt .
 RUN pip install -r requirements.txt
-RUN pip install git+https://github.com/vemonet/connexion@fix-servers-overwrite
+RUN pip install --install-option="--extras-require=swagger-ui" git+https://github.com/vemonet/connexion@fix-servers-overwrite
 
 COPY . .
 
