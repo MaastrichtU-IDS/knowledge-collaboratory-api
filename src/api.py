@@ -58,7 +58,7 @@ def start_api(port=8808, server_url='/', debug=False):
     # api.add_api('openapi.yml', arguments={'server_url': server_url}, validate_responses=True)
 
     # api.app.config['REVERSE_PROXY_PATH'] = 'http://api.collaboratory.semantiscience.org'
-    api.app.config['REVERSE_PROXY_PATH'] = ''
+    api.app.config['REVERSE_PROXY_PATH'] = '/'
     ReverseProxyPrefixFix(api.app)
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
