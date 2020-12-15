@@ -1,7 +1,7 @@
 click
 connexion[swagger-ui]
 flask-reverse-proxy-fix
-werkzeug
+werkzeug<1
 # -e git+https://github.com/vemonet/connexion.git@fix-servers-overwrite#egg=connexion[swagger-ui]
 aiohttp
 tornado
