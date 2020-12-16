@@ -66,7 +66,7 @@ def start_api(port=8808, server_url='/', debug=False):
         api.app.config['REVERSE_PROXY_PATH'] = server_url
         # api.app.config['REVERSE_PROXY_PATH'] = '/v1'
         ReverseProxyPrefixFix(api.app)
-    if os.getenv('VIRTUAL_HOST'):
+    elif os.getenv('VIRTUAL_HOST'):
         server_url='http://' + os.getenv('VIRTUAL_HOST')
         api.app.config['REVERSE_PROXY_PATH'] = server_url
         # api.app.config['REVERSE_PROXY_PATH'] = '/v1'
