@@ -174,7 +174,7 @@ def reasonerapi_to_sparql(reasoner_query):
             'category': object_category
         }
 
-         # Add the bindings to the results object
+        # Add the bindings to the results object
         result = {'edge_bindings': {}, 'node_bindings': {}}
         result['edge_bindings'][predicate_edge_id] = [
             {

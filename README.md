@@ -1,4 +1,4 @@
-[![Generate KGX from Knowledge Collaboratory](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20from%20Knowledge%20Collaboratory/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+from+Knowledge+Collaboratory%22)
+[![TRAPI version](https://img.shields.io/badge/TRAPI-v1.0.0--beta-blueviolet)](https://github.com/NCATSTranslator/ReasonerAPI) [![Generate KGX from Knowledge Collaboratory](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20from%20Knowledge%20Collaboratory/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+from+Knowledge+Collaboratory%22)
 
 This repository provides guidelines to publish Nanopublications as a user with the Nanobench, and query the published Nanopublications network as a researcher searching for answers 💬
 
