@@ -9,3 +9,13 @@ __pycache__/
 venv/
 
 output/
+
+.ipynb_checkpoints/
+.virtual_documents/
+.cache/
+.config/
+.ipython/
+.jupyter/
+.local/
+.npm/
+.bash_history

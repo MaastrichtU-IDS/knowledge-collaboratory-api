@@ -9,25 +9,22 @@ import json
 import csv
 from datetime import datetime
 
-from SPARQLWrapper import SPARQLWrapper, TURTLE, XML
-from rdflib import Graph, Namespace
+# from SPARQLWrapper import SPARQLWrapper, TURTLE, XML
 
 import pandas as pd 
 from nanopub import Publication, NanopubClient
-from rdflib import Graph, URIRef, Literal, RDF, FOAF, RDFS
+from rdflib import Graph, Namespace, URIRef, Literal, RDF, FOAF, RDFS
 
 import requests
 # import functools
 # import shutil
 
 BIOLINK = Namespace("https://w3id.org/biolink/vocab/")
-
 SKOS = Namespace("http://www.w3.org/2004/02/skos/core#")
 SCHEMA = Namespace("http://schema.org/")
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 MLS = Namespace("http://www.w3.org/ns/mls#")
-
 
 
 def create_drug_indic_nanopub(np_client, drug_id, disease_id):
