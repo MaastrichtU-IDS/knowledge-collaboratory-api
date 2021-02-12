@@ -8,7 +8,7 @@ def test_post_trapi():
     """Test Translator ReasonerAPI query POST operation to get predictions"""
     trapi_query = {
         "message": {
-            "n_results": 42,
+            "n_results": 13,
             "query_graph": {
             "edges": {
                 "e01": {
@@ -33,5 +33,5 @@ def test_post_trapi():
                         data=json.dumps(trapi_query), headers=headers).json()
 
     edges = trapi_results['knowledge_graph']['edges'].items()
-    assert len(edges) == 42
-    # assert edges[0]['object'] == 'OMIM:246300'
+    assert len(edges) == 13
+    # assert edges[0]['object'] == 'https://identifiers.org/MONDO:0001158'
