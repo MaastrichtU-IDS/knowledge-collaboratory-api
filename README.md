@@ -128,6 +128,10 @@ Stop the container:
 docker-compose down
 ```
 
+### Test the Collaboratory API
+
+See the [`TESTING.md`](/TESTING.md) file for more details on testing the API.
+
 ## Overview of API operations 🧭
 
 Overview of the different operations available in the Knowledge Collaboratory Translator Reasoner API (supporting `kgx`)
