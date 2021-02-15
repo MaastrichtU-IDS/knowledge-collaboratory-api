@@ -33,5 +33,5 @@ def test_post_trapi():
                         data=json.dumps(trapi_query), headers=headers).json()
 
     edges = trapi_results['knowledge_graph']['edges'].items()
-    assert len(edges) == 13
+    assert len(edges) >= 5
     # assert edges[0]['object'] == 'https://identifiers.org/MONDO:0001158'

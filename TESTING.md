@@ -6,6 +6,10 @@ Install the required dependency to run tests:
 pip install pytest
 ```
 
+## Manual tests
+
+Use the [`docs/openpredict-examples.ipynb`](https://github.com/MaastrichtU-IDS/translator-openpredict/blob/master/docs/openpredict-examples.ipynb) Jupyter notebook to manually try queries against the OpenPredict API.
+
 ## Integration tests
 
 Integration tests are run automatically by a [GitHub Action workflow](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Run+tests%22) everyday at 01:00am GMT+1 on the OpenPredict production API.
