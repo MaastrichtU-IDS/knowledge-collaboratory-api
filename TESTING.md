@@ -21,5 +21,5 @@ We test for an expected number of results and a few specific results.
 To run the tests of the OpenPredict production API locally:
 
 ```bash
-pytest tests/integration
+pytest
 ```

@@ -108,7 +108,14 @@ def reasonerapi_to_sparql(reasoner_query):
     :return: Results as ReasonerAPI object
     """
     query_graph = reasoner_query["message"]["query_graph"]
-    n_results = reasoner_query["message"]["n_results"]
+    n_results = None
+    if 'query_options' in reasoner_query.keys():
+        query_options = reasoner_query["query_options"]
+        try:
+            n_results = query_options["n_results"]
+        except:
+            print('n_results retrieve failed')
+            n_results = None
     if len(query_graph["edges"]) != 1:
         return {'error': len(query_graph["edges"]) + """ edges have been provided. 
             This API currently only implements 1 hop queries (with 1 edge query_graph). 
@@ -160,12 +167,17 @@ def reasonerapi_to_sparql(reasoner_query):
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
             'object': resolve_uri_with_context(edge_result['object']['value'])
         }
-        if edge_result['provided_by']:
-          knowledge_graph['edges'][edge_uri]['provided_by'] = resolve_uri_with_context(edge_result['provided_by']['value'])
-        if edge_result['association_type']:
-          knowledge_graph['edges'][edge_uri]['association_type'] = resolve_uri_with_context(edge_result['association_type']['value'])
         if edge_result['relation']:
           knowledge_graph['edges'][edge_uri]['relation'] = resolve_uri_with_context(edge_result['relation']['value'])
+        # if edge_result['association_type']:
+        #   knowledge_graph['edges'][edge_uri]['association_type'] = resolve_uri_with_context(edge_result['association_type']['value'])
+
+        attributes_obj = {}
+        if edge_result['provided_by']:
+          attributes_obj['provided_by'] = resolve_uri_with_context(edge_result['provided_by']['value'])
+
+        if len(attributes_obj) > 0:
+          knowledge_graph['edges'][edge_uri]['attributes'] = attributes_obj
 
         knowledge_graph['nodes'][edge_result['subject']['value']] = {
             'category': subject_category
