@@ -11,7 +11,7 @@ WHERE {
   graph ?np_assertion {
     ?association
       rdf:subject ?subject ;
-      rdf:predicate ?_predicate_category ;
+      rdf:predicate ?predicate ;
       rdf:object ?object .
     OPTIONAL {
       ?association biolink:relation ?relation .
@@ -23,8 +23,9 @@ WHERE {
       ?association biolink:association_type ?association_type .
     }
   }
-  ?subject biolink:category ?_subject_category .
-  ?object biolink:category ?_object_category .
+  ?subject biolink:category ?subject_category .
+  ?object biolink:category ?object_category .
+  ?_entity_filters
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
   }
@@ -64,6 +65,8 @@ context = data['@context']
 for prefix in context.keys():
     if isinstance(context[prefix], str):
         namespace_resolver[prefix] = context[prefix]
+
+uri_resolver = {v: k for k, v in namespace_resolver.items()}
 
 def resolve_uri_with_context(uri_string):
     """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded
@@ -108,14 +111,13 @@ def reasonerapi_to_sparql(reasoner_query):
     :return: Results as ReasonerAPI object
     """
     query_graph = reasoner_query["message"]["query_graph"]
+    query_options = {}
     n_results = None
     if 'query_options' in reasoner_query.keys():
         query_options = reasoner_query["query_options"]
-        try:
-            n_results = query_options["n_results"]
-        except:
-            print('n_results retrieve failed')
-            n_results = None
+        if 'n_results' in query_options:
+            n_results = int(query_options["n_results"])
+
     if len(query_graph["edges"]) != 1:
         return {'error': len(query_graph["edges"]) + """ edges have been provided. 
             This API currently only implements 1 hop queries (with 1 edge query_graph). 
@@ -131,15 +133,47 @@ def reasonerapi_to_sparql(reasoner_query):
     # TODO: improve to support multiple edges query (aka. hops)
     for edge_id in query_graph['edges'].keys():
         edge_props = query_graph['edges'][edge_id]
-        predicate_category = edge_props['predicate']
-        subject_category = query_graph['nodes'][edge_props['subject']]['category']
-        object_category = query_graph['nodes'][edge_props['object']]['category']
         predicate_edge_id = edge_id
         subject_node_id = edge_props['subject']
         object_node_id = edge_props['object']
-        sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_predicate_category', predicate_category)
-        sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_subject_category', subject_category)
-        sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_object_category', object_category)
+        # predicate_category = edge_props['predicate']
+        # subject_category = query_graph['nodes'][edge_props['subject']]['category']
+        # object_category = query_graph['nodes'][edge_props['object']]['category']
+        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_predicate_category', predicate_category)
+        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_subject_category', subject_category)
+        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_object_category', object_category)
+        
+        entity_filters = ''
+        try:
+          predicate_uri = edge_props['predicate']
+          entity_filters = entity_filters + 'FILTER (?predicate = ' + predicate_uri + ')\n'
+        except:
+          pass
+
+        try:
+          subject_category = query_graph['nodes'][edge_props['subject']]['category']
+          entity_filters = entity_filters + 'FILTER (?subject_category = ' + subject_category + ')\n'
+        except:
+          pass
+
+        try:
+          object_category = query_graph['nodes'][edge_props['object']]['category']
+          entity_filters = entity_filters + 'FILTER (?object_category = ' + object_category + ')\n'
+        except:
+          pass
+
+        # TODO: currently only accepting URIs, improve for CURIEs
+        try:
+          subject_curie = query_graph['nodes'][edge_props['subject']]['curie']
+          entity_filters = entity_filters + 'FILTER (?subject = <' + subject_curie + '>)\n'
+        except:
+          pass
+        try:
+          object_curie = query_graph['nodes'][edge_props['object']]['curie']
+          entity_filters = entity_filters + 'FILTER (?object = <' + object_curie + '>)\n'
+        except:
+          pass
+        sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_entity_filters', entity_filters)
 
     # Add LIMIT to the SPARQL query if n_results provided
     if n_results:
@@ -163,7 +197,7 @@ def reasonerapi_to_sparql(reasoner_query):
         edge_uri = edge_result['association']['value']
         # Create edge object in knowledge_graph
         knowledge_graph['edges'][edge_uri] = {
-            'predicate': predicate_category,
+            'predicate': resolve_uri_with_context(edge_result['predicate']['value']),
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
             'object': resolve_uri_with_context(edge_result['object']['value'])
         }
@@ -180,10 +214,10 @@ def reasonerapi_to_sparql(reasoner_query):
           knowledge_graph['edges'][edge_uri]['attributes'] = attributes_obj
 
         knowledge_graph['nodes'][edge_result['subject']['value']] = {
-            'category': subject_category
+            'category': resolve_uri_with_context(edge_result['subject_category']['value'])
         }
         knowledge_graph['nodes'][edge_result['object']['value']] = {
-            'category': object_category
+            'category': resolve_uri_with_context(edge_result['object_category']['value'])
         }
 
         # Add the bindings to the results object

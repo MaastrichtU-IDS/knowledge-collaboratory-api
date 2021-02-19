@@ -82,7 +82,7 @@ pip3 install -r requirements.txt
 >
 > ```bash
 > # Create the virtual environment folder in your workspace
-> python3 -m venv .venv
+> python3.8 -m venv .venv
 > # Activate it using a script in the created folder
 > source .venv/bin/activate
 > ```
