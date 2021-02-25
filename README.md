@@ -21,15 +21,13 @@ Check the **Translator Reasoner API** to query the Nanopublications network SPAR
 
 Requirements: [Java 8+](https://openjdk.java.net/install/)
 
-Use the [Nanobench 🛋️](https://github.com/vemonet/nanobench) to publish and explore nanopublications using a convenient web UI.
+Use the [Nanobench 🛋️](https://github.com/peta-pico/nanobench) to publish and explore nanopublications using a convenient web UI.
 
-Download the latest release of the Nanobench jar file for the Translator ecosystem by running this command:
+Download the latest release of the `nanobench.zip` file from GitHub: https://github.com/peta-pico/nanobench/releases/tag/nanobench-1.19
 
-```bash
-curl -s https://api.github.com/repos/vemonet/nanobench/releases/latest | grep "browser_download_url.*.jar" | cut -d : -f 2,3 | tr -d \" | wget -O ~/.nanopub/nanobench.jar -i -
-```
+Unzip the file, and put the jar file in a convenient folder (at `~/.nanopub/nanobench.jar` for example, to be able to call it from anywhere easily)
 
-> The jar file is downloaded in your home folder: `~/.nanopub/nanobench.jar`
+> Visit the [complete nanobench installation instructions](https://github.com/peta-pico/nanobench/blob/master/INSTALL.md) for more details.
 
 Run the Nanobench on http://localhost:37373. It will use the `ids_rsa` key in the `.nanopub` folder to authenticate, or guide you to generate one:
 
