@@ -16,6 +16,8 @@ info:
     component: KP
     team:
       - Clinical Data Provider
+  x-trapi: 
+    version: "1.0.0"
 externalDocs:
   description: >-
     Documentation for the NCATS Biomedical Translator Reasoners web services
@@ -27,18 +29,9 @@ servers:
   #   description: Production Knowledge Collaboratory API
 # - url: "{{server_url}}"
 tags:
-  - name: predicates
-    description: Get supported relationships by source and target
-    # externalDocs:
-    #   description: Documentation for the reasoner predicates function
-    #   url: http://reasonerhost.ncats.io/overview.html#predicates
-  - name: query
+  - name: trapi
     description: Query reasoner using a predefined question type
-    # externalDocs:
-    #   description: Documentation for the reasoner query function
-    #   url: http://reasonerhost.ncats.io/overview.html#query
   - name: translator
-  - name: reasoner
 paths:
   /kgx:
     get:
@@ -70,7 +63,7 @@ paths:
     get:
       operationId: api.get_predicates
       tags:
-        - predicates
+        - translator
       summary: Get supported relationships by source and target
       responses:
         '200':
@@ -97,7 +90,7 @@ paths:
     post:
       operationId: api.post_reasoner_query
       tags:
-        - query
+        - trapi
       summary: Query reasoner via one of several inputs
       description: 'Send a [ReasonerAPI](https://github.com/NCATSTranslator/ReasonerAPI) query 
         to request the predicted targets given: a source node, and the relation to predict. 
