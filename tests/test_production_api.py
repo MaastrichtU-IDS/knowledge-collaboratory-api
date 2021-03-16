@@ -8,9 +8,9 @@ def test_post_trapi():
     """Test Translator ReasonerAPI query POST operation to get predictions"""
     headers = {'Content-type': 'application/json'}
     tests_list = [
-        {'limit': 2, 'class': 'drug'},
+        {'limit': 1, 'class': 'drug'},
         {'limit': 'no', 'class': 'drug'},
-        {'limit': 2, 'class': 'anydrugdisease'},
+        {'limit': 1, 'class': 'anydrugdisease'},
         {'limit': 'no', 'class': 'anydrugdisease'},
     ]
 
@@ -24,7 +24,7 @@ def test_post_trapi():
         edges = trapi_results['knowledge_graph']['edges'].items()
 
         if trapi_test['limit'] == 'no':
-            assert len(edges) >= 5
+            assert len(edges) >= 2
         else:
             assert len(edges) == trapi_test['limit']
 
