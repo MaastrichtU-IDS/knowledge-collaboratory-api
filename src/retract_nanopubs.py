@@ -1,22 +1,10 @@
-import os
-import sys
-import subprocess
-import ast
-import connexion
-import flask
-import logging
-import json
-import csv
-from datetime import datetime
-
 from SPARQLWrapper import SPARQLWrapper, TURTLE, XML
 from rdflib import Graph, Namespace
 
-import pandas as pd 
 from nanopub import Publication, NanopubClient
 from rdflib import Graph, URIRef, Literal, RDF, FOAF, RDFS
 
-import requests
+# import requests
 # import functools
 # import shutil
 
@@ -27,7 +15,6 @@ SCHEMA = Namespace("http://schema.org/")
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 PROV = Namespace("http://www.w3.org/ns/prov#")
 MLS = Namespace("http://www.w3.org/ns/mls#")
-
 
 
 # def create_drug_indic_nanopub(np_client, drug_id, disease_id):
@@ -75,10 +62,12 @@ MLS = Namespace("http://www.w3.org/ns/mls#")
 np_client = NanopubClient()
 
 # results = np_client.find_nanopubs_with_text('fair')
-# results = np_client.find_nanopubs_with_pattern(\
+# results = np_client.find_nanopubs_with_pattern(
+    # obj='http://w3id.org/biolink/treats'
+    # obj='https://w3id.org/biolink/treats'
 results = np_client.find_valid_signed_nanopubs_with_pattern(
-    obj='https://w3id.org/biolink/vocab/ChemicalToDiseaseOrPhenotypicFeatureAssociation'
-    )
+    obj='https://w3.org/biolink/treats'
+)
 print(results)
 
 count = 0
@@ -86,7 +75,7 @@ for nanopub in results:
     count += 1
     print(nanopub['np'])
     # np_client.retract(nanopub['np'])
-    # np_client.retract(nanopub['np'], force=True)
+    np_client.retract(nanopub['np'], force=True)
 
 print(str(count) + ' nanopublications')
 

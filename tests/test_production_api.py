@@ -21,7 +21,7 @@ def test_post_trapi():
         trapi_results = requests.post(PROD_API_URL + '/query',
                             data=trapi_query, headers=headers).json()
 
-        edges = trapi_results['knowledge_graph']['edges'].items()
+        edges = trapi_results['message']['knowledge_graph']['edges'].items()
 
         if trapi_test['limit'] == 'no':
             assert len(edges) >= 2

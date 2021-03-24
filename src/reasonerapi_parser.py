@@ -67,6 +67,9 @@ for prefix in context.keys():
         namespace_resolver[prefix] = context[prefix]
 
 uri_resolver = {v: k for k, v in namespace_resolver.items()}
+uri_resolver['https://identifiers.org/mim/'] = 'OMIM'
+uri_resolver['https://identifiers.org/drugbank/'] = 'DRUGBANK'
+uri_resolver['https://w3id.org/biolink/'] = 'BIOLINK'
 
 def resolve_uri_with_context(uri_string):
     """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded
@@ -241,4 +244,4 @@ def reasonerapi_to_sparql(reasoner_query):
 
         kg_edge_count += 1
     
-    return {'knowledge_graph': knowledge_graph, 'query_graph': query_graph, 'results': query_results}
+    return {'message': {'knowledge_graph': knowledge_graph, 'query_graph': query_graph, 'results': query_results}}
