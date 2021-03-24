@@ -146,6 +146,12 @@ The `/predicates` operation will return the entities and relations provided by t
 
 The `/kgx` operation will return the complete Knowledge Collaboratory drug indications in [KGX](https://github.com/biolink/kgx) TSV format (in a `.zip` file)
 
+## Current resources in the Collaboratory
+
+* Drugs indications from the [PREDICT publication](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3159979/)
+
+* Drugs indications from the [NeuroDKG](https://github.com/MaastrichtU-IDS/neuro_dkg/), and off-label drug indications
+
 # Acknowledgments
 
 Service funded by the [NIH NCATS Translator project](https://ncats.nih.gov/translator/about). 
