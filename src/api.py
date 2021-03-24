@@ -75,13 +75,15 @@ def start_api(port=8808, server_url='/', debug=False):
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
     api.run(host='0.0.0.0', port=port, debug=debug, server=deployment_server)
 
-
-def get_kgx(from_kg):
+# def get_kgx(from_kg):
+def get_kgx():
     """Query the Nanopubs SPARQL endpoint using CONSTRUCT queries 
     to retrieve BioLink nodes and edges (associations)
     Then convert the RDF to kgx TSV format
     And return the nodes/edges files in a zip file  
     """
+    # TODO: currently only performing it from NeuroDKG direct conversion
+    from_kg = 'NeuroDKG'
     kgx_transformer = KgxTransformer(DATA_DIR)
     resp = kgx_transformer.transform_rdf_to_kgx(from_kg)
     return resp

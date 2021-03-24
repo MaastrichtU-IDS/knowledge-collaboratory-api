@@ -69,15 +69,19 @@ for prefix in context.keys():
 uri_resolver = {v: k for k, v in namespace_resolver.items()}
 uri_resolver['https://identifiers.org/mim/'] = 'OMIM'
 uri_resolver['https://identifiers.org/drugbank/'] = 'DRUGBANK'
-uri_resolver['https://w3id.org/biolink/'] = 'biolink'
+uri_resolver['https://w3id.org/biolink/vocab/'] = 'biolink'
+uri_resolver['http://w3id.org/biolink/vocab/'] = 'biolink'
+
 
 def resolve_uri_with_context(uri_string):
     """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded
     """
-    for prefix in namespace_resolver.keys():
-        if uri_string.startswith(namespace_resolver[prefix]):
-            return uri_string.replace(namespace_resolver[prefix], prefix + ':')
-
+    # print(uri_resolver)
+    for ns_uri in uri_resolver.keys():
+        # print(namespace_resolver[ns_uri] + ' - ' + uri_string)
+        if uri_string.startswith(ns_uri):
+            return uri_string.replace(ns_uri, uri_resolver[ns_uri] + ':')
+    # If not found:
     return uri_string
 
 def get_predicates_from_nanopubs():
