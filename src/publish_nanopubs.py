@@ -78,6 +78,7 @@ def create_drug_indic_nanopub(np_client, drug_id, disease_id):
 # Create the client, that allows searching, fetching and publishing nanopubs
 np_client = NanopubClient()
 
+# Generate nanopubs from OpenPredict drug-disease gold standard
 url = 'https://raw.githubusercontent.com/MaastrichtU-IDS/translator-openpredict/master/openpredict/data/resources/openpredict-omim-drug.csv'
 
 data = pd.read_csv(url)

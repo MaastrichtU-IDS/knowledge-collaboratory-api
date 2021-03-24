@@ -22,9 +22,9 @@ WHERE {
     OPTIONAL {
       ?association biolink:association_type ?association_type .
     }
+    ?subject biolink:category ?subject_category .
+    ?object biolink:category ?object_category .
   }
-  ?subject biolink:category ?subject_category .
-  ?object biolink:category ?object_category .
   ?_entity_filters
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
@@ -44,9 +44,9 @@ WHERE {
       rdf:subject ?subject ;
       rdf:predicate ?predicate_category ;
       rdf:object ?object .
+    ?subject biolink:category ?subject_category .
+    ?object biolink:category ?object_category .
   }
-  ?subject biolink:category ?subject_category .
-  ?object biolink:category ?object_category .
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
   }
@@ -76,9 +76,7 @@ uri_resolver['http://w3id.org/biolink/vocab/'] = 'biolink'
 def resolve_uri_with_context(uri_string):
     """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded
     """
-    # print(uri_resolver)
     for ns_uri in uri_resolver.keys():
-        # print(namespace_resolver[ns_uri] + ' - ' + uri_string)
         if uri_string.startswith(ns_uri):
             return uri_string.replace(ns_uri, uri_resolver[ns_uri] + ':')
     # If not found:
