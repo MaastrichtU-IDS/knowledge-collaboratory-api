@@ -89,6 +89,11 @@ def resolve_curie_to_identifiersorg(curie_string):
     """Take a CURIE and return the corresponding identifiers.org URI in the Nanopublication network
     using the BioLink JSON-LD Context previously loaded
     """
+    # Quick fix to handle lowercase drugbank and omim
+    if curie_string.startswith('drugbank:'):
+      curie_string = curie_string.replace('drugbank:', 'DRUGBANK:')
+    if curie_string.startswith('omim:'):
+      curie_string = curie_string.replace('omim:', 'OMIM:')
     return 'https://identifiers.org/' + curie_string
 
 def get_predicates_from_nanopubs():
