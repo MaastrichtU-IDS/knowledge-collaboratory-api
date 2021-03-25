@@ -11,7 +11,7 @@
             "nodes": {
                 "n0": {
                     "category": "biolink:Drug",
-                    "curie": "https://identifiers.org/drugbank/DB00394"
+                    "id": "CHEBI:75725"
                 },
                 "n1": {
                     "category": "biolink:Disease"

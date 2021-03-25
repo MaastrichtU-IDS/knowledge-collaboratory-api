@@ -66,7 +66,7 @@ np_client = NanopubClient()
     # obj='http://w3id.org/biolink/treats'
     # obj='https://w3id.org/biolink/treats'
 results = np_client.find_valid_signed_nanopubs_with_pattern(
-    obj='https://w3id.org/biolink/treats'
+    obj='https://w3id.org/biolink/vocab/treats'
 )
 print(results)
 
