@@ -153,16 +153,21 @@ components:
           query_graph:
             nodes:
               n0: 
-                category: "biolink:Drug"
-                id: DRUGBANK:DB00394
-                # id: "CHEBI:75725"
+                category: 
+                  - "biolink:Drug"
+                  - "biolink:ChemicalSubstance"
+                id: 
+                  - DRUGBANK:DB00394
+                  - CHEBI:75725
               n1:
-                category: "biolink:Disease"
+                category: 
+                  - "biolink:Disease"
             edges:
               e01:
                 subject: n0
                 object: n1
-                predicate: "biolink:treats"
+                predicate: 
+                  - "biolink:treats"
             
       description: >-
         The Query class is used to package a user request for information. A
