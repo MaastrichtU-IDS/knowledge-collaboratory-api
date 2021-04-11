@@ -1,6 +1,11 @@
 name: Test production API
 on:
   workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+    - 'tests/**'
+    - '.github/workflows/run-tests-prod.yml'
   schedule:
     - cron:  '00 01 * * *'
     # Everyday at 01:00am GMT+1
