@@ -143,53 +143,65 @@ def reasonerapi_to_sparql(reasoner_query):
             Contact us if you are interested in running multiple hop queries"""}
     
     sparql_query_get_nanopubs = get_nanopubs_select_query
-    predicate_category = ''
-    subject_category = ''
-    object_category = ''
     predicate_edge_id = ''
     subject_node_id = ''
     object_node_id = ''
-    # TODO: improve to support multiple edges query (aka. hops)
+
     for edge_id in query_graph['edges'].keys():
         edge_props = query_graph['edges'][edge_id]
         predicate_edge_id = edge_id
         subject_node_id = edge_props['subject']
         object_node_id = edge_props['object']
-        # predicate_category = edge_props['predicate']
-        # subject_category = query_graph['nodes'][edge_props['subject']]['category']
-        # object_category = query_graph['nodes'][edge_props['object']]['category']
-        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_predicate_category', predicate_category)
-        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_subject_category', subject_category)
-        # sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_object_category', object_category)
         
         entity_filters = ''
         try:
-          predicate_uri = edge_props['predicate']
-          entity_filters = entity_filters + 'FILTER (?predicate = ' + predicate_uri + ')\n'
+          predicate_curies = edge_props['predicate']
+          if not isinstance(predicate_curies, list):
+            predicate_curies = [ predicate_curies ]
+          predicate_curies = list(map(lambda curie: '?predicate = ' +  curie, predicate_curies))
+          predicate_curies = ' || '.join('?predicate = ' + predicate_curies)
+          entity_filters = entity_filters + 'FILTER ( ' + predicate_curies + ' )\n'
         except:
           pass
 
         try:
-          subject_category = query_graph['nodes'][edge_props['subject']]['category']
-          entity_filters = entity_filters + 'FILTER (?subject_category = ' + subject_category + ')\n'
+          subject_categories = query_graph['nodes'][edge_props['subject']]['category']
+          if not isinstance(subject_categories, list):
+            subject_categories = [ subject_categories ]
+          subject_categories = list(map(lambda curie: '?subject_category = ' +  curie, subject_categories))
+          subject_categories = ' || '.join(subject_categories)
+          entity_filters = entity_filters + 'FILTER ( ' + subject_categories + ' )\n'
         except:
           pass
 
         try:
-          object_category = query_graph['nodes'][edge_props['object']]['category']
-          entity_filters = entity_filters + 'FILTER (?object_category = ' + object_category + ')\n'
+          object_categories = query_graph['nodes'][edge_props['object']]['category']
+          if not isinstance(object_categories, list):
+            object_categories = [ object_categories ]
+          object_categories = list(map(lambda curie: '?object_category = ' +  curie, object_categories))
+          object_categories = ' || '.join(object_categories)
+          entity_filters = entity_filters + 'FILTER ( ' + object_categories + ' )\n'
         except:
           pass
 
-        # TODO: currently only accepting URIs, improve for CURIEs
+        # Resolve provided CURIE to https://identifiers.org/CURIE
         try:
-          subject_curie = resolve_curie_to_identifiersorg(query_graph['nodes'][edge_props['subject']]['id'])
-          entity_filters = entity_filters + 'FILTER (?subject = <' + subject_curie + '>)\n'
+          subject_curies = query_graph['nodes'][edge_props['subject']]['id']
+          if not isinstance(subject_curies, list):
+            subject_curies = [ subject_curies ]
+          subject_curies = list(map(lambda curie: '?subject = <' +  resolve_curie_to_identifiersorg(curie) + '>', subject_curies))
+          subject_curies = ' || '.join(subject_curies)
+          entity_filters = entity_filters + 'FILTER ( ' + subject_curies + ' )\n'
         except:
           pass
+        
         try:
-          object_curie = resolve_curie_to_identifiersorg(query_graph['nodes'][edge_props['object']]['id'])
-          entity_filters = entity_filters + 'FILTER (?object = <' + object_curie + '>)\n'
+          object_curies = query_graph['nodes'][edge_props['object']]['id']
+          if not isinstance(object_curies, list):
+            object_curies = [ object_curies ]
+          object_curies = list(map(lambda curie: '?subject = <' +  resolve_curie_to_identifiersorg(curie) + '>', object_curies))
+          object_curies = ' || '.join(object_curies)
+          entity_filters = entity_filters + 'FILTER ( ' + object_curies + ' )\n'
         except:
           pass
         sparql_query_get_nanopubs = sparql_query_get_nanopubs.replace('?_entity_filters', entity_filters)
@@ -261,3 +273,27 @@ def reasonerapi_to_sparql(reasoner_query):
         kg_edge_count += 1
     
     return {'message': {'knowledge_graph': knowledge_graph, 'query_graph': query_graph, 'results': query_results}}
+
+
+array_json = {
+  "message": {
+    "query_graph": {
+      "edges": {
+        "e01": {
+          "object": "n1",
+          "predicate": ["biolink:treated_by", "biolink:treats"],
+          "subject": "n0"
+        }
+      },
+      "nodes": {
+        "n0": {
+          "category": ["biolink:ChemicalSubstance", "biolink:Drug"],
+          "id": ["CHEBI:75725", "DRUGBANK:DB00394"]
+        },
+        "n1": {
+          "category": ["biolink:Drug", "biolink:Disease"]
+        }
+      }
+    }
+  }
+}

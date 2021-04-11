@@ -75,7 +75,7 @@ for nanopub in results:
     count += 1
     print(nanopub['np'])
     # np_client.retract(nanopub['np'])
-    # np_client.retract(nanopub['np'], force=True)
+    # np_client.retract(nanopub['np'])
 
 print(str(count) + ' nanopublications')
 
