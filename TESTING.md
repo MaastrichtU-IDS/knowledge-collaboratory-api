@@ -1,4 +1,4 @@
-[![Test production API](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Test%20production%20API/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Test+production+API%22)
+[![Test production API](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions/workflows/run-tests-prod.yml/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions/workflows/run-tests-prod.yml)
 
 Install the required dependency to run tests:
 

@@ -1,5 +1,3 @@
-[![Generate KGX from Knowledge Collaboratory](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Generate%20KGX%20from%20Knowledge%20Collaboratory/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Generate+KGX+from+Knowledge+Collaboratory%22) [![Validate RDF graphs](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/workflows/Validate%20Knowledge%20Collaboratory%20RDF/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions?query=workflow%3A%22Validate+Knowledge+Collaboratory+RDF%22)
-
 # Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via an [issue](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues) if applicable.
