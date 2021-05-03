@@ -7,6 +7,10 @@ Sample TSV:
 MESH:D001523	DB00235
 ```
 
+## More data
+
+More datasets here: http://snap.stanford.edu/biodata/
+
 ## How it is published
 
 Each association is published as a separate nanopublication in the Nanopublication network (http://nanopub.org/wordpress/). 
