@@ -1,5 +1,3 @@
-> Contributions, [feedbacks](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues) and pull requests are welcomed!
-
 # Example notebooks 📔
 
 We provide [Jupyter Notebooks](https://jupyter.org/) with examples to use the OpenPredict API in this folder.
@@ -20,3 +18,5 @@ docker-compose up
 ```
 
 > The default password of the notebook started with docker is `password`
+
+Contributions, [feedbacks](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/issues) and pull requests are welcomed!
