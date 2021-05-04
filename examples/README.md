@@ -10,10 +10,15 @@ git clone https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api.git
 
 Then go to the `examples` folder and open the notebooks with your favorite viewer (Jupyter or VisualStudio Code)
 
+To install the dependencies:
+
+```bash
+/path/to/vscode/interpreter/python -m pip install -r requirements.txt
+```
+
 You can also start the notebook with docker (requires docker to be installed):
 
 ```bash
-cd docs
 docker-compose up
 ```
 
