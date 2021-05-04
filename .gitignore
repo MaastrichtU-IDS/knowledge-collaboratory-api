@@ -19,3 +19,6 @@ output/
 .local/
 .npm/
 .bash_history
+
+.DS_Store
+settings.json
