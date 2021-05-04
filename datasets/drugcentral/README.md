@@ -78,7 +78,9 @@ select meddra_name,meddra_code,llr,llr_threshold from faers,structures
         and llr > llr_threshold order by llr desc;
 ```
 
+## Ontop
 
+Example files: https://ontop-vkg.org/tutorial/basic/university-1.html#ontology-classes-and-properties
 
 ## How it is published
 
