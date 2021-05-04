@@ -17,7 +17,7 @@ Check the **Translator Reasoner API** to query the Nanopublications network SPAR
 
 ## Publish Nanopublications 📬
 
-### Nanopublish with the Nanobench UI
+### Publish with the Nanobench UI
 
 Requirements: [Java 8+](https://openjdk.java.net/install/)
 
@@ -40,7 +40,7 @@ See also:
 * Check the [vemonet/nanobench wiki](https://github.com/vemonet/nanobench/wiki/Add-an-evidence-to-an-association) to get a full tutorial to publish associations!
 * Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
-### Nanopublish a tabular file with python
+### Publish a tabular file with python
 
 1. Use the [BioLink JSON-LD Context file](https://github.com/biolink/biolink-model/blob/master/context.jsonld) to use the right URIs (so that Translator tools can map them to CURIEs)
 2. Checkout the [`src/publish_nanopubs.py`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/src/publish_nanopubs.py) file to see an example for generating nanopublications for drug indications from a simple TSV file.
@@ -84,7 +84,6 @@ pip3 install -r requirements.txt
 > # Activate it using a script in the created folder
 > source .venv/bin/activate
 > ```
->
 
 Start the API in **production** mode on http://localhost:8808 with Tornado:
 
