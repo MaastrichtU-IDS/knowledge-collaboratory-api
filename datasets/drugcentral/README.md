@@ -40,6 +40,23 @@ s.id = o.struct_id
 AND o.relationship_name='indication'
 ```
 
+To query indications with doid and drugbank_id:
+
+```sql
+select * from omop_relationship as o
+INNER JOIN identifier on identifier.struct_id = o.struct_id
+where o.relationship_name = ‘indication’ and identifier.id_type = ‘DRUGBANK_ID’
+```
+
+and
+
+```sql
+select * from omop_relationship as o
+INNER JOIN doid_xref on doid_xref.xref=o.umls_cui
+INNER JOIN identifier on identifier.struct_id = o.struct_id
+where o.relationship_name = ‘indication’ and identifier.id_type = ‘DRUGBANK_ID’
+```
+
 Example queries from DrugCentral:
 
 ```sql

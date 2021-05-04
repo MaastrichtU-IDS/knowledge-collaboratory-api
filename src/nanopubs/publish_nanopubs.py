@@ -1,7 +1,7 @@
 from nanopub import Publication, NanopubClient
 from rdflib import Graph, Namespace, URIRef, Literal, RDF, FOAF, RDFS, XSD
 
-# Create the client, that allows publishing nanopubs
+# Example to publish a nanopub about to comment an edge with an evidence
 def publish_edge_comment(edge_to_comment, comment, negated, evidence, dryrun=True):
   np_client = NanopubClient()
   BIOLINK = Namespace("https://w3id.org/biolink/vocab/")
