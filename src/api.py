@@ -118,8 +118,16 @@ def get_kgx():
 #     results_json = json.loads(results_dict)
 #     return {'results': results_json, 'relation': relation, 'count': len(results_json)} or ('Not found', 404)
 
+def get_meta_knowledge_graph():
+    """Get predicates and entities provided by the API
+    
+    :return: JSON with biolink entities
+    """
+    return get_predicates_from_nanopubs()
+
 def get_predicates():
     """Get predicates and entities provided by the API
+    DEPRECATED since 3.1.0, replaced by meta_knowledge_graph
     
     :return: JSON with biolink entities
     """
