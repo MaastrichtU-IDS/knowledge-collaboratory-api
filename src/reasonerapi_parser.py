@@ -100,6 +100,7 @@ def get_predicates_from_nanopubs():
     """Query the Nanopublications network to get BioLink entity categories and the relation between them
     Formatted for the Translator TRAPI /predicate get call
     """
+    # TODO: Update to the meta_knowledge_graph for TRAPI 3.1.0
     predicates = {}
     # Run query to get types and relations between them
     sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
@@ -155,7 +156,7 @@ def reasonerapi_to_sparql(reasoner_query):
         
         entity_filters = ''
         try:
-          predicate_curies = edge_props['predicate']
+          predicate_curies = edge_props['predicates']
           if not isinstance(predicate_curies, list):
             predicate_curies = [ predicate_curies ]
           predicate_curies = list(map(lambda curie: '?predicate = ' +  curie, predicate_curies))
@@ -186,9 +187,7 @@ def reasonerapi_to_sparql(reasoner_query):
 
         # Resolve provided CURIE to https://identifiers.org/CURIE
         try:
-          subject_curies = query_graph['nodes'][edge_props['subject']]['id']
-          if not isinstance(subject_curies, list):
-            subject_curies = [ subject_curies ]
+          subject_curies = query_graph['nodes'][edge_props['subject']]['ids']
           subject_curies = list(map(lambda curie: '?subject = <' +  resolve_curie_to_identifiersorg(curie) + '>', subject_curies))
           subject_curies = ' || '.join(subject_curies)
           entity_filters = entity_filters + 'FILTER ( ' + subject_curies + ' )\n'
@@ -196,9 +195,7 @@ def reasonerapi_to_sparql(reasoner_query):
           pass
         
         try:
-          object_curies = query_graph['nodes'][edge_props['object']]['id']
-          if not isinstance(object_curies, list):
-            object_curies = [ object_curies ]
+          object_curies = query_graph['nodes'][edge_props['object']]['ids']
           object_curies = list(map(lambda curie: '?subject = <' +  resolve_curie_to_identifiersorg(curie) + '>', object_curies))
           object_curies = ' || '.join(object_curies)
           entity_filters = entity_filters + 'FILTER ( ' + object_curies + ' )\n'
@@ -228,7 +225,7 @@ def reasonerapi_to_sparql(reasoner_query):
         edge_uri = edge_result['association']['value']
         # Create edge object in knowledge_graph
         knowledge_graph['edges'][edge_uri] = {
-            'predicate': resolve_uri_with_context(edge_result['predicate']['value']),
+            'predicate': [resolve_uri_with_context(edge_result['predicate']['value'])],
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
             'object': resolve_uri_with_context(edge_result['object']['value'])
         }
@@ -245,10 +242,10 @@ def reasonerapi_to_sparql(reasoner_query):
           knowledge_graph['edges'][edge_uri]['attributes'] = attributes_obj
 
         knowledge_graph['nodes'][resolve_uri_with_context(edge_result['subject']['value'])] = {
-            'category': resolve_uri_with_context(edge_result['subject_category']['value'])
+            'categories': resolve_uri_with_context(edge_result['subject_category']['value'])
         }
         knowledge_graph['nodes'][resolve_uri_with_context(edge_result['object']['value'])] = {
-            'category': resolve_uri_with_context(edge_result['object_category']['value'])
+            'categories': resolve_uri_with_context(edge_result['object_category']['value'])
         }
 
         # Add the bindings to the results object
