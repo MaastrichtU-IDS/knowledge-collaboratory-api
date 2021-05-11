@@ -128,17 +128,17 @@ def get_meta_knowledge_graph():
             {
                 "object": "biolink:Disease",
                 "predicate": "biolink:treats",
-                "relations": [
-                    "RO:0002434"
-                ],
+                # "relations": [
+                #     "RO:0002434"
+                # ],
                 "subject": "biolink:Drug"
             },
             {
                 "object": "biolink:Drug",
                 "predicate": "biolink:treated_by",
-                "relations": [
-                    "RO:0002434"
-                ],
+                # "relations": [
+                #     "RO:0002434"
+                # ],
                 "subject": "biolink:Disease"
             }
         ],
