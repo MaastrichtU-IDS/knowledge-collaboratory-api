@@ -166,7 +166,7 @@ def reasonerapi_to_sparql(reasoner_query):
           pass
 
         try:
-          subject_categories = query_graph['nodes'][edge_props['subject']]['category']
+          subject_categories = query_graph['nodes'][edge_props['subject']]['categories']
           if not isinstance(subject_categories, list):
             subject_categories = [ subject_categories ]
           subject_categories = list(map(lambda curie: '?subject_category = ' +  curie, subject_categories))
@@ -176,7 +176,7 @@ def reasonerapi_to_sparql(reasoner_query):
           pass
 
         try:
-          object_categories = query_graph['nodes'][edge_props['object']]['category']
+          object_categories = query_graph['nodes'][edge_props['object']]['categories']
           if not isinstance(object_categories, list):
             object_categories = [ object_categories ]
           object_categories = list(map(lambda curie: '?object_category = ' +  curie, object_categories))
