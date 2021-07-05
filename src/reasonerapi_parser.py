@@ -225,7 +225,7 @@ def reasonerapi_to_sparql(reasoner_query):
         edge_uri = edge_result['association']['value']
         # Create edge object in knowledge_graph
         knowledge_graph['edges'][edge_uri] = {
-            'predicate': [resolve_uri_with_context(edge_result['predicate']['value'])],
+            'predicate': resolve_uri_with_context(edge_result['predicate']['value']),
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
             'object': resolve_uri_with_context(edge_result['object']['value']),
             'attributes': [
