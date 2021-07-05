@@ -235,7 +235,7 @@ def reasonerapi_to_sparql(reasoner_query):
                     'value_type_id': 'biolink:InformationResource',
                     'attribute_source': 'infores:knowledge-collaboratory',
                     'value_url': 'https://api.collaboratory.semanticscience.org/query'
-                },
+                }
             ]
         }
         if edge_result['relation']:
@@ -243,12 +243,13 @@ def reasonerapi_to_sparql(reasoner_query):
         # if edge_result['association_type']:
         #   knowledge_graph['edges'][edge_uri]['association_type'] = resolve_uri_with_context(edge_result['association_type']['value'])
 
-        attributes_obj = {}
         if edge_result['provided_by']:
-          attributes_obj['provided_by'] = resolve_uri_with_context(edge_result['provided_by']['value'])
-
-        if len(attributes_obj) > 0:
-          knowledge_graph['edges'][edge_uri]['attributes'] = attributes_obj
+          # Add provided_by attribute
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:provided_by',
+              'value': resolve_uri_with_context(edge_result['provided_by']['value']),
+              # 'value_type_id': 'biolink:Agent',
+          })
 
         knowledge_graph['nodes'][resolve_uri_with_context(edge_result['subject']['value'])] = {
             'categories': [resolve_uri_with_context(edge_result['subject_category']['value'])]
