@@ -225,9 +225,18 @@ def reasonerapi_to_sparql(reasoner_query):
         edge_uri = edge_result['association']['value']
         # Create edge object in knowledge_graph
         knowledge_graph['edges'][edge_uri] = {
-            'predicate': [resolve_uri_with_context(edge_result['predicate']['value'])],
+            'predicates': [resolve_uri_with_context(edge_result['predicate']['value'])],
             'subject': resolve_uri_with_context(edge_result['subject']['value']),
-            'object': resolve_uri_with_context(edge_result['object']['value'])
+            'object': resolve_uri_with_context(edge_result['object']['value']),
+            'attributes': [
+                {
+                    'attribute_type_id': 'biolink:aggregator_knowledge_source',
+                    'value': 'infores:knowledge-collaboratory',
+                    'value_type_id': 'biolink:InformationResource',
+                    'attribute_source': 'infores:knowledge-collaboratory',
+                    'value_url': 'https://api.collaboratory.semanticscience.org/query'
+                },
+            ]
         }
         if edge_result['relation']:
           knowledge_graph['edges'][edge_uri]['relation'] = resolve_uri_with_context(edge_result['relation']['value'])
@@ -242,10 +251,10 @@ def reasonerapi_to_sparql(reasoner_query):
           knowledge_graph['edges'][edge_uri]['attributes'] = attributes_obj
 
         knowledge_graph['nodes'][resolve_uri_with_context(edge_result['subject']['value'])] = {
-            'categories': resolve_uri_with_context(edge_result['subject_category']['value'])
+            'categories': [resolve_uri_with_context(edge_result['subject_category']['value'])]
         }
         knowledge_graph['nodes'][resolve_uri_with_context(edge_result['object']['value'])] = {
-            'categories': resolve_uri_with_context(edge_result['object_category']['value'])
+            'categories': [resolve_uri_with_context(edge_result['object_category']['value'])]
         }
 
         # Add the bindings to the results object

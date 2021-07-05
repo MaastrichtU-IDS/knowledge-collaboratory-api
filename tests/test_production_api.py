@@ -1,6 +1,7 @@
 import pytest
 import os
 import requests
+from reasoner_validator import validate
 
 PROD_API_URL = 'https://api.collaboratory.semanticscience.org'
 
@@ -24,6 +25,7 @@ def test_post_trapi():
 
         edges = trapi_results['message']['knowledge_graph']['edges'].items()
 
+        assert validate(trapi_results['message'], "Message", "1.1.0") == None
         if trapi_filename.endswith('limit1.json'):
             assert len(edges) == 1
         else:
