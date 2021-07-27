@@ -1,0 +1,45 @@
+@prefix : <http://purl.org/nanopub/temp/mynanopub#> .
+@prefix biolink: <https://w3id.org/biolink/vocab/> .
+@prefix np: <http://www.nanopub.org/nschema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:provenance {
+    :assertion prov:generatedAtTime "2021-07-12T10:50:10.272178"^^xsd:dateTime .
+}
+
+:pubInfo {
+    : prov:generatedAtTime "2021-07-12T10:50:10.272178"^^xsd:dateTime ;
+        prov:wasAttributedTo <https://orcid.org/1234-1234-1234-1234> .
+}
+
+:assertion {
+    :association a rdf:Statement ;
+        rdf:object <http://purl.obolibrary.org/obo/MONDO_0002009> ;
+        rdf:predicate biolink:treats ;
+        rdf:subject <https://identifiers.org/DRUGBANK:DB00193> ;
+        biolink:description "Tramadol was reported to be an effective or very effective antidepressant by 94.6% of patients (123/130) who provided ratings submitted to User Reviews for Tramadol to Treat Depression. Tramadol addiction has been reported in individuals who have consumed high doses for prolonged periods. " ;
+        biolink:has_population_context :context ;
+        biolink:provided_by <https://w3id.org/um/NeuroDKG> ;
+        biolink:publications <https://pubmed.ncbi.nlm.nih.gov/33344902> ;
+        biolink:relation <https://w3id.org/um/neurodkg/OffLabelIndication> .
+
+    <http://purl.obolibrary.org/obo/MONDO_0002009> a biolink:Disease ;
+        rdfs:label "Major depressive disorder" .
+
+    :context a biolink:Cohort ;
+        rdfs:label "Adults" .
+
+    <https://identifiers.org/DRUGBANK:DB00193> a biolink:Drug ;
+        rdfs:label "Tramadol" .
+}
+
+:Head {
+    : a np:Nanopublication ;
+        np:hasAssertion :assertion ;
+        np:hasProvenance :provenance ;
+        np:hasPublicationInfo :pubInfo .
+}
+
