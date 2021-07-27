@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   description: "Translator Reasoner API for the Knowledge Collaboratory, hosted on the [Nanopublications network](http://nanopub.org/wordpress/), for annotated drug indications or any other BioLink-compliant claims.
-    \n\n This Open API supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) queries and the [`KGX`](https://github.com/biolink/kgx) format
+    \n\n This Open API supports [Translator Reasoner API](https://github.com/NCATSTranslator/ReasonerAPI) queries
     \n\nSee the API GitHub repository: [github.com/MaastrichtU-IDS/knowledge-collaboratory-api](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api)
     \n\n[![Test production API](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions/workflows/run-tests-prod.yml/badge.svg)](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/actions/workflows/run-tests-prod.yml)
     \n\nThis service is supported by the [NCATS Translator project](https://ncats.nih.gov/translator/about)"
@@ -55,32 +55,6 @@ tags:
   - name: trapi
     description: Required for SmartAPI validation of x-trapi
 paths:
-  /kgx:
-    get:
-      operationId: api.get_kgx
-      tags:
-        - translator
-      summary: "Experimental: get the Knowledge Collaboratory drug indications in KGX TSV format (TSV files in a .zip)"
-      # parameters:
-      #   - in: query
-      #     name: from_kg
-      #     description: Get drug indications from which KG
-      #     schema:
-      #       type: string
-      #       enum: [NeuroDKG, Nanopublications]
-      #       default: NeuroDKG
-      responses:
-        '200':
-          description: Zip file with nodes and edges files in KGX TSV format
-          content: 
-            application/zip:
-            # application/octet-stream:
-              schema:
-                type: string
-                format: binary
-          # content:
-          #   application/json:
-
   /predicates:
     get:
       operationId: api.get_predicates

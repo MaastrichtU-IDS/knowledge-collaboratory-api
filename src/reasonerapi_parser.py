@@ -53,6 +53,7 @@ WHERE {
   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
 }"""
 
+
 ## Virtuoso SPARQL endpoint for the Nanopubs server at IDS
 SPARQL_ENDPOINT_URL = 'http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql'
 
