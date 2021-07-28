@@ -5,7 +5,7 @@ import connexion
 from flask_reverse_proxy_fix.middleware import ReverseProxyPrefixFix
 from flask_cors import CORS
 
-from reasonerapi_parser import reasonerapi_to_sparql, get_predicates_from_nanopubs
+from reasonerapi_parser import reasonerapi_to_sparql, get_predicates_from_nanopubs, get_metakg_from_nanopubs
 
 # import flask
 # import json
@@ -29,7 +29,7 @@ def start_api(port=8808, server_url='/', debug=False):
     :param debug: Run in debug mode, defaults to False
     :param start_spark: Start a local Spark cluster, default to true
     """
-    print("Starting the \033[1mTranslator Knowledge Collaboratory API\033[0m 🔮🐍")
+    print("Starting the \033[1mTranslator Knowledge Collaboratory API\033[0m")
 
     if debug:
         # Run in development mode
@@ -106,43 +106,7 @@ def get_meta_knowledge_graph():
     
     :return: JSON with biolink entities
     """
-    predicates = {
-        "edges": [
-            {
-                "object": "biolink:Disease",
-                "predicate": "biolink:treats",
-                # "relations": [
-                #     "RO:0002434"
-                # ],
-                "subject": "biolink:Drug"
-            },
-            {
-                "object": "biolink:Drug",
-                "predicate": "biolink:treated_by",
-                # "relations": [
-                #     "RO:0002434"
-                # ],
-                "subject": "biolink:Disease"
-            }
-        ],
-        "nodes": {
-            "biolink:Disease": {
-                "id_prefixes": [
-                    "OMIM",
-                    "MONDO"
-                ]
-            },
-            "biolink:Drug": {
-                "id_prefixes": [
-                    "DRUGBANK",
-                    "CHEBI"
-                ]
-            }
-        }
-    }
-    
-    return predicates
-    # return get_predicates_from_nanopubs()
+    return get_metakg_from_nanopubs()
 
 def get_predicates():
     """Get predicates and entities provided by the API

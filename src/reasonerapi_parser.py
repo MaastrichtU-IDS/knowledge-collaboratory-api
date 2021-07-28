@@ -32,7 +32,7 @@ WHERE {
   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
 }"""
 
-get_predicates_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+get_edges_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX biolink: <https://w3id.org/biolink/vocab/>
 PREFIX np: <http://www.nanopub.org/nschema#>
@@ -52,6 +52,36 @@ WHERE {
   }
   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
 }"""
+
+get_metakg_prefixes_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX biolink: <https://w3id.org/biolink/vocab/>
+PREFIX np: <http://www.nanopub.org/nschema#>
+PREFIX npx: <http://purl.org/nanopub/x/>
+SELECT DISTINCT ?node_category ?node_prefix
+WHERE {
+  graph ?np_assertion {
+    {
+      ?association
+        rdf:subject ?node ;
+        rdf:predicate ?predicate_category ;
+        rdf:object ?object .
+    } UNION {
+      ?association
+        rdf:subject ?subject ;
+        rdf:predicate ?predicate_category ;
+        rdf:object ?node .
+    }
+    ?node biolink:category ?node_category .
+    BIND(UCASE(STRBEFORE(REPLACE(STRAFTER(str(?node), ":"), "//identifiers.org/", ""), ":")) AS ?node_prefix)
+    FILTER(strlen(?node_prefix)>0)
+  }
+  graph ?np_head {
+    ?np_uri np:hasAssertion ?np_assertion .
+  }
+  FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
+}
+"""
 
 
 ## Virtuoso SPARQL endpoint for the Nanopubs server at IDS
@@ -106,7 +136,7 @@ def get_predicates_from_nanopubs():
     # Run query to get types and relations between them
     sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
     sparql.setReturnFormat(JSON)
-    sparql.setQuery(get_predicates_select_query)
+    sparql.setQuery(get_edges_select_query)
     sparqlwrapper_results = sparql.query().convert()
     sparql_results = sparqlwrapper_results["results"]["bindings"]
     for result in sparql_results:
@@ -122,6 +152,42 @@ def get_predicates_from_nanopubs():
             predicates[np_subject][np_object].append(np_predicate)
 
     return predicates
+
+def get_metakg_from_nanopubs():
+    """Query the Nanopublications network to get BioLink entity categories and the relation between them
+    Formatted for the Translator TRAPI /predicate get call
+    """
+    # TODO: Update to the meta_knowledge_graph for TRAPI 3.1.0
+    predicates = {}
+    # Run query to get types and relations between them
+    sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
+    sparql.setReturnFormat(JSON)
+    sparql.setQuery(get_edges_select_query)
+    sparqlwrapper_results = sparql.query().convert()
+    sparql_results = sparqlwrapper_results["results"]["bindings"]
+    edges_array = []
+    for result in sparql_results:
+        edges_array.append({
+            "subject": resolve_uri_with_context(result['subject_category']['value']),
+            "predicate": resolve_uri_with_context(result['predicate_category']['value']),
+            "object": resolve_uri_with_context(result['object_category']['value'])
+        })
+
+    sparql.setQuery(get_metakg_prefixes_query)
+    sparqlwrapper_results = sparql.query().convert()
+    prefixes_results = sparqlwrapper_results["results"]["bindings"]
+    nodes_obj = {}
+    for result in prefixes_results:
+        node_category = resolve_uri_with_context(result['node_category']['value'])
+        if node_category not in nodes_obj.keys():
+            nodes_obj[node_category] = {
+                "id_prefixes": [ result['node_prefix']['value'] ]
+            }
+        else:
+            nodes_obj[node_category]['id_prefixes'].append(result['node_prefix']['value'])
+
+    return {'edges': edges_array, 'nodes': nodes_obj}
+
 
 def reasonerapi_to_sparql(reasoner_query):
     """Convert an array of predictions objects to ReasonerAPI format
