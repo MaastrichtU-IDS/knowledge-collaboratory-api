@@ -4,6 +4,7 @@ import requests
 from reasoner_validator import validate
 
 PROD_API_URL = 'https://api.collaboratory.semanticscience.org'
+VALIDATE_TRAPI_VERSION="1.1.0"
 
 def test_post_trapi():
     """Test Translator ReasonerAPI query POST operation to get predictions"""
@@ -28,7 +29,7 @@ def test_post_trapi():
         print(trapi_results)
         edges = trapi_results['message']['knowledge_graph']['edges'].items()
 
-        assert validate(trapi_results['message'], "Message", "1.2.0") == None
+        assert validate(trapi_results['message'], "Message", VALIDATE_TRAPI_VERSION) == None
         if trapi_filename.endswith('limit1.json'):
             assert len(edges) == 1
         else:
