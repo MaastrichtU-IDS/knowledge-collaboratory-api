@@ -42,22 +42,30 @@ See also:
 
 ### Publish a spreadsheet as nanopublications
 
-1. Use the [BioLink JSON-LD Context file](https://github.com/biolink/biolink-model/blob/master/context.jsonld) to use the right URIs (so that Translator tools can map them to CURIEs)
-2. Checkout the [`src/nanopubs/drug_indications_from_gdocs.py`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/src/nanopubs/drug_indications_from_gdocs.py) file to see an example for publishing drug indications from a gdocs spreadsheet as Nanopublications using the BioLink model
+Check the [BioLink JSON-LD Context file](https://github.com/biolink/biolink-model/blob/master/context.jsonld) to find ontologies supported by the Translator (for better integrations with other Translator tools)
 
-Run the commands from the root folder of this repository. Install required dependencies:
+Checkout the [`src/nanopubs/drug_indications_from_gdocs.py`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/src/nanopubs/drug_indications_from_gdocs.py) file to see an example for publishing drug indications from a gdocs spreadsheet as Nanopublications using the BioLink model
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api
+cd knowledge-collaboratory-api
+```
+
+2. Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Test the script to generate nanopubs from the gdoc spreadsheet, and inspect the RDF generated:
+3. Test the script to generate nanopubs from the gdoc spreadsheet, and inspect the RDF generated:
 
 ```bash
 python3 src/nanopubs/drug_indications_from_gdocs.py
 ```
 
-Run and publish each row of the spreadsheet as a nanopublication:
+When you are ready, you can run and publish each row of the spreadsheet as a nanopublication:
 
 ```bash
 python3 src/nanopubs/drug_indications_from_gdocs.py --publish
