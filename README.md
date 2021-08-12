@@ -40,10 +40,28 @@ See also:
 * Check the [vemonet/nanobench wiki](https://github.com/vemonet/nanobench/wiki/Add-an-evidence-to-an-association) to get a full tutorial to publish associations!
 * Templates for the Translator (e.g. "Defining a biomedical association with its context") can be seen and improved in [the MaastrichtU-IDS/nanobench-templates GitHub repository](https://github.com/MaastrichtU-IDS/nanobench-templates/tree/master/templates/translator).
 
-### Publish a tabular file with python
+### Publish a spreadsheet as nanopublications
 
 1. Use the [BioLink JSON-LD Context file](https://github.com/biolink/biolink-model/blob/master/context.jsonld) to use the right URIs (so that Translator tools can map them to CURIEs)
-2. Checkout the [`src/publish_nanopubs.py`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/src/publish_nanopubs.py) file to see an example for generating nanopublications for drug indications from a simple TSV file.
+2. Checkout the [`src/nanopubs/drug_indications_from_gdocs.py`](https://github.com/MaastrichtU-IDS/knowledge-collaboratory-api/blob/master/src/nanopubs/drug_indications_from_gdocs.py) file to see an example for publishing drug indications from a gdocs spreadsheet as Nanopublications using the BioLink model
+
+Run the commands from the root folder of this repository. Install required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Test the script to generate nanopubs from the gdoc spreadsheet, and inspect the RDF generated:
+
+```bash
+python3 src/nanopubs/drug_indications_from_gdocs.py
+```
+
+Run and publish each row of the spreadsheet as a nanopublication:
+
+```bash
+python3 src/nanopubs/drug_indications_from_gdocs.py --publish
+```
 
 ## Query the Collaboratory API
 

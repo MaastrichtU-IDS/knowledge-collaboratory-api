@@ -99,10 +99,15 @@ for prefix in context.keys():
 
 uri_resolver = {v: k for k, v in namespace_resolver.items()}
 uri_resolver['https://identifiers.org/mim/'] = 'OMIM'
+uri_resolver['https://identifiers.org/OMIM:'] = 'OMIM'
 uri_resolver['https://identifiers.org/drugbank/'] = 'DRUGBANK'
+uri_resolver['https://go.drugbank.com/drugs/'] = 'DRUGBANK'
 uri_resolver['https://w3id.org/biolink/vocab/'] = 'biolink'
 uri_resolver['http://w3id.org/biolink/vocab/'] = 'biolink'
 uri_resolver['https://w3id.org/um/neurodkg/'] = 'neurodkg'
+# http://www.ebi.ac.uk/efo/EFO_000985
+
+
 
 def resolve_uri_with_context(uri_string):
     """Take an URI and return its CURIE form, using the BioLink JSON-LD Context previously loaded

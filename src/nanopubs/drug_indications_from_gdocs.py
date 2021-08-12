@@ -47,7 +47,7 @@ for index, row in df.iterrows():
     # drug_uri = URIRef('http://identifiers.org/drugbank/' + row['drugbank_id'])
     g.add( (association_uri, RDF.subject, drug_uri) )
 
-    # Add disease as object (use mondo_URL? http://purl.obolibrary.org/obo/MONDO_0002491)
+    # Add disease as object (use OBO or identifiergs.org URI? http://purl.obolibrary.org/obo/MONDO_0002491)
     # disease_uri = URIRef('https://identifiers.org/' + row['mondo_id'].replace('_', ':'))
     disease_uri = URIRef(row['mondo_URL'])
     g.add( (association_uri, RDF.object, disease_uri) )
@@ -93,11 +93,13 @@ for index, row in df.iterrows():
             else:
                 print(f"ShEx FAIL:\n {r.reason}")
 
+    # Add template in pub info
     pubinfo = Graph()
-    # Add template info? (for better update)
-    # sub:pubinfo {
-    #     nt:wasCreatedFromTemplate <http://purl.org/np/RAZdZj78B6nKrP1Q00oFzsK07u7WdiY3sToz-H-H2nSgg> .
-    # }
+    pubinfo.add( (
+        URIRef('http://purl.org/nanopub/temp/mynanopub#'), 
+        URIRef('https://w3id.org/np/o/ntemplate/wasCreatedFromTemplate'), 
+        URIRef('http://purl.org/np/RATVS2nKWuTWDgbsjgxEILE7Y2SWVEyUeynak5u-n7QFE')
+    ) )
     publication = Publication.from_assertion(
         assertion_rdf=g,
         pubinfo_rdf=pubinfo
@@ -107,6 +109,7 @@ for index, row in df.iterrows():
     if args.publish:
         print("Publishing the nanopub")
         # publication_info = np_client.publish(publication)
+        # print(publication_info)
     else:
         print(publication)
         print("Dry run, not publishing the Nanopub. Add --publish to publish")
