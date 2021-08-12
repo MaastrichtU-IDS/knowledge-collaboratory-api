@@ -20,12 +20,15 @@ def test_post_trapi():
         # trapi_filename = 'tests/queries/trapi_' + trapi_test['class'] + '_limit' + str(trapi_test['limit']) + '.json'
         with open('tests/queries/' + trapi_filename,'r') as f:
             trapi_query = f.read()
+        print(PROD_API_URL)
+        print(trapi_query)
         trapi_results = requests.post(PROD_API_URL + '/query',
                             data=trapi_query, headers=headers).json()
-
+        print("trapi_resultsss")
+        print(trapi_results)
         edges = trapi_results['message']['knowledge_graph']['edges'].items()
 
-        assert validate(trapi_results['message'], "Message", "1.1.0") == None
+        assert validate(trapi_results['message'], "Message", "1.2.0") == None
         if trapi_filename.endswith('limit1.json'):
             assert len(edges) == 1
         else:
