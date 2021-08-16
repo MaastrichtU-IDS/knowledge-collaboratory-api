@@ -44,6 +44,7 @@ for index, row in df.iterrows():
         g = Graph()
         g.bind("biolink", URIRef('https://w3id.org/biolink/vocab/'))
         g.add( (association_uri, RDF.type, RDF.Statement ) )
+        g.add( (association_uri, RDFS.label, Literal(row['context'])) )
 
         # Add drug as subject
         drug_uri = URIRef('https://identifiers.org/DRUGBANK:' + row['drugbank_id'])
