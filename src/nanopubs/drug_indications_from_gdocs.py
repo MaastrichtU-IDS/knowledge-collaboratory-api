@@ -67,7 +67,7 @@ for index, row in df.iterrows():
 
         # Infos about the indication evidence publication
         g.add( (association_uri, BIOLINK['publications'], URIRef(row['URL Complete'])) )
-        g.add( (association_uri, BIOLINK['description'], Literal(row['context'])) )
+        # g.add( (association_uri, BIOLINK['description'], Literal(row['context'])) )
         g.add( (association_uri, BIOLINK['has_population_context'], study_context_uri) )
 
         # Target group in the related publication
