@@ -56,7 +56,7 @@ for index, row in df.iterrows():
 
         # Add disease as object (use OBO or identifiergs.org URI? http://purl.obolibrary.org/obo/MONDO_0002491)
         # disease_uri = URIRef('https://identifiers.org/' + row['mondo_id'].replace('_', ':'))
-        disease_uri = URIRef(row['mondo_URL'])
+        disease_uri = URIRef(row['mondo_URL'].strip())
         g.add( (association_uri, RDF.object, disease_uri) )
 
         # Define predicate/relation: BioLink treats/OffLabel drug indication?
