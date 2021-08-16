@@ -77,6 +77,7 @@ for index, row in df.iterrows():
         g.add( (study_context_uri, RDF.type, BIOLINK['Cohort']) )
         g.add( (study_context_uri, RDFS.label, Literal(row['targetGroup'])) )
         if (row['hasPhenotype'] and row['hasPhenotype'] != pd.np.nan):
+            print(row['hasPhenotype'])
             g.add( (study_context_uri, BIOLINK['has_phenotype'], URIRef(row['hasPhenotype'])) )
 
         # Types for drug and disease
