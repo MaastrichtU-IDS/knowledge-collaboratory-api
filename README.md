@@ -56,7 +56,7 @@ cd knowledge-collaboratory-api
 2. Install the required dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 3. Test the script to generate nanopubs from the gdoc spreadsheet, and inspect the RDF generated:
