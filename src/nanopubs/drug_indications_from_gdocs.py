@@ -10,6 +10,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--publish', action='store_true',
                     help='Publish nanopubs (default: False)')
+parser.add_argument('--count', default=1, help='Publish nanopubs (default: 1)')
 parser.add_argument('--validate', action='store_true',
                     help='Validate nanopubs wih PyShEx (default: False)')
 args = parser.parse_args()
@@ -100,21 +101,25 @@ for index, row in df.iterrows():
         pubinfo.add( (
             URIRef('http://purl.org/nanopub/temp/mynanopub#'), 
             URIRef('https://w3id.org/np/o/ntemplate/wasCreatedFromTemplate'), 
-            URIRef('http://purl.org/np/RATVS2nKWuTWDgbsjgxEILE7Y2SWVEyUeynak5u-n7QFE')
+            URIRef('http://purl.org/np/RAhNHZw6Urw_Mccs4qy6Ws3C9CRuaHpQx8AwuApbWkqnY')
         ) )
         publication = Publication.from_assertion(
             assertion_rdf=g,
             pubinfo_rdf=pubinfo
         )
-        count = count + 1
         # print(g.serialize(format='turtle'))
         if args.publish:
             print("Publishing the nanopub")
-            # publication_info = np_client.publish(publication)
-            # print(publication_info)
+            if count < int(args.count):
+                print('Publish nanopub ' + str(count))
+                # publication_info = np_client.publish(publication)
+                # print(publication_info)
+            else:
+                break
         else:
             print(publication)
             print("Dry run, not publishing the Nanopub. Add --publish to publish")
             break
+        count = count + 1
 
-print(str(count) + ' drug indications has been published')
+print(str(count) + ' drug indications has been processed')

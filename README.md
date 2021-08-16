@@ -68,7 +68,7 @@ python3 src/nanopubs/drug_indications_from_gdocs.py
 When you are ready, you can run and publish each row of the spreadsheet as a nanopublication:
 
 ```bash
-python3 src/nanopubs/drug_indications_from_gdocs.py --publish
+python3 src/nanopubs/drug_indications_from_gdocs.py --publish --count 10
 ```
 
 ## Query the Collaboratory API
