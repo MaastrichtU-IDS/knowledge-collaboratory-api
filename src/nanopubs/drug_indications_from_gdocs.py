@@ -36,81 +36,85 @@ association_uri = NP['association']
 study_context_uri = NP['context']
 # shex = str(requests.get('https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex').content)
 
+count = 0
 for index, row in df.iterrows():
-    # Build the nanopub with a RDFLib Graph
-    g = Graph()
-    g.bind("biolink", URIRef('https://w3id.org/biolink/vocab/'))
-    g.add( (association_uri, RDF.type, RDF.Statement ) )
+    if (row['nanopub'] == 0):
+        # Build the nanopub with a RDFLib Graph
+        g = Graph()
+        g.bind("biolink", URIRef('https://w3id.org/biolink/vocab/'))
+        g.add( (association_uri, RDF.type, RDF.Statement ) )
 
-    # Add drug as subject
-    drug_uri = URIRef('https://identifiers.org/DRUGBANK:' + row['drugbank_id'])
-    # drug_uri = URIRef('http://identifiers.org/drugbank/' + row['drugbank_id'])
-    g.add( (association_uri, RDF.subject, drug_uri) )
+        # Add drug as subject
+        drug_uri = URIRef('https://identifiers.org/DRUGBANK:' + row['drugbank_id'])
+        # drug_uri = URIRef('http://identifiers.org/drugbank/' + row['drugbank_id'])
+        g.add( (association_uri, RDF.subject, drug_uri) )
 
-    # Add disease as object (use OBO or identifiergs.org URI? http://purl.obolibrary.org/obo/MONDO_0002491)
-    # disease_uri = URIRef('https://identifiers.org/' + row['mondo_id'].replace('_', ':'))
-    disease_uri = URIRef(row['mondo_URL'])
-    g.add( (association_uri, RDF.object, disease_uri) )
+        # Add disease as object (use OBO or identifiergs.org URI? http://purl.obolibrary.org/obo/MONDO_0002491)
+        # disease_uri = URIRef('https://identifiers.org/' + row['mondo_id'].replace('_', ':'))
+        disease_uri = URIRef(row['mondo_URL'])
+        g.add( (association_uri, RDF.object, disease_uri) )
 
-    # Define predicate/relation: BioLink treats/OffLabel drug indication?
-    g.add( (association_uri, RDF.predicate, BIOLINK['treats']) )
-    relation_uri = 'https://w3id.org/um/neurodkg/OffLabelIndication'
-    g.add( (association_uri, BIOLINK['relation'], URIRef(relation_uri)) )
+        # Define predicate/relation: BioLink treats/OffLabel drug indication?
+        g.add( (association_uri, RDF.predicate, BIOLINK['treats']) )
+        relation_uri = 'https://w3id.org/um/neurodkg/OffLabelIndication'
+        g.add( (association_uri, BIOLINK['relation'], URIRef(relation_uri)) )
 
-    # Information about the dataset providing of the statement
-    provider_uri = 'https://w3id.org/um/NeuroDKG'
-    g.add( (association_uri, BIOLINK['provided_by'], URIRef(provider_uri)) )
+        # Information about the dataset providing of the statement
+        provider_uri = 'https://w3id.org/um/NeuroDKG'
+        g.add( (association_uri, BIOLINK['provided_by'], URIRef(provider_uri)) )
 
-    # Infos about the indication evidence publication
-    g.add( (association_uri, BIOLINK['publications'], URIRef(row['URL Complete'])) )
-    g.add( (association_uri, BIOLINK['description'], Literal(row['context'])) )
-    g.add( (association_uri, BIOLINK['has_population_context'], study_context_uri) )
+        # Infos about the indication evidence publication
+        g.add( (association_uri, BIOLINK['publications'], URIRef(row['URL Complete'])) )
+        g.add( (association_uri, BIOLINK['description'], Literal(row['context'])) )
+        g.add( (association_uri, BIOLINK['has_population_context'], study_context_uri) )
 
-    # Target group in the related publication
-    g.add( (study_context_uri, RDF.type, BIOLINK['Cohort']) )
-    g.add( (study_context_uri, RDFS.label, Literal(row['targetGroup'])) )
+        # Target group in the related publication
+        g.add( (study_context_uri, RDF.type, BIOLINK['Cohort']) )
+        g.add( (study_context_uri, RDFS.label, Literal(row['targetGroup'])) )
 
-    # Types for drug and disease
-    g.add( (drug_uri, RDF.type, BIOLINK['Drug']) )
-    g.add( (disease_uri, RDF.type, BIOLINK['Disease']) )
-    # Add labels?
-    # g.add( (drug_uri, RDFS.label, Literal(row['drugbank_name'])) )
-    # g.add( (disease_uri, RDFS.label, Literal(row['mondo_name'])) )
+        # Types for drug and disease
+        g.add( (drug_uri, RDF.type, BIOLINK['Drug']) )
+        g.add( (disease_uri, RDF.type, BIOLINK['Disease']) )
+        # Add labels?
+        # g.add( (drug_uri, RDFS.label, Literal(row['drugbank_name'])) )
+        # g.add( (disease_uri, RDFS.label, Literal(row['mondo_name'])) )
 
-    if args.validate:
-        # Validate with ShEx
-        print('Running ShEx validation...')
-        results = ShExEvaluator().evaluate(
-            g, 
-            'https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex',
-            # focus='http://purl.org/nanopub/temp/mynanopub#association',
-            focus='https://w3id.org/biolink/vocab/Drug',
-            start='https://w3id.org/biolink/vocab/Drug',
+        if args.validate:
+            # Validate with ShEx
+            print('Running ShEx validation...')
+            results = ShExEvaluator().evaluate(
+                g, 
+                'https://raw.githubusercontent.com/biolink/biolink-model/master/biolink-model.shex',
+                # focus='http://purl.org/nanopub/temp/mynanopub#association',
+                focus='https://w3id.org/biolink/vocab/Drug',
+                start='https://w3id.org/biolink/vocab/Drug',
+            )
+            for r in results:
+                if r.result:
+                    print("ShEx PASS")
+                else:
+                    print(f"ShEx FAIL:\n {r.reason}")
+
+        # Add template in pub info
+        pubinfo = Graph()
+        pubinfo.add( (
+            URIRef('http://purl.org/nanopub/temp/mynanopub#'), 
+            URIRef('https://w3id.org/np/o/ntemplate/wasCreatedFromTemplate'), 
+            URIRef('http://purl.org/np/RATVS2nKWuTWDgbsjgxEILE7Y2SWVEyUeynak5u-n7QFE')
+        ) )
+        publication = Publication.from_assertion(
+            assertion_rdf=g,
+            pubinfo_rdf=pubinfo
         )
-        for r in results:
-            if r.result:
-                print("ShEx PASS")
-            else:
-                print(f"ShEx FAIL:\n {r.reason}")
+        count = count + 1
+        # print(g.serialize(format='turtle'))
+        if args.publish:
+            print("Publishing the nanopub")
+            # publication_info = np_client.publish(publication)
+            # print(publication_info)
+        else:
+            print(publication)
+            print("Dry run, not publishing the Nanopub. Add --publish to publish")
+            break
 
-    # Add template in pub info
-    pubinfo = Graph()
-    pubinfo.add( (
-        URIRef('http://purl.org/nanopub/temp/mynanopub#'), 
-        URIRef('https://w3id.org/np/o/ntemplate/wasCreatedFromTemplate'), 
-        URIRef('http://purl.org/np/RATVS2nKWuTWDgbsjgxEILE7Y2SWVEyUeynak5u-n7QFE')
-    ) )
-    publication = Publication.from_assertion(
-        assertion_rdf=g,
-        pubinfo_rdf=pubinfo
-    )
-
-    # print(g.serialize(format='turtle'))
-    if args.publish:
-        print("Publishing the nanopub")
-        # publication_info = np_client.publish(publication)
-        # print(publication_info)
-    else:
-        print(publication)
-        print("Dry run, not publishing the Nanopub. Add --publish to publish")
-        break
+print(str(count) + ' drug indications has been published')
