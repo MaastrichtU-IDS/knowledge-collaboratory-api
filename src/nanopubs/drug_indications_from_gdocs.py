@@ -24,8 +24,11 @@ googledocs_url = 'https://docs.google.com/spreadsheets/d/' + googledocs_id + '/g
 
 # Load csv to a pandas dataframe from the URL
 df = pd.read_csv(googledocs_url)
+# .fillna(value = 0)
 # Read from local to dev faster:
 # df = pd.read_csv('data/data.csv')
+
+print(df)
 
 # Initialize the nanopub client using the encrypted keys in the ~/.nanopub folder
 np_client = NanopubClient()
@@ -73,7 +76,7 @@ for index, row in df.iterrows():
         # Target group in the related publication
         g.add( (study_context_uri, RDF.type, BIOLINK['Cohort']) )
         g.add( (study_context_uri, RDFS.label, Literal(row['targetGroup'])) )
-        if (row['hasPhenotype'] and len(row['hasPhenotype']) > 0):
+        if (row['hasPhenotype'] and row['hasPhenotype'] != pd.np.nan):
             g.add( (study_context_uri, BIOLINK['has_phenotype'], URIRef(row['hasPhenotype'])) )
 
         # Types for drug and disease
