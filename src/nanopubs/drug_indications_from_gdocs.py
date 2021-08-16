@@ -112,8 +112,8 @@ for index, row in df.iterrows():
             print("Publishing the nanopub")
             if count < int(args.count):
                 print('Publish nanopub ' + str(count))
-                # publication_info = np_client.publish(publication)
-                # print(publication_info)
+                publication_info = np_client.publish(publication)
+                print(publication_info)
             else:
                 break
         else:
