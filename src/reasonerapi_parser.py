@@ -26,6 +26,12 @@ WHERE {
       ?association biolink:publications ?publications .
     }
     OPTIONAL {
+      ?association rdfs:label ?label .
+    }
+    OPTIONAL {
+      ?association biolink:description ?description .
+    }
+    OPTIONAL {
       ?association biolink:has_population_context [
         rdfs:label ?has_population_context ;
         biolink:has_phenotype ?populationHasPhenotype ;
@@ -280,7 +286,7 @@ def reasonerapi_to_sparql(reasoner_query):
         
         try:
           object_curies = query_graph['nodes'][edge_props['object']]['ids']
-          object_curies = list(map(lambda curie: '?subject = <' +  resolve_curie_to_identifiersorg(curie) + '>', object_curies))
+          object_curies = list(map(lambda curie: '?object = <' +  resolve_curie_to_identifiersorg(curie) + '>', object_curies))
           object_curies = ' || '.join(object_curies)
           entity_filters = entity_filters + 'FILTER ( ' + object_curies + ' )\n'
         except:
@@ -327,6 +333,11 @@ def reasonerapi_to_sparql(reasoner_query):
         if 'publications' in edge_result:
           knowledge_graph['edges'][edge_uri]['publications'] = resolve_uri_with_context(edge_result['publications']['value'])
         
+        if 'label' in edge_result:
+          knowledge_graph['edges'][edge_uri]['name'] = resolve_uri_with_context(edge_result['label']['value'])
+        if 'description' in edge_result:
+          knowledge_graph['edges'][edge_uri]['description'] = resolve_uri_with_context(edge_result['description']['value'])
+
         if 'has_population_context' in edge_result:
           knowledge_graph['edges'][edge_uri]['has_population_context'] = resolve_uri_with_context(edge_result['has_population_context']['value'])
         
