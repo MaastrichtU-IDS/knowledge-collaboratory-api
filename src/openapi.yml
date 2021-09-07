@@ -124,12 +124,12 @@ components:
       properties:
         n_results:
           description: The maximum number of results to be returned.
-          example: 2
+          example: 30
           type: integer
     Query:
       example:
         query_options:
-          n_results: 2
+          n_results: 30
         message:
           query_graph:
             nodes:
