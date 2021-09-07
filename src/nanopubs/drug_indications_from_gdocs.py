@@ -81,8 +81,10 @@ for index, row in df.iterrows():
             g.add( (study_context_uri, BIOLINK['has_phenotype'], URIRef(row['hasPhenotype'])) )
 
         # Types for drug and disease
-        g.add( (drug_uri, RDF.type, BIOLINK['Drug']) )
-        g.add( (disease_uri, RDF.type, BIOLINK['Disease']) )
+        g.add( (drug_uri, BIOLINK['category'], BIOLINK['Drug']) )
+        g.add( (disease_uri, BIOLINK['category'], BIOLINK['Disease']) )
+        # g.add( (drug_uri, RDF.type, BIOLINK['Drug']) )
+        # g.add( (disease_uri, RDF.type, BIOLINK['Disease']) )
         # Add labels?
         # g.add( (drug_uri, RDFS.label, Literal(row['drugbank_name'])) )
         # g.add( (disease_uri, RDFS.label, Literal(row['mondo_name'])) )
