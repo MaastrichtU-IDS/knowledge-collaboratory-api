@@ -69,6 +69,7 @@ def start_api(port=8808, server_url='/', debug=False):
 
     print("Access Swagger UI at \033[1mhttp://localhost:" + str(port) + "\033[1m 🔗")
     api.run(host='0.0.0.0', port=port, debug=debug, server=deployment_server)
+    return api
 
 
 

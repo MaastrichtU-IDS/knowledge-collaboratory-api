@@ -337,13 +337,28 @@ def reasonerapi_to_sparql(reasoner_query):
           knowledge_graph['edges'][edge_uri]['name'] = resolve_uri_with_context(edge_result['label']['value'])
         if 'description' in edge_result:
           knowledge_graph['edges'][edge_uri]['description'] = resolve_uri_with_context(edge_result['description']['value'])
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:has_population_context',
+              'value': resolve_uri_with_context(edge_result['has_population_context']['value']),
+              # 'value_type_id': 'biolink:Cohort',
+          })
 
         if 'has_population_context' in edge_result:
-          knowledge_graph['edges'][edge_uri]['has_population_context'] = resolve_uri_with_context(edge_result['has_population_context']['value'])
+          # knowledge_graph['edges'][edge_uri]['has_population_context'] = resolve_uri_with_context(edge_result['has_population_context']['value'])
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:has_population_context',
+              'value': resolve_uri_with_context(edge_result['has_population_context']['value']),
+              # 'value_type_id': 'biolink:Cohort',
+          })
         
         if 'populationHasPhenotype' in edge_result:
           # TODO: fix the key
-          knowledge_graph['edges'][edge_uri]['has_phenotype'] = resolve_uri_with_context(edge_result['populationHasPhenotype']['value'])
+          # knowledge_graph['edges'][edge_uri]['has_phenotype'] = resolve_uri_with_context(edge_result['populationHasPhenotype']['value'])
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:has_phenotype',
+              'value': resolve_uri_with_context(edge_result['populationHasPhenotype']['value']),
+              # 'value_type_id': 'biolink:Phenotype',
+          })
         
         # if edge_result['association_type']:
         #   knowledge_graph['edges'][edge_uri]['association_type'] = resolve_uri_with_context(edge_result['association_type']['value'])

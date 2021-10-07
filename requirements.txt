@@ -10,5 +10,6 @@ rdflib
 nanopub
 SPARQLWrapper
 requests
+reasoner-validator
 # rdflib==4.2.2
 # -e git+https://github.com/vemonet/connexion.git@fix-servers-overwrite#egg=connexion[swagger-ui]
