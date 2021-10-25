@@ -3,8 +3,8 @@ import os
 import requests
 from reasoner_validator import validate
 
-# PROD_API_URL = 'https://api.collaboratory.semanticscience.org'
-PROD_API_URL = 'http://localhost:8808'
+PROD_API_URL = 'https://api.collaboratory.semanticscience.org'
+# PROD_API_URL = 'http://localhost:8808'
 VALIDATE_TRAPI_VERSION="1.1.0"
 
 def test_post_trapi():
