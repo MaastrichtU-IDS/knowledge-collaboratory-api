@@ -37,8 +37,13 @@ WHERE {
         biolink:has_phenotype ?populationHasPhenotype ;
       ] .
     }
-    ?subject a|biolink:category ?subject_category .
-    ?object a|biolink:category ?object_category .
+    {
+      ?subject a ?subject_category .
+      ?object a ?object_category .
+    } UNION {
+      ?subject biolink:category ?subject_category .
+      ?object biolink:category ?object_category .
+    }
   }
   ?_entity_filters
   graph ?np_head {
@@ -59,8 +64,13 @@ WHERE {
       rdf:subject ?subject ;
       rdf:predicate ?predicate_category ;
       rdf:object ?object .
-    ?subject a|biolink:category ?subject_category .
-    ?object a|biolink:category ?object_category .
+    {
+      ?subject a ?subject_category .
+      ?object a ?object_category .
+    } UNION {
+      ?subject biolink:category ?subject_category .
+      ?object biolink:category ?object_category .
+    }
   }
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
@@ -87,7 +97,11 @@ WHERE {
         rdf:predicate ?predicate_category ;
         rdf:object ?node .
     }
-    ?node a|biolink:category ?node_category .
+    {
+      ?node a ?node_category .
+    } UNION {
+      ?node biolink:category ?node_category .
+    }
     BIND(UCASE(STRBEFORE(REPLACE(STRAFTER(str(?node), ":"), "//identifiers.org/", ""), ":")) AS ?node_prefix)
     FILTER(strlen(?node_prefix)>0)
   }
