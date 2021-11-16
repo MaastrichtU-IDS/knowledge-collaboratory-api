@@ -17,6 +17,7 @@ info:
     component: KP
     team:
       - Clinical Data Provider
+    infores: infores:knowledge-collaboratory
     biolink-version: 1.8.2
     externalDocs:
       description: >-
@@ -34,9 +35,11 @@ info:
       url: https://github.com/NCATSTranslator/translator_extensions/blob/production/x-trapi/
 servers:
   - url: /
-    description: Local API
+    description: Local TRAPI
+    x-maturity: development
   - url: https://api.collaboratory.semanticscience.org
-    description: Production API
+    description: Production TRAPI
+    x-maturity: production
 externalDocs:
   description: >-
     Documentation for the NCATS Biomedical Translator Reasoners web services
