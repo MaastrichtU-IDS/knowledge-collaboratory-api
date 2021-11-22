@@ -1,25 +1,28 @@
 version: "3"
-
 services:
-  knowledge-collaboratory-api:
-    container_name: knowledge-collaboratory-api
-    build: .
-    restart: unless-stopped
-    # command: src/api.py
-    # ports:
-    #   - 8808:8808
-    environment: 
-      # Variable for nginx-proxy routing. See https://github.com/nginx-proxy/
-      TRAPI_DATA_DIR: /data
-      # VIRTUAL_HOST: nanopub-kgx-api.137.120.31.102.nip.io
-      # LETSENCRYPT_HOST: nanopub-kgx-api.137.120.31.102.nip.io
-      VIRTUAL_HOST: api.collaboratory.semanticscience.org
-      LETSENCRYPT_HOST: api.collaboratory.semanticscience.org
-      VIRTUAL_PORT: 8808
-      ## To implement (see kgx_transformer.py)
-      # ENDPOINT: http://virtuoso.np.dumontierlab.137.120.31.101.nip.io/sparql
+
+  api:
+    # container_name: knowledge-collaboratory-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_DEV: ${INSTALL_DEV-true}
+    ports:
+      - 8808:8808
     volumes:
-      - /data/nanopub-kgx-api:/data
+      - ./src:/app/src
+      # - /data/nanopub-kgx-api:/data
+    environment:
+      # Show print() in logs:
+      PYTHONUNBUFFERED: '1'
+      DEV_MODE: 'true'
+
+    entrypoint: uvicorn src.main:app --host 0.0.0.0 --port 8808 --reload
+    ## Gunicorn for multiple uvicorn workers in prod:
+    # entrypoint: gunicorn -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8808 openpredict.main:app
+
+
 
   # comunica-sparql-endpoint:
   #   container_name: nanopub-sparql
@@ -55,7 +58,3 @@ services:
   #   networks:
   #     - network
   #   restart: unless-stopped
-
-networks:
-  network:
-    driver: bridge

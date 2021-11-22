@@ -1,0 +1,13 @@
+version: '3'
+services:
+  api:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - /data/nanopub-kgx-api:/data
+    environment: 
+      # Variable for nginx-proxy routing. See https://github.com/nginx-proxy
+      VIRTUAL_HOST: api.collaboratory.semanticscience.org
+      LETSENCRYPT_HOST: api.collaboratory.semanticscience.org
+      VIRTUAL_PORT: 8808
+    # entrypoint: gunicorn -w 8 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8808 openpredict.main:app

@@ -1,11 +1,11 @@
 name: Generate KGX from Knowledge Collaboratory
 on:
   workflow_dispatch:
-  push:
-    branches: [master]
-    paths:
-      - ".github/workflows/generate-kgx.yml"
-      - "src/sparql/get_nanopubs_drug_action_with_context.rq"
+  # push:
+  #   branches: [master]
+  #   paths:
+  #     - ".github/workflows/generate-kgx.yml"
+  #     - "src/sparql/get_nanopubs_drug_action_with_context.rq"
   # schedule:
   #   - cron: '0 2 * * *'
   # Everyday at 2am

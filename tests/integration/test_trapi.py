@@ -1,24 +1,29 @@
 import pytest
-import pkg_resources
-import connexion
+from fastapi.testclient import TestClient
 import os
 import json
 # from reasoner_validator import validate
 # from src.api import start_api
+from src.main import app
 
-# os.chdir('../..')
-# Create and start Flask from openapi.yml before running tests
-flask_app = connexion.FlaskApp(__name__)
-flask_app.add_api('../../src/openapi.yml')
-# flask_app = start_api(8808, server_url, debug)
-@pytest.fixture(scope='module')
-def client():
-    with flask_app.app.test_client() as c:
-        yield c
 
-VALIDATE_TRAPI_VERSION="1.1.0"
+VALIDATE_TRAPI_VERSION="1.2.0"
 
-def test_post_trapi(client):
+
+# # os.chdir('../..')
+# # Create and start Flask from openapi.yml before running tests
+# flask_app = connexion.FlaskApp(__name__)
+# flask_app.add_api('../../src/openapi.yml')
+# # flask_app = start_api(8808, server_url, debug)
+# @pytest.fixture(scope='module')
+# def client():
+#     with flask_app.app.test_client() as c:
+#         yield c
+
+client = TestClient(app)
+
+
+def test_post_trapi():
     """Test Translator ReasonerAPI query POST operation to get predictions"""
     url = '/query'
 
@@ -27,10 +32,10 @@ def test_post_trapi(client):
             reasoner_query = f.read()
             response = client.post(url, 
                                     data=reasoner_query, 
-                                    content_type='application/json')
+                                    headers={"Content-Type": "application/json"})
 
             # print(response.json)
-            edges = response.json['message']['knowledge_graph']['edges'].items()
+            edges = response.json()['message']['knowledge_graph']['edges'].items()
             # print(response)
             print(trapi_filename)
             # assert validate(response.json['message'], "Message", VALIDATE_TRAPI_VERSION) == None
@@ -42,7 +47,7 @@ def test_post_trapi(client):
                 assert len(edges) >= 5
 
 
-def test_trapi_empty_response(client):
+def test_trapi_empty_response():
     reasoner_query = {
         "message": {
             "query_graph": {
@@ -67,8 +72,8 @@ def test_trapi_empty_response(client):
 
     response = client.post('/query',
         data=json.dumps(reasoner_query),
-        content_type='application/json')
+        headers={"Content-Type": "application/json"})
 
-    print(response.json)
+    print(response.json())
     # assert validate(response.json['message'], "Message", VALIDATE_TRAPI_VERSION) == None
-    assert len(response.json['message']['results']) == 0
+    assert len(response.json()['message']['results']) == 0

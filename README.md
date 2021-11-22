@@ -107,7 +107,7 @@ Available at **[https://api.collaboratory.semanticscience.org 🔗](https://api.
 
 Starts the **Translator Reasoner API to query the Nanopublications SPARQL endpoint**, supporting `kgx` and TRAPI `1.1.0` (defined in this repo in `src/`)
 
-> Requires [Python 3.7+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
+> Requires [Python 3.8+](https://www.python.org/downloads/) and [pip](https://pip.pypa.io/en/stable/installing/)
 
 Clone the repository first
 
@@ -121,7 +121,7 @@ cd knowledge-collaboratory-api
 Install dependencies
 
 ```bash
-pip3 install -r requirements.txt
+pip3 install -e .
 ```
 
 > If you are facing conflict with already installed packages, then you might want to use a [Virtual Environment](https://docs.python.org/3/tutorial/venv.html) to isolate the installation in the current folder before installing knowledge-collaboratory-api:
@@ -133,16 +133,16 @@ pip3 install -r requirements.txt
 > source .venv/bin/activate
 > ```
 
-Start the API in **production** mode on http://localhost:8808 with Tornado:
+Start the API in **production** mode on http://localhost:8808:
 
 ```bash
-python3 src/api.py
+uvicorn src.main:app --port 8808
 ```
 
-Or start the API in **debug** mode with Flask (the API will be reloaded automatically at each change to the code):
+Or start the API in **debug** mode (the API will be reloaded automatically at each change to the code):
 
 ```bash
-python3 src/api.py debug
+uvicorn src.main:app --port 8808 --reload
 ```
 
 >  Check [CONTRIBUTING.md](/CONTRIBUTING.md) for more details on how to run the API locally and contribute.

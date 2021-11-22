@@ -21,5 +21,12 @@ We test for an expected number of results and a few specific results.
 To run the tests of the OpenPredict production API locally:
 
 ```bash
-pytest
+docker-compose -f docker-compose.test.yml up --force-recreate
 ```
+
+Or while the API is already running with docker-compose:
+
+```bash
+docker-compose exec api pytest tests/integration/test_trapi.py::test_post_trapi -s
+```
+

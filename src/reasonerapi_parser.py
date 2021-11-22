@@ -52,7 +52,7 @@ WHERE {
   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
 }"""
 
-get_edges_select_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+get_metakg_edges_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX biolink: <https://w3id.org/biolink/vocab/>
 PREFIX np: <http://www.nanopub.org/nschema#>
@@ -60,17 +60,19 @@ PREFIX npx: <http://purl.org/nanopub/x/>
 SELECT DISTINCT ?subject_category ?predicate_category ?object_category
 WHERE {
   graph ?np_assertion {
+    ?subject biolink:category ?subject_category .
+    ?object biolink:category ?object_category .
     ?association
       rdf:subject ?subject ;
       rdf:predicate ?predicate_category ;
       rdf:object ?object .
-    {
-      ?subject a ?subject_category .
-      ?object a ?object_category .
-    } UNION {
-      ?subject biolink:category ?subject_category .
-      ?object biolink:category ?object_category .
-    }
+    #{
+    #  ?subject a ?subject_category .
+    #  ?object a ?object_category .
+    #} UNION {
+    #  ?subject biolink:category ?subject_category .
+    #  ?object biolink:category ?object_category .
+    #}
   }
   graph ?np_head {
     ?np_uri np:hasAssertion ?np_assertion .
@@ -173,7 +175,7 @@ def get_predicates_from_nanopubs():
     # Run query to get types and relations between them
     sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
     sparql.setReturnFormat(JSON)
-    sparql.setQuery(get_edges_select_query)
+    sparql.setQuery(get_metakg_edges_query)
     sparqlwrapper_results = sparql.query().convert()
     sparql_results = sparqlwrapper_results["results"]["bindings"]
     for result in sparql_results:
@@ -199,7 +201,8 @@ def get_metakg_from_nanopubs():
     # Run query to get types and relations between them
     sparql = SPARQLWrapper(SPARQL_ENDPOINT_URL)
     sparql.setReturnFormat(JSON)
-    sparql.setQuery(get_edges_select_query)
+    sparql.setQuery(get_metakg_edges_query)
+    print(get_metakg_edges_query)
     sparqlwrapper_results = sparql.query().convert()
     sparql_results = sparqlwrapper_results["results"]["bindings"]
     edges_array = []
@@ -343,22 +346,30 @@ def reasonerapi_to_sparql(reasoner_query):
             ]
         }
         if 'relation' in edge_result:
-          knowledge_graph['edges'][edge_uri]['relation'] = resolve_uri_with_context(edge_result['relation']['value'])
+          # knowledge_graph['edges'][edge_uri]['relation'] = resolve_uri_with_context(edge_result['relation']['value'])
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:relation',
+              'value': resolve_uri_with_context(edge_result['relation']['value'])
+          })
         if 'publications' in edge_result:
-          knowledge_graph['edges'][edge_uri]['publications'] = resolve_uri_with_context(edge_result['publications']['value'])
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:publications',
+              'value': resolve_uri_with_context(edge_result['publications']['value'])
+          })
         
         if 'label' in edge_result:
-          knowledge_graph['edges'][edge_uri]['name'] = resolve_uri_with_context(edge_result['label']['value'])
-        if 'description' in edge_result:
-          knowledge_graph['edges'][edge_uri]['description'] = resolve_uri_with_context(edge_result['description']['value'])
           knowledge_graph['edges'][edge_uri]['attributes'].append({
-              'attribute_type_id': 'biolink:has_population_context',
-              'value': resolve_uri_with_context(edge_result['has_population_context']['value']),
+              'attribute_type_id': 'biolink:name',
+              'value': resolve_uri_with_context(edge_result['label']['value'])
+          })
+        if 'description' in edge_result:
+          knowledge_graph['edges'][edge_uri]['attributes'].append({
+              'attribute_type_id': 'biolink:description',
+              'value': resolve_uri_with_context(edge_result['description']['value']),
               # 'value_type_id': 'biolink:Cohort',
           })
 
         if 'has_population_context' in edge_result:
-          # knowledge_graph['edges'][edge_uri]['has_population_context'] = resolve_uri_with_context(edge_result['has_population_context']['value'])
           knowledge_graph['edges'][edge_uri]['attributes'].append({
               'attribute_type_id': 'biolink:has_population_context',
               'value': resolve_uri_with_context(edge_result['has_population_context']['value']),
@@ -367,7 +378,6 @@ def reasonerapi_to_sparql(reasoner_query):
         
         if 'populationHasPhenotype' in edge_result:
           # TODO: fix the key
-          # knowledge_graph['edges'][edge_uri]['has_phenotype'] = resolve_uri_with_context(edge_result['populationHasPhenotype']['value'])
           knowledge_graph['edges'][edge_uri]['attributes'].append({
               'attribute_type_id': 'biolink:has_phenotype',
               'value': resolve_uri_with_context(edge_result['populationHasPhenotype']['value']),
@@ -438,3 +448,30 @@ array_json = {
     }
   }
 }
+
+## Get for rdf:type and biolink:category
+# get_metakg_edges_query = """PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+# PREFIX biolink: <https://w3id.org/biolink/vocab/>
+# PREFIX np: <http://www.nanopub.org/nschema#>
+# PREFIX npx: <http://purl.org/nanopub/x/>
+# SELECT DISTINCT ?subject_category ?predicate_category ?object_category
+# WHERE {
+#   graph ?np_assertion {
+#     ?association
+#       rdf:subject ?subject ;
+#       rdf:predicate ?predicate_category ;
+#       rdf:object ?object .
+#     {
+#       ?subject a ?subject_category .
+#       ?object a ?object_category .
+#     } UNION {
+#       ?subject biolink:category ?subject_category .
+#       ?object biolink:category ?object_category .
+#     }
+#   }
+#   graph ?np_head {
+#     ?np_uri np:hasAssertion ?np_assertion .
+#   }
+#   FILTER NOT EXISTS { ?creator npx:retracts ?np_uri }
+# }"""
