@@ -48,7 +48,7 @@ def post_reasoner_query(
     reasonerapi_response = reasonerapi_to_sparql(request_body.dict(exclude_none=True))
     # reasonerapi_response = request_body
 
-    return reasonerapi_response or ('Not found', 404)
+    return JSONResponse(reasonerapi_response) or ('Not found', 404)
 
 
 
